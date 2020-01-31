@@ -1,0 +1,86 @@
+html, body, .container, #mapcontainer {
+	padding: 0;
+	margin: 0;
+	height: 100%;
+	width: 100%;
+}
+
+
+.container {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+}
+
+#optcontainer{
+	width: 25%;
+	background-color: #272727;
+	font-family: "Lucida Console", Monaco, monospace;
+	color: #f1f1f6;
+	font-size: 12px;
+                /*font-weight:    bold;*/
+}
+
+#mapcontainer{
+	width: 75%;
+}
+
+#bascontainer{
+	width: 100%;
+}
+
+#HomeButton {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  z-index: 50;
+}
+
+.dijitAccordionTitleFocus:hover{
+	background-color: #0f4c75
+}
+
+
+.aboutcontainer{
+	margin: 20px 20px 0px 20px;
+	text-align: center;
+	font-family: "Lucida Console";
+}
+
+#downloadcontainer{
+	margin:20px;
+}
+
+#cargarwmscontainer{
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+}
+
+#urlcontainer{
+	width: 80%;
+}
+
+#cargarcontainer{
+	text-align: center;
+	vertical-align: middle;	
+	width: 20%;
+}
+
+input{
+	width: 100%;
+}
+
+#cargarwms{
+  /*border-radius: 4px;*/
+  /*background-color: #f4511e;*/
+  /*border: none;*/
+  /*color: #FFFFFF;*/
+  /*text-align: center;*/
+  /*font-size: 16px;*/
+  /*padding: 20px;*/
+  /*width: 100%;*/
+  /*transition: all 0.5s;*/
+  cursor: pointer;
+  /*margin: 5px;*/
+}
