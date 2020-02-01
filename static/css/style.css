@@ -126,6 +126,19 @@ input{
 	cursor: pointer;
 }
 
+.loadercontainer{
+	display: none;
+	text-align: center;
+	padding: 10%;
+	height: 20%;
+}
+
+
+.loadercontainer.active{
+	display: block;
+}
+
+
 @media only screen and (max-width: 1100px) {
 
 	#optcontainer{

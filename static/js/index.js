@@ -58,6 +58,7 @@ require([
     });
 
   _cargarwms = function() {
+    _showLoader(true);
     uuid = Math.random().toString(36).substring(2) + Date.now().toString(36);
     var url = document.getElementById('urlwms').value;
 
@@ -84,9 +85,9 @@ require([
       }, 
       function(error){
         alert(error)
+        _showLoader(false);
       }
     );
-
   };
 
   _zoomToExtent = function(id){
@@ -100,6 +101,7 @@ require([
   _setMapExtent = function(response){
       var extent = response.extent;
       mapviewer.setExtent(extent, true);
+      _showLoader(false);
   };
 
   _removelayer = function(id){
@@ -131,6 +133,15 @@ require([
     row.setAttribute("id", uuid);
     row.setAttribute("class", 'rowlayer');
     container.appendChild(row);
+  }
+
+  _showLoader = function(toggle){
+
+    if (toggle == true){
+      document.getElementById("idloadercontainer").classList.add("active")
+    } else {
+      document.getElementById("idloadercontainer").classList.remove("active")
+    }
   }
 
   document.getElementById('cargarwms').onclick = _cargarwms;
