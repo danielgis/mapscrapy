@@ -13,6 +13,7 @@ html, body, .container, #mapcontainer {
 }
 
 #optcontainer{
+	padding: 10px;
 	width: 25%;
 	background-color: #272727;
 	font-family: "Lucida Console", Monaco, monospace;
@@ -103,14 +104,25 @@ input{
 
 
 .namelyr{
-	width: 90%;
+	width: 80%;
+	margin: auto;
+	cursor: pointer;
 }
 
-.icono{
-	width: 10%
+.namelyr:hover{
+	color: yellow;
 }
 
-.icono:hover{
+.turnlyr{
+	width: 10%;
+}
+
+.iconlyr{
+	width: 10%;
+	margin: auto;
+}
+
+.iconlyr:hover{
 	cursor: pointer;
 }
 

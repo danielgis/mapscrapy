@@ -6,6 +6,8 @@ require([
   "esri/dijit/Popup", 
   "esri/dijit/PopupTemplate",
   "esri/request",
+  "esri/tasks/query",
+  "esri/SpatialReference",
   "dojo/parser",
   "dojo/dom-construct",
   "dijit/form/Form", 
@@ -21,6 +23,8 @@ require([
     Popup, 
     PopupTemplate,
     esriRequest,
+    Query,
+    SpatialReference,
     parser,
     domConstruct
   ) {
@@ -47,10 +51,6 @@ require([
     map: mapviewer
   }, "HomeButton");
   home.startup();
-        
-        // basemapGallery.on("error", function(msg) {
-        //   console.log("basemap gallery error:  ", msg);
-        // });
 
   var infoTemplate = new PopupTemplate({
       description: "{*}",
@@ -70,6 +70,7 @@ require([
     });
     requestHandle.then(
       function(response){
+        // console.log(response);
         var featureLayer = new FeatureLayer(url, {
           mode: FeatureLayer.MODE_ONDEMAND,
           outFields: ["*"],
@@ -77,8 +78,9 @@ require([
           id: uuid
         });
         mapviewer.addLayer(featureLayer);
+
+        _zoomToExtent(uuid);
         _listarwms(uuid, response);
-        // console.log(response);
       }, 
       function(error){
         alert(error)
@@ -87,19 +89,44 @@ require([
 
   };
 
-  _removelayer = function(){
-    var id = event.target.parentElement.attributes.value.value
-    var lyr = mapviewer.getLayer(id)
+  _zoomToExtent = function(id){
+    var featureLayer = mapviewer.getLayer(id);
+    var query = new Query();
+    query.where = "1=1";
+    query.outSpatialReference = new SpatialReference(mapviewer.extent.spatialReference.wkid);
+    featureLayer.queryExtent(query, _setMapExtent);
+  };
+
+  _setMapExtent = function(response){
+      var extent = response.extent;
+      mapviewer.setExtent(extent, true);
+  };
+
+  _removelayer = function(id){
+    var lyr = mapviewer.getLayer(id);
     mapviewer.removeLayer(lyr);
     document.getElementById(id).remove();
-  }
+  };
+
+  _toglelyr = function(id){
+    var checked = event.toElement.checked;
+    var lyr = mapviewer.getLayer(id);
+    if (checked == true){
+      lyr.show();
+    } else {
+      lyr.hide();
+    }
+  };
 
   _listarwms = function(uuid, response){
     name = response.name;
     container = document.getElementById("layerscontainer");
     var row = document.createElement("div");
-    var str = `<div class="namelyr">${name}</div>
-               <div value=${uuid} class="icono" onclick="_removelayer()"><i class="fa fa-minus-circle" style="color: red;"></i></div>`;
+    var str = `<div class="namelyr" onclick="_zoomToExtent('${uuid}')">${name}</div>
+               <div class="turnlyr"><input type="checkbox" onclick="_toglelyr('${uuid}')" checked></div>
+               <div class="iconlyr" onclick="_removelayer('${uuid}')">
+                  <i class="fa fa-minus-circle fa-lg" style="color: #eb4d55;"></i>
+               </div>`;
     row.innerHTML = str;
     row.setAttribute("id", uuid);
     row.setAttribute("class", 'rowlayer');
