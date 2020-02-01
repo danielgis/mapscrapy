@@ -28,7 +28,7 @@ require([
     parser,
     domConstruct
   ) {
-    parser.parse();
+  parser.parse();
 
   var popup = new Popup({
     titleInBody: false
@@ -81,7 +81,7 @@ require([
         mapviewer.addLayer(featureLayer);
 
         _zoomToExtent(uuid);
-        _listarwms(uuid, response);
+        _listarwms(uuid, response, url);
       }, 
       function(error){
         alert(error)
@@ -108,6 +108,7 @@ require([
     var lyr = mapviewer.getLayer(id);
     mapviewer.removeLayer(lyr);
     document.getElementById(id).remove();
+    document.getElementsByClassName(id)[0].remove();
   };
 
   _toglelyr = function(id){
@@ -120,19 +121,25 @@ require([
     }
   };
 
-  _listarwms = function(uuid, response){
+  _listarwms = function(uuid, response, url){
     name = response.name;
     container = document.getElementById("layerscontainer");
+    select = document.getElementById("optioncontainer");
     var row = document.createElement("div");
+    var opt = document.createElement("option")
     var str = `<div class="namelyr" onclick="_zoomToExtent('${uuid}')">${name}</div>
                <div class="turnlyr"><input type="checkbox" onclick="_toglelyr('${uuid}')" checked></div>
                <div class="iconlyr" onclick="_removelayer('${uuid}')">
                   <i class="fa fa-minus-circle fa-lg" style="color: #eb4d55;"></i>
                </div>`;
     row.innerHTML = str;
+    opt.innerHTML = name;
     row.setAttribute("id", uuid);
     row.setAttribute("class", 'rowlayer');
+    opt.setAttribute("value", url);
+    opt.setAttribute("class", uuid);
     container.appendChild(row);
+    select.appendChild(opt);
   }
 
   _showLoader = function(toggle){

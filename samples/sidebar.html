@@ -1,0 +1,102 @@
+<!-- Sample by DanielGIS -->
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="stylesheet" href="https://js.arcgis.com/3.31/esri/css/esri.css">
+  <script src="https://js.arcgis.com/3.31/"></script>
+  <script>
+    require([
+      "esri/map",
+      ], function(
+        Map
+        ) {
+      var map = new Map("mapcontainer", {
+        center: [-75, -9],
+        zoom: 6,
+        basemap: "topo"
+      });
+    });
+  </script>
+  <title>Sample</title>
+  <style>
+
+    html, body {
+      padding: 0;
+      margin: 0;
+      height: 100%;
+      width: 100%;
+      margin: 0;
+      padding: 0;
+      background-color: #111;
+    }
+
+    .sidebar {
+      height: 100%;
+      width: 0;
+      position: fixed;
+      z-index: 1;
+      top: 0;
+      left: 0;
+      background-color: #111;
+      overflow-x: hidden;
+      transition: 0.5s;
+      padding-top: 60px;
+    }
+
+    #toggcontainer{
+      height: 100%;
+      width: 1%;
+      color: white;
+      background-color: #111;
+      position: fixed;
+      z-index: 1;
+      top: 0;
+      left: 0;
+      overflow-x: hidden;
+      transition: 0.5s;
+      text-align: center;
+      cursor: pointer;
+      display: table;
+    }
+
+    #mapcontainer{
+      height: 100%;
+      margin-left: 1%;
+      transition: 0.5s;
+    }
+
+    #btntoggcontainer{
+     display: table-cell;
+     vertical-align: middle;
+    }
+
+
+  </style>
+</head>
+<body>
+  <div>
+    <div id="menucontainer" class="sidebar">
+    </div>
+    <div id="toggcontainer" onclick="openNav()">
+      <div id="btntoggcontainer">||</div>
+    </div>
+  </div>
+  <div id="mapcontainer">
+  </div>
+  <script>
+    var toggle = false;
+    function openNav() {
+      if (toggle==false){
+        document.getElementById("menucontainer").style.width = "30%";
+        document.getElementById("toggcontainer").style.marginLeft = "30%";
+        document.getElementById("mapcontainer").style.marginLeft = "31%";
+        toggle = true
+      }else{
+        document.getElementById("menucontainer").style.width = "0";
+        document.getElementById("toggcontainer").style.marginLeft = "0";
+        document.getElementById("mapcontainer").style.marginLeft= "1%";
+        toggle = false;
+      }};
+</script>
+</body>
+</html>

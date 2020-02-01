@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html>
 <head>
-<!-- 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-	<meta name="viewport" content="initial-scale=1, maximum-scale=1,user-scalable=no"/> -->
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<meta name="viewport" content="initial-scale=1, maximum-scale=1,user-scalable=no"/>
 	<link rel="icon" type="image/png" href="static/img/monster-truck.png" />
 	<link rel="stylesheet" href="https://js.arcgis.com/3.31/dijit/themes/claro/claro.css">   
 	<link rel="stylesheet" href="https://js.arcgis.com/3.31/esri/css/esri.css">
@@ -33,7 +33,6 @@
 	       		</div>
 	        </div>
 	        <div data-dojo-type="dijit/layout/ContentPane" title="Desargar servicios" id="downloadcontainer">
-	        	<!-- <form method="post"> -->
 	        		<div>
 	        			<label>Insertar URL del WebMapService</label><br>
 	        			<div id="cargarwmscontainer">	
@@ -41,7 +40,6 @@
 		        				<input type="text" name="url wms" id="urlwms">
 		        			</div>
 		        			<div id="cargarcontainer">
-		        				<!-- <i class="fa fa-chevron-circle-right fa-2x" id="cargarwms"></i> -->
 		        				<button id="cargarwms">cargar</button>
 		        			</div>	 
 	        			</div>
@@ -49,12 +47,24 @@
 	        				<i class="fa fa-cog fa-spin fa-3x"></i>	
 	        			</div>
 	        		</div>
-	        	<!-- </form> -->
-<!-- 				<div data-dojo-type="dijit/form/Form" id="myForm" data-dojo-id="myForm" encType="multipart/form-data" action="" method="">
-	                <label for="name">Insertar URL del WebMapService</label><br>
-	                <input type="text" id="name" name="name" required="true" data-dojo-type="dijit/form/ValidationTextBox" style="width: 100%;"/>
-				</div>
- -->	        </div>
+	        		<br>
+	        		<div id="formcontainer">
+	        			<form method="post">
+	        				<label>Seleccionar servicio</label><br>
+	        				<select id="optioncontainer">
+	        				</select><br><br>
+	        				<label>Graficar área de interes</label><br>
+	        					<div id="drawcontainer" class="tabcontentHz active">
+	        						<button class="drawtool" id="polygon" title="Polígono"></button>
+	        						<button class="drawtool" id="circle" title="Circulo"></button>
+	        						<button class="drawtool" id="ellipse" title="Elipse"></button>
+	        						<button class="drawtool" id="triangle" title="Triangulo"></button>
+	        						<button class="drawtool" id="delete" title="Eliminar graficos"></button>
+	        					</div>
+	        				<input type="button" name="submit" value="descargar"><br>
+	        			</form>
+	        		</div>
+	        	</div>
 	        <div data-dojo-type="dijit/layout/ContentPane" title="Tabla de contenidos" id="layerscontainer">
 	        </div>
 	        <div data-dojo-type="dijit/layout/ContentPane" title="Basemap">
