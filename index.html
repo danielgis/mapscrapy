@@ -43,9 +43,6 @@
 		        				<button id="cargarwms">cargar</button>
 		        			</div>	 
 	        			</div>
-	        			<div id="idloadercontainer" class="loadercontainer">
-	        				<i class="fa fa-cog fa-spin fa-3x"></i>	
-	        			</div>
 	        		</div>
 	        		<br>
 	        		<div id="formcontainer">
@@ -54,16 +51,18 @@
 	        				<select id="optioncontainer">
 	        				</select><br><br>
 	        				<label>Graficar área de interes</label><br>
-	        					<div id="drawcontainer" class="tabcontentHz active">
-	        						<button class="drawtool" id="polygon" title="Polígono"></button>
-	        						<button class="drawtool" id="circle" title="Circulo"></button>
-	        						<button class="drawtool" id="ellipse" title="Elipse"></button>
-	        						<button class="drawtool" id="triangle" title="Triangulo"></button>
-	        						<button class="drawtool" id="delete" title="Eliminar graficos"></button>
+	        					<div id="drawcontainer" class="toolbarconteiner">
+	        						<button class="drawtool" type="button" id="polygon" title="Polígono" onclick="_activateTool()"></button>
+	        						<button class="drawtool" type="button" id="circle" title="Circulo" onclick="_activateTool()"></button>
+	        						<button class="drawtool" type="button" id="ellipse" title="Elipse" onclick="_activateTool()"></button>
+	        						<button class="drawtool" type="button" id="triangle" title="Triangulo" onclick="_activateTool()"></button>
 	        					</div>
-	        				<input type="button" name="submit" value="descargar"><br>
+	        				<input type="button" id="btnsubmit" name="submit" value="descargar"><br>
 	        			</form>
 	        		</div>
+	        			<div id="idloadercontainer" class="loadercontainer">
+	        				<i class="fa fa-cog fa-spin fa-3x"></i>	
+	        			</div>
 	        	</div>
 	        <div data-dojo-type="dijit/layout/ContentPane" title="Tabla de contenidos" id="layerscontainer">
 	        </div>

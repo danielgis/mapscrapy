@@ -8,6 +8,9 @@ require([
   "esri/request",
   "esri/tasks/query",
   "esri/SpatialReference",
+  "esri/toolbars/draw",
+  "esri/graphic",
+  "esri/symbols/SimpleFillSymbol",
   "dojo/parser",
   "dojo/dom-construct",
   "dijit/form/Form", 
@@ -25,6 +28,9 @@ require([
     esriRequest,
     Query,
     SpatialReference,
+    Draw,
+    Graphic,
+    SimpleFillSymbol,
     parser,
     domConstruct
   ) {
@@ -51,6 +57,23 @@ require([
     map: mapviewer
   }, "HomeButton");
   home.startup();
+
+  _createToolbar = function(){
+      var toolbar = new Draw(mapviewer);
+      toolbar.on("draw-end", _addDrawToMap);
+      return toolbar;
+  };
+
+  _addDrawToMap = function(evt){
+    toolbar.deactivate();
+    mapviewer.setInfoWindowOnClick(true);
+    var symbol = new SimpleFillSymbol()
+    var graphic = new Graphic(evt.geometry, symbol);
+    mapviewer.graphics.add(graphic);
+    mapviewer.setExtent(graphic._extent, true);
+  };
+
+  var toolbar = _createToolbar();
 
   var infoTemplate = new PopupTemplate({
       description: "{*}",
@@ -140,7 +163,7 @@ require([
     opt.setAttribute("class", uuid);
     container.appendChild(row);
     select.appendChild(opt);
-  }
+  };
 
   _showLoader = function(toggle){
 
@@ -149,8 +172,33 @@ require([
     } else {
       document.getElementById("idloadercontainer").classList.remove("active")
     }
-  }
+  };
+
+  _activateTool = function(evt){
+    mapviewer.graphics.clear();
+    // if(_viewerMap.graphicsLayerIds.indexOf("87b6d67d-85cd-4ea7-ad9f-81f27ee22e12") >= 0){
+    //     _viewerMap.removeLayer(_viewerMap.getLayer("87b6d67d-85cd-4ea7-ad9f-81f27ee22e12"))
+    // }
+    // Captura el id del boton clickeado
+    var tool = event.target.id.toUpperCase();
+    // Si el boton utilizado no es "Delete features"
+    if (tool != "DELETE"){
+      // Se activa la herramienta de dibujo
+      toolbar.activate(Draw[tool]);
+      // Se deshabilitan los Popup
+      mapviewer.setInfoWindowOnClick(false);
+    }else{
+      console.log("Delete fetures")
+      toolbar.deactivate();
+      mapviewer.setInfoWindowOnClick(true);
+    }   
+  };
 
   document.getElementById('cargarwms').onclick = _cargarwms;
+  // document.getElementById('polygon').onclick = _activateTool;
+  // document.getElementById('circle').onclick = _activateTool;
+  // document.getElementById('ellipse').onclick = _activateTool;
+  // document.getElementById('triangle').onclick = _activateTool;
+  // document.getElementById('delete').onclick = _activateTool;
 
 });
