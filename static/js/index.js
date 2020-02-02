@@ -176,16 +176,9 @@ require([
 
   _activateTool = function(evt){
     mapviewer.graphics.clear();
-    // if(_viewerMap.graphicsLayerIds.indexOf("87b6d67d-85cd-4ea7-ad9f-81f27ee22e12") >= 0){
-    //     _viewerMap.removeLayer(_viewerMap.getLayer("87b6d67d-85cd-4ea7-ad9f-81f27ee22e12"))
-    // }
-    // Captura el id del boton clickeado
     var tool = event.target.id.toUpperCase();
-    // Si el boton utilizado no es "Delete features"
     if (tool != "DELETE"){
-      // Se activa la herramienta de dibujo
       toolbar.activate(Draw[tool]);
-      // Se deshabilitan los Popup
       mapviewer.setInfoWindowOnClick(false);
     }else{
       console.log("Delete fetures")
@@ -194,11 +187,10 @@ require([
     }   
   };
 
+  _dataDownload = function(){
+    alert('Lo sentimos! Funcionalidad en desarrollo.')
+  }
+
   document.getElementById('cargarwms').onclick = _cargarwms;
-  // document.getElementById('polygon').onclick = _activateTool;
-  // document.getElementById('circle').onclick = _activateTool;
-  // document.getElementById('ellipse').onclick = _activateTool;
-  // document.getElementById('triangle').onclick = _activateTool;
-  // document.getElementById('delete').onclick = _activateTool;
 
 });
