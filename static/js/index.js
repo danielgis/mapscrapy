@@ -1,5 +1,6 @@
 require([
-  "esri/map", 
+  "esri/map",
+  "esri/config",
   "esri/dijit/BasemapGallery", 
   "esri/dijit/HomeButton",
   "esri/layers/FeatureLayer",
@@ -19,7 +20,8 @@ require([
   "dojo/domReady!"
 ], 
   function(
-    Map, 
+    Map,
+    esriConfig,
     BasemapGallery, 
     HomeButton,
     FeatureLayer,
@@ -35,6 +37,8 @@ require([
     domConstruct
   ) {
   parser.parse();
+
+  var graphicAsJsonString;
 
   var popup = new Popup({
     titleInBody: false
@@ -71,6 +75,8 @@ require([
     var graphic = new Graphic(evt.geometry, symbol);
     mapviewer.graphics.add(graphic);
     mapviewer.setExtent(graphic._extent, true);
+    graphicAsJsonString = JSON.stringify(graphic.geometry.toJson()).replace(/['"]+/g, '\'')
+    // console.log(graphicAsJsonString);
   };
 
   var toolbar = _createToolbar();
@@ -181,16 +187,56 @@ require([
       toolbar.activate(Draw[tool]);
       mapviewer.setInfoWindowOnClick(false);
     }else{
-      console.log("Delete fetures")
+      // console.log("Delete fetures")
       toolbar.deactivate();
       mapviewer.setInfoWindowOnClick(true);
     }   
   };
 
   _dataDownload = function(){
-    alert('Lo sentimos! Funcionalidad en desarrollo.')
+
+    _showLoader(true);
+
+    argurl = 'http://127.0.0.1:8000/mapscrapy/'
+
+    var e = document.getElementById("optioncontainer");
+    var urlservice = e.options[e.selectedIndex].value;
+
+    argdata = {
+      'url': urlservice,
+      'geometry': graphicAsJsonString
+    }
+    var response = _serviceRequests(url=argurl, data=argdata)
+    .then((response) => {
+      if(response.status == 1){
+        var container = document.getElementById("linkdownloadcontainer");
+        container.innerHTML = `<a href="${response.response}" target="blank">Link de descarga</a>`
+      } else {
+        var res = 'Ocurrio un error durante el proceso: ' + response.message
+        alert(res)
+      }
+      _showLoader(false);
+    });
   }
 
-  document.getElementById('cargarwms').onclick = _cargarwms;
 
+
+  _serviceRequests = async function(url='', data={}){
+    const response = await fetch(url, {
+      method: 'POST',
+      mode: 'cors',
+      cache: 'no-cache',
+      credentials: 'same-origin',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      redirect: 'follow',
+      referrerPolicy: 'no-referrer',
+      body: JSON.stringify(data)
+    });
+    return await response.json();
+  };
+
+  document.getElementById('cargarwms').onclick = _cargarwms;
 });
