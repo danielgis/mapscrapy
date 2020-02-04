@@ -222,20 +222,26 @@ require([
 
 
   _serviceRequests = async function(url='', data={}){
-    const response = await fetch(url, {
-      method: 'POST',
-      mode: 'cors',
-      cache: 'no-cache',
-      credentials: 'same-origin',
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json'
-      },
-      redirect: 'follow',
-      referrerPolicy: 'no-referrer',
-      body: JSON.stringify(data)
-    });
-    return await response.json();
+    try {
+      const response = await fetch(url, {
+        method: 'POST',
+        mode: 'cors',
+        cache: 'no-cache',
+        credentials: 'same-origin',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        },
+        redirect: 'follow',
+        referrerPolicy: 'no-referrer',
+        body: JSON.stringify(data)
+      });
+      return await response.json();
+    } catch(e) {
+      alert(e);
+      _showLoader(false);
+    }
+
   };
 
   document.getElementById('cargarwms').onclick = _cargarwms;
