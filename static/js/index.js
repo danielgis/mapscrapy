@@ -212,7 +212,7 @@ require([
     query.outSpatialReference = new SpatialReference(mapviewer.extent.spatialReference.wkid)
 
     queryTask.execute(query, function(results){
-      var url = 'http://ogre.adc4gis.com/convertJson'
+      var url = 'https://ogre.adc4gis.com/convertJson'
       var data = new FormData();
       data.append('json', JSON.stringify(results.toJson()));
       data.append('outputName', `response.zip`);
