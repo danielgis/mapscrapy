@@ -266,12 +266,25 @@ input, select{
 	#icocontainer{
 		width: 50%;
 		text-align: left;
-	} 
+	}
 
 	#footcontainer{
 		width: 50%;
 		text-align: right;
 	}
+}
 
 
+@media only screen and (max-width: 600px) {
+	#imgcontainer{
+		width: 20%;
+	}
+
+	#imghome{
+		width: 100%;
+	}
+
+	#textcontainer{
+		width: 80%;
+	}
 }

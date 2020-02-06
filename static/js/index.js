@@ -8,6 +8,7 @@ require([
   "esri/dijit/PopupTemplate",
   "esri/request",
   "esri/tasks/query",
+  "esri/tasks/QueryTask",
   "esri/SpatialReference",
   "esri/toolbars/draw",
   "esri/graphic",
@@ -29,6 +30,7 @@ require([
     PopupTemplate,
     esriRequest,
     Query,
+    QueryTask,
     SpatialReference,
     Draw,
     Graphic,
@@ -75,7 +77,8 @@ require([
     var graphic = new Graphic(evt.geometry, symbol);
     mapviewer.graphics.add(graphic);
     mapviewer.setExtent(graphic._extent, true);
-    graphicAsJsonString = JSON.stringify(graphic.geometry.toJson()).replace(/['"]+/g, '\'')
+    graphicAsJsonString = graphic;
+    // graphicAsJsonString = JSON.stringify(graphic.geometry.toJson()).replace(/['"]+/g, '\'')
     // console.log(graphicAsJsonString);
   };
 
@@ -187,35 +190,56 @@ require([
       toolbar.activate(Draw[tool]);
       mapviewer.setInfoWindowOnClick(false);
     }else{
-      // console.log("Delete fetures")
       toolbar.deactivate();
       mapviewer.setInfoWindowOnClick(true);
     }   
   };
 
   _dataDownload = function(){
-
     _showLoader(true);
-
-    argurl = 'http://127.0.0.1:8000/mapscrapy/'
-
     var e = document.getElementById("optioncontainer");
     var urlservice = e.options[e.selectedIndex].value;
+    var idservice = e.options[e.selectedIndex].id;
+    var queryTask = new QueryTask(urlservice);
 
-    argdata = {
-      'url': urlservice,
-      'geometry': graphicAsJsonString
-    }
-    var response = _serviceRequests(url=argurl, data=argdata)
-    .then((response) => {
-      if(response.status == 1){
-        var container = document.getElementById("linkdownloadcontainer");
-        container.innerHTML = `<a href="${response.response}" target="blank">Link de descarga</a>`
-      } else {
-        var res = 'Ocurrio un error durante el proceso: ' + response.message
-        alert(res)
-      }
-      _showLoader(false);
+    var query = new Query();
+    query.where = "1=1"
+    query.geometry = graphicAsJsonString._extent;
+    query.spatialRelationship = Query.SPATIAL_REL_INTERSECTS;
+    query.f = "geojson";
+    query.outFields = ['*'];
+    query.returnGeometry = true;
+    query.outSpatialReference = new SpatialReference(mapviewer.extent.spatialReference.wkid)
+
+    queryTask.execute(query, function(results){
+      var url = 'http://ogre.adc4gis.com/convertJson'
+      var data = new FormData();
+      data.append('json', JSON.stringify(results.toJson()));
+      data.append('outputName', `response.zip`);
+
+      _serviceRequests(url=url, data=data)
+      .then(response => response.blob())
+      .then(function(myBlob) {
+        const fileName = 'response.zip';
+        const link = document.createElement('a');
+        link.href = URL.createObjectURL(myBlob);
+        link.download = fileName;
+        link.target = '_blank';
+        link.setAttribute("type", "hidden");
+        document.body.appendChild(link);
+        _showLoader(false);
+        link.click();
+      });
+      // var feature;
+      // var features = results.features;
+      // var validFeatures = [];
+      // for (var i = 0; i < features.length; i++) {
+      //   feature = features[i];
+      //   if(graphicAsJsonString.geometry.contains(feature.geometry)){
+      //         validFeatures.push(feature);
+      //       }
+      // }
+      // results.features = validFeatures;
     });
   }
 
@@ -225,18 +249,9 @@ require([
     try {
       const response = await fetch(url, {
         method: 'POST',
-        mode: 'cors',
-        cache: 'no-cache',
-        credentials: 'same-origin',
-        headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json'
-        },
-        redirect: 'follow',
-        referrerPolicy: 'no-referrer',
-        body: JSON.stringify(data)
+        body: data
       });
-      return await response.json();
+      return await response;
     } catch(e) {
       alert(e);
       _showLoader(false);
