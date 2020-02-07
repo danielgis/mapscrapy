@@ -206,15 +206,67 @@ input, select{
 }
 
 
+
+
+.modal {
+  font-family: Arial, Helvetica, sans-serif;
+  display: block; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 100; /* Sit on top */
+  padding-top: 5%; /* Location of the box */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 90%; /* Full height */
+  overflow: scroll; 
+  background-color: rgb(0,0,0); /* Fallback color */
+  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+
+/* Modal Content */
+.modal-content {
+  background-color: #fefefe;
+  margin: auto;
+  padding: 20px;
+  border: 1px solid #888;
+  width: 80%;
+}
+
+/* The Close Button */
+.classAcept {
+	border: none;
+	height: 30px;
+	width: 100%;
+	background-color: #f5701e;
+	color: #f1f1f6;
+	border-radius: 3px;
+	cursor: pointer	;
+	transition: 0.2s;
+/*  color: #aaaaaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;*/
+}
+
+.classAcept:hover,
+.classAcept:focus {
+  background-color: #f4511e;
+  cursor: pointer;
+}
+
+
+
+
+
 @media only screen and (max-width: 1100px) {
 	#optcontainer{
 		width: 30%;
-		transition: 1s;
+		/*transition: 1s;*/
 	}
 
 	#mapcontainer{
 		width: 70%;
-		transition: 1s;
+		/*transition: 1s;*/
 	}
 
 }

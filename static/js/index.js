@@ -302,5 +302,10 @@ require([
 
   };
 
+  _closeModal = function(){
+    var modal = document.getElementById("myModal");
+    modal.style.display = "none";
+  }
+
   document.getElementById('cargarwms').onclick = _cargarwms;
 });
