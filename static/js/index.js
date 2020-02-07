@@ -78,8 +78,6 @@ require([
     mapviewer.graphics.add(graphic);
     mapviewer.setExtent(graphic._extent, true);
     graphicAsJsonString = graphic;
-    // graphicAsJsonString = JSON.stringify(graphic.geometry.toJson()).replace(/['"]+/g, '\'')
-    // console.log(graphicAsJsonString);
   };
 
   var toolbar = _createToolbar();
@@ -197,57 +195,102 @@ require([
 
   _dataDownload = function(){
     _showLoader(true);
+    var linkcontainer = document.getElementById("linkdownloadcontainer");
+    linkcontainer.innerHTML = '';
     var e = document.getElementById("optioncontainer");
     var urlservice = e.options[e.selectedIndex].value;
-    var idservice = e.options[e.selectedIndex].id;
+
     var queryTask = new QueryTask(urlservice);
 
     var query = new Query();
+
     query.where = "1=1"
     query.geometry = graphicAsJsonString._extent;
-    query.spatialRelationship = Query.SPATIAL_REL_INTERSECTS;
+    query.spatialRelationship = Query.SPATIAL_REL_CONTAINS;
     query.f = "geojson";
     query.outFields = ['*'];
     query.returnGeometry = true;
     query.outSpatialReference = new SpatialReference(mapviewer.extent.spatialReference.wkid)
 
     queryTask.execute(query, function(results){
-      var url = 'https://ogre.adc4gis.com/convertJson'
-      var data = new FormData();
-      data.append('json', JSON.stringify(results.toJson()));
-      data.append('outputName', `response.zip`);
+    
+    var features = results.features;
+    var feature, attr, geom, src;
 
-      _serviceRequests(url=url, data=data)
-      .then(response => response.blob())
-      .then(function(myBlob) {
-        const fileName = 'response.zip';
-        const link = document.createElement('a');
-        link.href = URL.createObjectURL(myBlob);
-        link.download = fileName;
-        link.target = '_blank';
-        link.setAttribute("type", "hidden");
-        document.body.appendChild(link);
-        _showLoader(false);
-        link.click();
-      });
-      // var feature;
-      // var features = results.features;
-      // var validFeatures = [];
-      // for (var i = 0; i < features.length; i++) {
-      //   feature = features[i];
-      //   if(graphicAsJsonString.geometry.contains(feature.geometry)){
-      //         validFeatures.push(feature);
-      //       }
-      // }
-      // results.features = validFeatures;
+    switch (results.geometryType) {
+      case "esriGeometryMultipoint":
+        var newFeatures = []
+        for (var i = 0; i < features.length; i++){
+          feature = features[i]
+          attr = feature.attributes
+          geom = feature.geometry.points
+          src = feature.geometry.spatialReference
+          for(var r = 0; r < geom.length; r++){
+              var row = {
+                geometry: {
+                  x: geom[0][0], 
+                  y: geom[0][1], 
+                  spatialReference: src
+                }, 
+                attributes: attr
+              };
+              newFeatures.push(row)
+            }
+          }
+        features = newFeatures;
+        results.geometryType = 'esriGeometryPoint';
+        break;
+      case "esriGeometryMultiLine":
+        break;
+      case "esriGeometryMultipolygon":
+        break;
+    };
+
+    switch (results.geometryType) {
+      case 'esriGeometryPoint':
+        var validFeatures = [];
+        for (var i = 0; i < features.length; i++) {
+          feature = features[i];
+          if(graphicAsJsonString.geometry.contains(feature.geometry)){
+                validFeatures.push(feature);
+              }
+        }
+        results.features = validFeatures;
+        break;
+    };
+
+
+
+    // console.log(results.features);
+
+    var url = 'https://ogre.adc4gis.com/convertJson'
+    var data = new FormData();
+    data.append('json', JSON.stringify(results));
+    // data.append('outputName', `response.zip`);
+
+    _serviceRequests(url=url, data=data)
+    .then(response => response.blob())
+    .then(function(myBlob) {
+      const filename = 'response.zip';
+      const link = document.createElement('a');
+      var linkdownload = URL.createObjectURL(myBlob);
+      linkcontainer.innerHTML = `<a href="${linkdownload}" download="${filename}" target="_blank">Link de descarga</a>`;
+      // link.target = '_blank';
+      // link.setAttribute("type", "hidden");
+      // document.body.appendChild(link);
+      _showLoader(false);
+      // link.click();
     });
-  }
+    // console.log(results.features);
+  });
+  };
 
 
 
   _serviceRequests = async function(url='', data={}){
     try {
       const response = await fetch(url, {
+        // mode: 'no-cors',
         method: 'POST',
         body: data
       });
