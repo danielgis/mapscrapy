@@ -92,6 +92,8 @@ require([
     uuid = Math.random().toString(36).substring(2) + Date.now().toString(36);
     var url = document.getElementById('urlwms').value;
 
+
+
     var requestHandle = esriRequest({
       "url": url,
       "content": {
@@ -110,8 +112,13 @@ require([
         });
         mapviewer.addLayer(featureLayer);
 
+        console.log(response);
+
         _zoomToExtent(uuid);
         _listarwms(uuid, response, url);
+
+        _loadMetadata(url, response, uuid);
+
       }, 
       function(error){
         alert(error)
@@ -119,6 +126,41 @@ require([
       }
     );
   };
+
+  _loadMetadata = function(urlservice, response, uuid){
+    var queryTask = new QueryTask(urlservice);
+    var query = new Query();
+    query.where = "1=1";
+    queryTask.executeForCount(query, function(count){
+      _templateMetadata(response, count, uuid);
+    })
+
+  };
+
+  _templateMetadata = function(response, count, uuid){
+      var idcontent = uuid + '_content'
+      var comment = ''
+      template = `<div id='${idcontent}'>
+                  <div><strong>Versión de ArcGIS Server</strong></div><div>${response.currentVersion}</div><br>
+                  <div><strong>Nombre del servicio</strong></div><div>${response.name}</div><br>
+                  <div><strong>Tipo del servicio</strong></div><div>${response.type}</div><br>
+                  <div><strong>Descripción</strong></div><div>${response.description}</div><br>
+                  <div><strong>Tipo de geometría</strong></div><div>${response.geometryType}</div><br>
+                  <div><strong>Sistema de referencia</strong></div><div>${response.sourceSpatialReference.wkid}</div><br>
+                  <div><strong>Cantidad de registros totales</strong></div><div>${count}</div><br>
+                  <div><strong>Máxima cantidad de registros a descargar</strong></div><div>${response.maxRecordCount}</div><br>
+                  </div>`
+      if (count < response.maxRecordCount){
+        var comment = `<div  style="color: #50bda1;">Genial, podrá descargar todos los registros del servicio agregado</div>`
+      }else{
+        var comment = `<div style="color: #ed6663;">Lo sentimos, la cantidad de registros totales (${count}) es superior al lìmite de descarga permitido por el servicio; por lo tanto solo podrá descargar (${response.maxRecordCount}) registros</div>`
+      }
+
+      var res = `<div id='${idcontent}'>${template}${comment}</div>`
+
+      elm = document.getElementById('metacontainer');
+      elm.innerHTML = res;
+  }
 
   _zoomToExtent = function(id){
     var featureLayer = mapviewer.getLayer(id);
@@ -138,6 +180,7 @@ require([
     var lyr = mapviewer.getLayer(id);
     mapviewer.removeLayer(lyr);
     document.getElementById(id).remove();
+    document.getElementById(id+'_content').remove();
     document.getElementsByClassName(id)[0].remove();
   };
 
@@ -195,8 +238,8 @@ require([
 
   _dataDownload = function(){
     _showLoader(true);
-    var linkcontainer = document.getElementById("linkdownloadcontainer");
-    linkcontainer.innerHTML = '';
+    // var linkcontainer = document.getElementById("linkdownloadcontainer");
+    // linkcontainer.innerHTML = '';
     var e = document.getElementById("optioncontainer");
     var urlservice = e.options[e.selectedIndex].value;
 
@@ -307,7 +350,7 @@ require([
   _closeModal = function(){
     var modal = document.getElementById("myModal");
     modal.style.display = "none";
-  }
+  };
 
   document.getElementById('cargarwms').onclick = _cargarwms;
 });
