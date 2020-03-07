@@ -186,7 +186,7 @@ require([
     var innerhtml = ''
     for(var i in array){
       var r = array[i]
-      var template = `<div><strong>${r.name_ins}<strong> » <a href='${r.url}' about=blank>${r.name_serv} - ${r.name_mser}</a></div><hr>`
+      var template = `<div><strong>${r.name_ins}<strong> » <a href='${r.url}' target=blank>${r.name_serv} - ${r.name_mser}</a></div><hr>`
       innerhtml = innerhtml + template
     }
     var elm = document.getElementById('agscontainer');
