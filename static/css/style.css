@@ -5,11 +5,24 @@ html, body, .container, #mapcontainer {
 	width: 100%;
 }
 
+hr{
+	border-color: #434e52;
+}
 
+
+a:-webkit-any-link {
+	color: green;
+}
 
 ::-webkit-scrollbar {
     width: 0px;
     background: transparent; /* make scrollbar transparent */
+}
+
+
+.dijitAccordionTitleSelected{
+	background-color: #1b262c;
+	color: #1eb2a6;
 }
 
 .container {
@@ -42,6 +55,10 @@ html, body, .container, #mapcontainer {
 	margin: 10px;
 }
 
+#agscontainer{
+	margin: 10px;
+}
+
 #HomeButton {
   position: absolute;
   top: 20px;
@@ -57,7 +74,7 @@ html, body, .container, #mapcontainer {
 .aboutcontainer{
 	margin: 20px 20px 0px 20px;
 	text-align: center;
-	font-family: "Lucida Console";
+	font-family: "Lucida Console", Monaco, monospace;
 	/*overflow-y: hidden;*/
 }
 

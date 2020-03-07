@@ -42,6 +42,124 @@ require([
 
   var graphicAsJsonString;
 
+  var services = [
+    {
+      name_ins: 'Geoidep',
+      name_mser: 'ArcGIS Server',
+      name_serv: 'Geoidep',
+      url: "http://mapas.geoidep.gob.pe/geoidep/rest/services",
+    },
+    {
+      name_ins: 'Ingemmet',
+      name_mser: 'ArcGIS Server',
+      name_serv: 'Geocatmin',
+      url: "https://geocatmin.ingemmet.gob.pe/arcgis/rest/services",
+    },
+    {
+      name_ins: 'Cenepred',
+      name_mser: 'ArcGIS Server',
+      name_serv: 'Sigrid',
+      url: "http://sigrid.cenepred.gob.pe/arcgis/rest/services",
+    },
+    {
+      name_ins: 'Sernanp',
+      name_mser: 'ArcGIS Server',
+      name_serv: 'Geoservicios',
+      url: "http://geoservicios.sernanp.gob.pe/arcgis/rest/services"
+    },
+    {
+      name_ins: 'Minam',
+      name_mser: 'ArcGIS Server',
+      name_serv:'GeoservidorPeru',
+      url: 'http://geoservidorperu.minam.gob.pe/arcgis/rest/services',
+    },
+    {
+      name_ins: 'Minam:Sinia',
+      name_mser: 'Geoserver',
+      name_serv: 'AppSinia',
+      url: 'https://appsinia.analyticsperu.com/geoserver/web/'
+    },
+    {
+      name_ins: 'Serfor',
+      name_mser: 'ArcGIS Server',
+      name_serv: 'GeoSerfor',
+      url: 'https://geo.serfor.gob.pe/geoservicios/rest/services/'
+    },
+    {
+      name_ins:'Autoridad Nacional del Agua',
+      name_mser: 'ArcGIS Server',
+      name_serv:'Geosnirh',
+      url: 'http://geosnirh.ana.gob.pe:6080/arcgis/rest/services'
+    },
+    {
+      name_ins:'Autoridad Nacional del Agua',
+      name_mser: 'ArcGIS Server',
+      name_serv:'GeoANA',
+      url: 'http://geo.ana.gob.pe/arcgis/rest/services/'
+    },
+    {
+      name_ins: 'Osinfor',
+      name_mser: 'ArcGIS Server',
+      name_serv: 'Sisfor',
+      url: 'https://sisfor.osinfor.gob.pe/osinfor/rest/services/'
+    },
+    {
+      name_ins: 'MTC',
+      name_mser: 'ArcGIS Server',
+      name_serv: 'ServiciosGeo',
+      url: 'http://serviciosgeo.mtc.gob.pe/geoservicio/rest/'
+    },
+    {
+      name_ins: 'MTC:AATE',
+      name_mser: 'Geoserver',
+      name_serv: 'Services',
+      url: 'http://200.121.128.47:8080/geoserver/web/'
+    },
+    {
+      name_ins: 'Gore San Martín',
+      name_mser: 'ArcGIS Server',
+      name_serv: 'Portal',
+      url: 'https://portal.regionsanmartin.gob.pe/server/rest/services/'
+    },
+    {
+      name_ins: 'Senace',
+      name_mser: 'ArcGIS Server',
+      name_serv: 'GeoSenace',
+      url: 'https://geosenace.senace.gob.pe:6443/arcgis/rest/services'
+    },
+    {
+      name_ins: 'Instituto Catastral de Lima ICL',
+      name_mser: 'ArcGIS Server',
+      name_serv: 'SIT:ICL',
+      url: 'http://sit.icl.gob.pe/arcgis/rest/services/'
+    },
+    {
+      name_ins: 'Instituto de Estadística e Informática',
+      name_mser: 'ArcGIS Server',
+      name_serv: 'ArcGIS:INEI',
+      url: 'http://arcgis.inei.gob.pe:6080/arcgis/rest/'
+    },
+    {
+      name_ins: 'IGP',
+      name_mser: 'Geoserver',
+      name_serv: 'IdeIGP',
+      url: 'http://ide.igp.gob.pe/geoserver/web/'
+    },
+    {
+      name_ins: 'Senamhi',
+      name_mser: 'Geoserver',
+      name_serv: 'IdepSep',
+      url: 'http://idesep.senamhi.gob.pe/geoserver/web/'
+    },
+    {
+      name_ins: 'Ministerio de Cultura',
+      name_mser: 'Geoserver',
+      name_serv: 'Geoservicios',
+      url: 'https://geoservicios.cultura.gob.pe/geoserver/web/'
+    },
+
+  ]
+
   var popup = new Popup({
     titleInBody: false
   }, domConstruct.create("div"));
@@ -49,7 +167,7 @@ require([
   var mapviewer = new Map("mapcontainer", {
     center: [-75, -9],
     zoom: 6,
-    basemap: "satellite",
+    basemap: "dark-gray",
     infoWindow: popup
   });
 
@@ -63,6 +181,19 @@ require([
     map: mapviewer
   }, "HomeButton");
   home.startup();
+
+  _addServicesUrls = function(array){
+    var innerhtml = ''
+    for(var i in array){
+      var r = array[i]
+      var template = `<div><strong>${r.name_ins}<strong> » <a href='${r.url}' about=blank>${r.name_serv} - ${r.name_mser}</a></div><hr>`
+      innerhtml = innerhtml + template
+    }
+    var elm = document.getElementById('agscontainer');
+    elm.innerHTML = `<br>` + innerhtml;
+  };
+
+  _addServicesUrls(services);
 
   _createToolbar = function(){
       var toolbar = new Draw(mapviewer);
@@ -92,6 +223,11 @@ require([
     uuid = Math.random().toString(36).substring(2) + Date.now().toString(36);
     var url = document.getElementById('urlwms').value;
 
+    if (url==null || url==''){
+      alert('Debe ingresar la URL de un servicio')
+      _showLoader(false);
+      return
+    }
 
 
     var requestHandle = esriRequest({
@@ -137,10 +273,12 @@ require([
 
   };
 
+
   _templateMetadata = function(response, count, uuid){
       var idcontent = uuid + '_content'
       var comment = ''
-      template = `<div id='${idcontent}'>
+      template = `
+                  <div id='${idcontent}'>
                   <div><strong>Versión de ArcGIS Server</strong></div><div>${response.currentVersion}</div><br>
                   <div><strong>Nombre del servicio</strong></div><div>${response.name}</div><br>
                   <div><strong>Tipo del servicio</strong></div><div>${response.type}</div><br>
@@ -153,13 +291,14 @@ require([
       if (count < response.maxRecordCount){
         var comment = `<div  style="color: #50bda1;">Genial, podrá descargar todos los registros del servicio agregado</div>`
       }else{
-        var comment = `<div style="color: #ed6663;">Lo sentimos, la cantidad de registros totales (${count}) es superior al lìmite de descarga permitido por el servicio; por lo tanto solo podrá descargar (${response.maxRecordCount}) registros</div>`
+        var comment = `<div style="color: #ed6663;">Lo sentimos, la cantidad de registros totales (${count}) es superior al lìmite de descarga permitido por el servicio; por lo tanto solo podrá descargar (${response.maxRecordCount}) registros. Visualiza la información haciendo zoom sobre el área de interes <a href="https://doc.arcgis.com/es/hub/data/server-configuration-details.htm#GUID-D08498B2-096F-4BF5-8D79-AECA9F123098" about=blank>ver documentación oficial</a></div>`
       }
 
-      var res = `<div id='${idcontent}'>${template}${comment}</div>`
+      var res = `<div id='${idcontent}'><hr>${comment}<hr>${template}</div>`
 
       elm = document.getElementById('metacontainer');
       elm.innerHTML = res;
+      window.location.href='#formcontainer'
   }
 
   _zoomToExtent = function(id){

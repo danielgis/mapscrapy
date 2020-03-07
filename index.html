@@ -26,6 +26,7 @@
 			       				Este proyecto personal nace en base a la necesidad de obtener información geoespacial en formato vectorial
 			       				de las distintas entidades productoras de cartografía que disponen de tecnología suficiente para proporcionar
 			       				servicios de mapas web (WMS).
+			       				Por favor si tiene alguna sugerencia, sientase libre de dejarlo en <a href="https://github.com/danielgis/mapscrapy/issues/1" target="blanck">esta dirección<a>
 			       			</p>
 	       				</div>
 	       				<div id="icocontainer">
@@ -51,7 +52,7 @@
 	        			</div>
 	        			<div id="cargarcontainer">
 	        				<button id="cargarwms">cargar</button>
-	        			</div>	 
+	        			</div>
         			</div>
         		</div>
         		<br>
@@ -67,14 +68,15 @@
     						<button class="drawtool" type="button" id="ellipse" title="Elipse" onclick="_activateTool()"></button>
     						<button class="drawtool" type="button" id="triangle" title="Triangulo" onclick="_activateTool()"></button>
     					</div>
-        				<input type="button" id="btnsubmit" name="submit" value="descargar" onclick="_dataDownload()"><br><br>
 
-        				<div id="metacontainer">
-    					</div>
+        				<input type="button" id="btnsubmit" name="submit" value="descargar" onclick="_dataDownload()"><br><br>
         			</form>
         		</div>
+        		<div id="metacontainer"></div>
         	</div>
 	        <div data-dojo-type="dijit/layout/ContentPane" title="Tabla de contenidos" id="layerscontainer">
+	        </div>
+	        <div data-dojo-type="dijit/layout/ContentPane" title="Host de Servicios disponibles" id="agscontainer">
 	        </div>
 	        <div data-dojo-type="dijit/layout/ContentPane" title="Basemap">
 	        	<div id="bascontainer"></div>
