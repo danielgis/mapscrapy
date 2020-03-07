@@ -166,8 +166,8 @@ require([
 
   var mapviewer = new Map("mapcontainer", {
     center: [-75, -9],
-    zoom: 6,
-    basemap: "dark-gray",
+    zoom: 5,
+    basemap: "streets-night-vector",
     infoWindow: popup
   });
 
