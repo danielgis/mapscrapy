@@ -157,6 +157,12 @@ require([
       name_serv: 'Geoservicios',
       url: 'https://geoservicios.cultura.gob.pe/geoserver/web/'
     },
+    {
+      name_ins: 'Municipalidad de San Isidro',
+      name_mser: 'Geoserver',
+      name_serv: 'GeoMunisanIsidro',
+      url: 'http://geo.munisanisidro.gob.pe:8080/geoserver/web/'
+    }
 
   ]
 
