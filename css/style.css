@@ -59,7 +59,14 @@ a:-webkit-any-link {
 	margin: 10px;
 }
 
-#HomeButton {
+#LocateButton {
+  position: absolute;
+  top: 60px;
+  right: 20px;
+  z-index: 50;
+}
+
+#HomeButton{
   position: absolute;
   top: 20px;
   right: 20px;
@@ -177,28 +184,28 @@ input, select{
 }
 
 #polygon{
-  background: url('../img/polygon.png') no-repeat 50% 50%;
+  background: url('img/polygon.png') no-repeat 50% 50%;
     background-color: #333333;
 }
 
 
 #circle{
-  background: url('../img/dot.png') no-repeat 50% 50%;
+  background: url('img/dot.png') no-repeat 50% 50%;
     background-color: #333333;
 }
 
 #ellipse{
-  background: url('../img/oval.png') no-repeat 50% 50%;
+  background: url('img/oval.png') no-repeat 50% 50%;
     background-color: #333333;
 }
 
 #triangle{
-  background: url('../img/triangle.png') no-repeat 50% 50%;
+  background: url('img/triangle.png') no-repeat 50% 50%;
     background-color: #333333;
 }
 
 #delete{
-  background: url('../img/delete.png') no-repeat 50% 50%;
+  background: url('img/delete.png') no-repeat 50% 50%;
     background-color: #b11e48;
 }
 

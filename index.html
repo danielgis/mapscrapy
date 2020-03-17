@@ -2,13 +2,16 @@
 <html>
 <head>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<link rel="icon" type="image/png" href="static/img/monster-truck.png" />
+	<link rel="icon" type="image/png" href="css/img/monster-truck.png" />
 	<link rel="stylesheet" href="https://js.arcgis.com/3.31/dijit/themes/claro/claro.css">   
 	<link rel="stylesheet" href="https://js.arcgis.com/3.31/esri/css/esri.css">
 	<script src="https://js.arcgis.com/3.31/"></script>
+	<!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.8.0/css/bulma.min.css"> -->
+    <!-- <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script> -->
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-	<link rel="stylesheet" type="text/css" href="static/css/style.css">
-	<script type="text/javascript" src="static/js/index.js"></script>
+	<link rel="stylesheet" type="text/css" href="css/style.css">
+	<script type="text/javascript" src="src/servicesurl.js"></script>
+	<script type="text/javascript" src="index.js"></script>
 	<title>MapScrapy</title>
 </head>
 <body>
@@ -17,7 +20,7 @@
 			<div data-dojo-type="dijit/layout/ContentPane" title="Home">
 	       		<div class="aboutcontainer">
 	       			<div id="imgcontainer">
-	       				<img id="imghome" src="static/img/monster-truck.png">
+	       				<img id="imghome" src="css/img/monster-truck.png">
 	       			</div>
 	       			<div id="textcontainer">
 	       				<div id="descontainer">
@@ -84,8 +87,8 @@
 	    </div>
 		<div id="mapcontainer">
 			<div id="HomeButton"></div>
+			<div id="LocateButton"></div>
 		</div>
-	</div>
 	<div id="myModal" class="modal">
 
   <!-- Modal content -->
