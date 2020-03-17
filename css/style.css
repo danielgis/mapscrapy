@@ -66,8 +66,18 @@ a:-webkit-any-link {
   z-index: 50;
 }
 
-#HomeButton{
+#TitleApp {
+  color: white;
+  font-family: "Arial Black", Gadget, sans-serif;
+  font-size: 18px;
   position: absolute;
+  bottom: 2%;
+  left: 27%;
+  z-index: 50;
+}
+
+
+#HomeButton{position: absolute;
   top: 20px;
   right: 20px;
   z-index: 50;
@@ -293,6 +303,11 @@ table,tr,td {
 		/*transition: 1s;*/
 	}
 
+	#TitleApp {
+	  left: 32%;
+	}
+
+
 }
 
 @media only screen and (max-width: 900px) {
@@ -347,6 +362,11 @@ table,tr,td {
 	#footcontainer{
 		width: 50%;
 		text-align: right;
+	}
+
+	#TitleApp {
+	  bottom: 52%;
+	  left: 2%;
 	}
 }
 
