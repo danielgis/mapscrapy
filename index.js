@@ -14,6 +14,7 @@ require([
   "esri/toolbars/draw",
   "esri/graphic",
   "esri/symbols/SimpleFillSymbol",
+  "esri/geometry/Extent",
   "dojo/parser",
   "dojo/dom-construct",
   // "esri/dijit/FeatureTable",
@@ -38,6 +39,7 @@ require([
     Draw,
     Graphic,
     SimpleFillSymbol,
+    Extent,
     parser,
     domConstruct,
     // FeatureTable
@@ -51,8 +53,8 @@ require([
   }, domConstruct.create("div"));
 
   var mapviewer = new Map("mapcontainer", {
-    center: [-75, -9],
-    zoom: 5,
+    center: [-20, -0],
+    zoom: 2,
     basemap: "streets-night-vector",
     infoWindow: popup
   });
@@ -124,7 +126,7 @@ require([
     var requestHandle = esriRequest({
       "url": url,
       "content": {
-        "f": "json"
+        "f": "json",
       },
       "callbackParamName": "callback"
     });
@@ -134,6 +136,8 @@ require([
         var featureLayer = new FeatureLayer(url, {
           mode: FeatureLayer.MODE_ONDEMAND,
           outFields: ["*"],
+          // inSR:102100,
+          // outSR:102100,
           infoTemplate: infoTemplate,
           id: uuid
         });
@@ -180,21 +184,33 @@ require([
   _templateMetadata = function(response, count, uuid){
       var idcontent = uuid + '_content'
       var comment = ''
+      var wkid;
+      switch (true){
+        case response.currentVersion <= 10.3:
+          wkid = response.extent.spatialReference.wkid;
+          var ext = new Extent(response.extent)
+          mapviewer.setExtent(ext, true);
+          break;
+        case response.currentVersion > 10.3:
+          wkid = response.sourceSpatialReference.wkid;
+          break;
+      }
+
       template = `
                   <div id='${idcontent}'>
-                  <div><strong>Versión de ArcGIS Server</strong></div><div>${response.currentVersion}</div><br>
-                  <div><strong>Nombre del servicio</strong></div><div>${response.name}</div><br>
-                  <div><strong>Tipo del servicio</strong></div><div>${response.type}</div><br>
-                  <div><strong>Descripción</strong></div><div>${response.description}</div><br>
-                  <div><strong>Tipo de geometría</strong></div><div>${response.geometryType}</div><br>
-                  <div><strong>Sistema de referencia</strong></div><div>${response.sourceSpatialReference.wkid}</div><br>
-                  <div><strong>Cantidad de registros totales</strong></div><div>${count}</div><br>
-                  <div><strong>Máxima cantidad de registros a descargar</strong></div><div>${response.maxRecordCount}</div><br>
+                  <div><strong>${nls.version}</strong></div><div>${response.currentVersion}</div><br>
+                  <div><strong>${nls.name}</strong></div><div>${response.name}</div><br>
+                  <div><strong>${nls.type}</strong></div><div>${response.type}</div><br>
+                  <div><strong>${nls.description}</strong></div><div>${response.description}</div><br>
+                  <div><strong>${nls.geometryType}</strong></div><div>${response.geometryType}</div><br>
+                  <div><strong>${nls.wkid}</strong></div><div>${wkid}</div><br>
+                  <div><strong>${nls.count}</strong></div><div>${count}</div><br>
+                  <div><strong>${nls.maxRecordCount}</strong></div><div>${response.maxRecordCount}</div><br>
                   </div>`
       if (count < response.maxRecordCount){
-        var comment = `<div  style="color: #50bda1;">Genial, podrá descargar todos los registros del servicio agregado</div>`
+        var comment = `<div  style="color: #50bda1;">${nls.commentSuccess}</div>`
       }else{
-        var comment = `<div style="color: #ed6663;">Lo sentimos, la cantidad de registros totales (${count}) es superior al lìmite de descarga permitido por el servicio; por lo tanto solo podrá descargar (${response.maxRecordCount}) registros. Visualiza la información haciendo zoom sobre el área de interes <a href="https://doc.arcgis.com/es/hub/data/server-configuration-details.htm#GUID-D08498B2-096F-4BF5-8D79-AECA9F123098" about=blank>ver documentación oficial</a></div>`
+        var comment = `<div style="color: #ed6663;">${nls.commentWarning1} (${count}) ${nls.commentWarning2}(${response.maxRecordCount}) ${nls.rows}. ${nls.severalRows}<a href="${nls.docOficinalurl}" about=blank>${nls.docOficial}</a></div>`
       }
 
       var res = `<div id='${idcontent}'><hr>${comment}<hr>${template}</div>`
@@ -214,7 +230,12 @@ require([
 
   _setMapExtent = function(response){
       var extent = response.extent;
-      mapviewer.setExtent(extent, true);
+      if (extent){
+        mapviewer.setExtent(extent, true);
+      }
+      else{
+        console.log("Zoom de capas soportado para versiones de ArcGIS Server 10.3.1 y posterior.")
+      }
       _showLoader(false);
   };
 
