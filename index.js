@@ -85,6 +85,8 @@ require([
         // setTimeout(() => {  console.log("Esperando a respuesta del servidor"); }, 10000);
     })
 
+    document.getElementById('urlwms').value = '';
+
     // for (var i in loadLayer){
     //   layer = loadLayer[i];
     //   document.getElementById('urlwms').value = layer.url;
