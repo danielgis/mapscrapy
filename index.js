@@ -137,7 +137,7 @@ require([
 
     // Verifica que la url ingresada sea correcta
     try {new URL(url)}
-    catch(err){alert(`${urlfailed}`); _showLoader(false); return false;}
+    catch(err){alert(`${nls.urlfailed}`); _showLoader(false); return false;}
 
     // Verifica si el proceso de obtener datos del servidor se ejecutan correctamente
     try{var response = _getMetadata(url)}
