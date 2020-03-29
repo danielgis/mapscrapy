@@ -13,5 +13,6 @@ var nls = {
 	rows: 'registros',
 	severalRows: 'La capa no se dibujó por completo. Puede haber demasiados registros para mostrar. Intenta acercar a un área más pequeña.',
 	docOficial: 'ver documentación oficial',
-	docOficinalurl: 'https://doc.arcgis.com/es/hub/data/server-configuration-details.htm#GUID-D08498B2-096F-4BF5-8D79-AECA9F123098'
+	docOficinalurl: 'https://doc.arcgis.com/es/hub/data/server-configuration-details.htm#GUID-D08498B2-096F-4BF5-8D79-AECA9F123098',
+	urlfailed: 'Debe ingresar la URL de un servicio o ingresó una URL invalida. por favor verifique la URL del servicio ingresado'
 }

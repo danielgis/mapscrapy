@@ -75,6 +75,23 @@ require([
   }, "LocateButton");
   geoLocate.startup();
 
+  _loadLayerStartup = function (){
+    var layer;
+
+    loadLayer.forEach((layer) => {
+      // layer = loadLayer[i];
+        document.getElementById('urlwms').value = layer.url;
+        _cargarwms(zoom=false, namelayer=layer.name, removeLayer=false, turnLayer=layer.turn)
+        // setTimeout(() => {  console.log("Esperando a respuesta del servidor"); }, 10000);
+    })
+
+    // for (var i in loadLayer){
+    //   layer = loadLayer[i];
+    //   document.getElementById('urlwms').value = layer.url;
+    //   _cargarwms(zoom=false);
+    // }
+  };
+
   _addServicesUrls = function(array){
     var innerhtml = ''
     for(var i in array){
@@ -111,64 +128,69 @@ require([
       title: 'Info',
     });
 
-  _cargarwms = function() {
+  _cargarwms = async function(zoom=true, namelayer=null, removeLayer=true, turnLayer=true) {
     _showLoader(true);
     uuid = Math.random().toString(36).substring(2) + Date.now().toString(36);
     var url = document.getElementById('urlwms').value;
 
-    if (url==null || url==''){
-      alert('Debe ingresar la URL de un servicio')
-      _showLoader(false);
-      return
+    // Verifica que la url ingresada sea correcta
+    try {new URL(url)}
+    catch(err){alert(`${urlfailed}`); _showLoader(false); return false;}
+
+    // Verifica si el proceso de obtener datos del servidor se ejecutan correctamente
+    try{var response = _getMetadata(url)}
+    catch (err){alert(err); _showLoader(false); return false;}
+
+    // Se agrega la capa al mapa
+    var featureLayer = new FeatureLayer(url, {
+      mode: FeatureLayer.MODE_ONDEMAND,
+      outFields: ["*"],
+      // inSR:102100,
+      // outSR:102100,
+      infoTemplate: infoTemplate,
+      id: uuid
+    });
+    mapviewer.addLayer(featureLayer);
+
+    if (zoom){
+      _zoomToExtent(uuid);    
     }
 
+    // Verifica que los datos retornados son correctos
+    if(response.status){
+      var namelyr = namelayer ? namelayer : response.value.name
+      _listarwms(uuid, namelyr, url, remove=removeLayer, turn=turnLayer)
+      _loadMetadata(url, response.value, uuid);
+    }else{
+      alert(response.message)
+      _showLoader(false);
+      return false
+    }
+    _showLoader(false);
+  }
 
-    var requestHandle = esriRequest({
+  _getMetadata = (url) => {
+    var response;
+    esriRequest({
       "url": url,
+      "sync": true,
       "content": {
         "f": "json",
       },
       "callbackParamName": "callback"
-    });
-    requestHandle.then(
-      function(response){
-        // console.log(response);
-        var featureLayer = new FeatureLayer(url, {
-          mode: FeatureLayer.MODE_ONDEMAND,
-          outFields: ["*"],
-          // inSR:102100,
-          // outSR:102100,
-          infoTemplate: infoTemplate,
-          id: uuid
-        });
-        mapviewer.addLayer(featureLayer);
-
-        // console.log(response);
-
-        _zoomToExtent(uuid);
-        _listarwms(uuid, response, url);
-
-        _loadMetadata(url, response, uuid);
-
-        // _loadTable(featureLayer);
-
-      }, 
-      function(error){
-        alert(error)
-        _showLoader(false);
+    }).then (function(result){
+      response = {
+        status: true,
+        value: result
       }
-    );
+    }, function(error){
+      response = {
+        status: false,
+        message: error,
+      }
+    });
+    return response;
   };
-
-  // _loadTable = function(featurelayer){
-  //     var myFeatureTable = new FeatureTable({
-  //   "featureLayer" : featurelayer,
-  //   "outFields": ["*"],
-  //   "map" : mapviewer
-  // }, 'myTableNode');
-
-  //   myFeatureTable.startup();
-  // }
 
   _loadMetadata = function(urlservice, response, uuid){
     var queryTask = new QueryTask(urlservice);
@@ -186,12 +208,12 @@ require([
       var comment = ''
       var wkid;
       switch (true){
-        case response.currentVersion <= 10.3:
+        case 'extent' in response:
           wkid = response.extent.spatialReference.wkid;
           var ext = new Extent(response.extent)
           mapviewer.setExtent(ext, true);
           break;
-        case response.currentVersion > 10.3:
+        case 'sourceSpatialReference' in response:
           wkid = response.sourceSpatialReference.wkid;
           break;
       }
@@ -257,17 +279,22 @@ require([
     }
   };
 
-  _listarwms = function(uuid, response, url){
-    name = response.name;
+  _listarwms = function(uuid, name, url, remove, turn){
+    // name = response.name;
     container = document.getElementById("layerscontainer");
     select = document.getElementById("optioncontainer");
     var row = document.createElement("div");
     var opt = document.createElement("option")
+
+    var check = turn ? 'checked' : '';
+    var rmlayer = remove ? 'visible' : 'hidden';
+
     var str = `<div class="namelyr" onclick="_zoomToExtent('${uuid}')">${name}</div>
-               <div class="turnlyr"><input type="checkbox" onclick="_toglelyr('${uuid}')" checked></div>
-               <div class="iconlyr" onclick="_removelayer('${uuid}')">
+               <div class="turnlyr"><input type="checkbox" onclick="_toglelyr('${uuid}')" ${check}></div>
+               <div class="iconlyr" onclick="_removelayer('${uuid}')" style="visibility: ${rmlayer};">
                   <i class="fa fa-minus-circle fa-lg" style="color: #eb4d55;"></i>
                </div>`;
+
     row.innerHTML = str;
     opt.innerHTML = name;
     row.setAttribute("id", uuid);
@@ -416,4 +443,5 @@ require([
   };
 
   document.getElementById('cargarwms').onclick = _cargarwms;
+  _loadLayerStartup();
 });
