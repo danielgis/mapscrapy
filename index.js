@@ -323,6 +323,7 @@ require([
       toolbar.activate(Draw[tool]);
       mapviewer.setInfoWindowOnClick(false);
     }else{
+      mapviewer.graphics.clear();
       toolbar.deactivate();
       mapviewer.setInfoWindowOnClick(true);
     }   

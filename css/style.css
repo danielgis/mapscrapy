@@ -209,9 +209,9 @@ input, select{
     background-color: #333333;
 }
 
-#triangle{
-  background: url('img/triangle.png') no-repeat 50% 50%;
-    background-color: #333333;
+#delete{
+  background: url('img/delete.png') no-repeat 50% 50%;
+    background-color: red;
 }
 
 #delete{
