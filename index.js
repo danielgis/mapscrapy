@@ -147,8 +147,8 @@ require([
     var featureLayer = new FeatureLayer(url, {
       mode: FeatureLayer.MODE_ONDEMAND,
       outFields: ["*"],
-      // inSR:102100,
-      // outSR:102100,
+      inSR:102100,
+      outSR:102100,
       infoTemplate: infoTemplate,
       id: uuid
     });
