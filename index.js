@@ -79,19 +79,20 @@ require([
     var layer;
 
     loadLayer.forEach((layer) => {
-      // layer = loadLayer[i];
         document.getElementById('urlwms').value = layer.url;
-        _cargarwms(zoom=false, namelayer=layer.name, removeLayer=false, turnLayer=layer.turn)
-        // setTimeout(() => {  console.log("Esperando a respuesta del servidor"); }, 10000);
+        render = layer.renderer ? _simbolPolygonToCentroidSize(layer.rendererField) : false
+        _cargarwms(
+          zoom=false, 
+          namelayer=layer.name, 
+          removeLayer=false, 
+          turnLayer=layer.turn, 
+          opacity=layer.opacity, 
+          applyRenderer=render,
+          disabledOption=layer.disabledOption
+          )
     })
 
     document.getElementById('urlwms').value = '';
-
-    // for (var i in loadLayer){
-    //   layer = loadLayer[i];
-    //   document.getElementById('urlwms').value = layer.url;
-    //   _cargarwms(zoom=false);
-    // }
   };
 
   _addServicesUrls = function(array){
@@ -130,7 +131,7 @@ require([
       title: 'Info',
     });
 
-  _cargarwms = async function(zoom=true, namelayer=null, removeLayer=true, turnLayer=true) {
+  _cargarwms = async function(zoom=true, namelayer=null, removeLayer=true, turnLayer=true, opacity=1, applyRenderer=false, disabledOption=false) {
     _showLoader(true);
     uuid = Math.random().toString(36).substring(2) + Date.now().toString(36);
     var url = document.getElementById('urlwms').value;
@@ -147,11 +148,17 @@ require([
     var featureLayer = new FeatureLayer(url, {
       mode: FeatureLayer.MODE_ONDEMAND,
       outFields: ["*"],
-      inSR:102100,
-      outSR:102100,
+      // inSR:102100,
+      // outSR:102100,
+      opacity: opacity,
       infoTemplate: infoTemplate,
       id: uuid
     });
+
+    if (applyRenderer){
+      featureLayer.setRenderer(applyRenderer)
+    }
+
     mapviewer.addLayer(featureLayer);
 
     if (zoom){
@@ -161,7 +168,7 @@ require([
     // Verifica que los datos retornados son correctos
     if(response.status){
       var namelyr = namelayer ? namelayer : response.value.name
-      _listarwms(uuid, namelyr, url, remove=removeLayer, turn=turnLayer)
+      _listarwms(uuid, namelyr, url, remove=removeLayer, turn=turnLayer, disabledOption=disabledOption)
       _loadMetadata(url, response.value, uuid);
     }else{
       alert(response.message)
@@ -281,7 +288,7 @@ require([
     }
   };
 
-  _listarwms = function(uuid, name, url, remove, turn){
+  _listarwms = function(uuid, name, url, remove, turn, disabledOption){
     // name = response.name;
     container = document.getElementById("layerscontainer");
     select = document.getElementById("optioncontainer");
@@ -303,6 +310,7 @@ require([
     row.setAttribute("class", 'rowlayer');
     opt.setAttribute("value", url);
     opt.setAttribute("class", uuid);
+    opt.disabled = disabledOption; 
     container.appendChild(row);
     select.appendChild(opt);
   };
