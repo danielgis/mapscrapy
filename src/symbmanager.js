@@ -13,7 +13,7 @@ require([
 
     _COVID19_AREACOLOR = '#80FF0000';
     _COVID19_OUTLINECOLOR = '#FF0000';
-    _COVID19_MAXVALUE = 5000;
+    _COVID19_MAXVALUE = 3000;
     _COVID19_MINVALUE = 1;
 
 
@@ -42,7 +42,7 @@ require([
             field: rendererField,
             minDataValue: _COVID19_MINVALUE,
             maxDataValue: _COVID19_MAXVALUE,
-            minSize: 5,
+            minSize: 15,
             maxSize: 100
         }, ]);
 
