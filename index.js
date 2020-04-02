@@ -148,8 +148,8 @@ require([
     var featureLayer = new FeatureLayer(url, {
       mode: FeatureLayer.MODE_ONDEMAND,
       outFields: ["*"],
-      // inSR:102100,
-      // outSR:102100,
+      inSR:102100,
+      outSR:102100,
       opacity: opacity,
       infoTemplate: infoTemplate,
       id: uuid
@@ -278,9 +278,18 @@ require([
     document.getElementsByClassName(id)[0].remove();
   };
 
-  _toglelyr = function(id){
-    var checked = event.toElement.checked;
+  _toglelyr = function(id, programmatically=false, show=true){
+    // var checked;
+    // if (programmatically){
+    //   checked = show
+    // }else{
+    //   checked = event.toElement.checked;
+           
+    // }
+    var checked = programmatically ? show : event.toElement.checked
+
     var lyr = mapviewer.getLayer(id);
+
     if (checked == true){
       lyr.show();
     } else {
@@ -304,6 +313,7 @@ require([
                   <i class="fa fa-minus-circle fa-lg" style="color: #eb4d55;"></i>
                </div>`;
 
+
     row.innerHTML = str;
     opt.innerHTML = name;
     row.setAttribute("id", uuid);
@@ -313,6 +323,12 @@ require([
     opt.disabled = disabledOption; 
     container.appendChild(row);
     select.appendChild(opt);
+
+    if (turn == false){
+      // var event = new Event('change');
+      _toglelyr(uuid, programmatically=true, show=false)
+    }
+
   };
 
   _showLoader = function(toggle){
