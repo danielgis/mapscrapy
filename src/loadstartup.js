@@ -53,7 +53,7 @@ var loadLayer = [
         url: 'https://services.arcgis.com/4CZwpdWHGNPLU7QQ/arcgis/rest/services/Estados_Corona_View/FeatureServer/0',
         turn: true,
         renderer: true,
-        rendererField: 'Caso_Confirmado',
+        rendererField: 'Casos_total',
         opacity: 0.60,
         disabledOption: false,
     },
