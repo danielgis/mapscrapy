@@ -7,6 +7,7 @@ var loadLayer = [
         renderer: false,
         opacity: 0.5,
         disabledOption: false,
+        fields: ["*"]
     }, 
     {
         fuente: 'Telemática SAC',
@@ -16,6 +17,7 @@ var loadLayer = [
         renderer: false,
         opacity: 0.75,
         disabledOption: false,
+        fields: ["*"]
     },
     {
         fuente: 'Telemática SAC',
@@ -26,6 +28,7 @@ var loadLayer = [
         rendererField: 'Casos_confirmados',
         opacity: 0.60,
         disabledOption: false,
+        fields: ["DEPARTAMEN", "Casos_confirmados", "Casos_fallecidos"]
     },
     {
         fuente: 'Aeroterra',
@@ -36,6 +39,7 @@ var loadLayer = [
         rendererField: 'Casos',
         opacity: 0.60,
         disabledOption: false,
+        fields: ["Casos", "Muertes", "Recuperados", "Provincia"]
     },
     {
         fuente: 'ESRI Chile',
@@ -46,16 +50,7 @@ var loadLayer = [
         rendererField: 'CONTAGIADO',
         opacity: 0.60,
         disabledOption: false,
-    },
-    {
-        fuente: 'Imagem',
-        name: '<strong>Confirmados por estados - Brasil</strong><br> Fuente: Imagem',
-        url: 'https://services.arcgis.com/4CZwpdWHGNPLU7QQ/arcgis/rest/services/Estados_Corona_View/FeatureServer/0',
-        turn: true,
-        renderer: true,
-        rendererField: 'Casos_total',
-        opacity: 0.60,
-        disabledOption: false,
+        fields: ["*"]
     },
     {
         fuente: 'Gobierno de Bolivia',
@@ -66,5 +61,17 @@ var loadLayer = [
         rendererField: 'CONFIRMADOS',
         opacity: 0.60,
         disabledOption: false,
+        fields: ["*"]
+    },
+    {
+        fuente: 'Imagem',
+        name: '<strong>Confirmados por estados - Brasil</strong><br> Fuente: Imagem',
+        url: 'https://services.arcgis.com/4CZwpdWHGNPLU7QQ/arcgis/rest/services/Estados_Corona_View/FeatureServer/0',
+        turn: true,
+        renderer: true,
+        rendererField: 'Casos_total',
+        opacity: 0.60,
+        disabledOption: false,
+        fields: ["NM_ESTADO", "Casos_total"]
     }
 ]

@@ -82,6 +82,7 @@ require([
         document.getElementById('urlwms').value = layer.url;
         render = layer.renderer ? _simbolPolygonToCentroidSize(layer.rendererField) : false
         _cargarwms(
+          fields=layer.fields,
           zoom=false, 
           namelayer=layer.name, 
           removeLayer=false, 
@@ -131,7 +132,7 @@ require([
       title: 'Info',
     });
 
-  _cargarwms = async function(zoom=true, namelayer=null, removeLayer=true, turnLayer=true, opacity=1, applyRenderer=false, disabledOption=false) {
+  _cargarwms = async function(fields=["*"], zoom=true, namelayer=null, removeLayer=true, turnLayer=true, opacity=1, applyRenderer=false, disabledOption=false) {
     _showLoader(true);
     uuid = Math.random().toString(36).substring(2) + Date.now().toString(36);
     var url = document.getElementById('urlwms').value;
@@ -147,7 +148,7 @@ require([
     // Se agrega la capa al mapa
     var featureLayer = new FeatureLayer(url, {
       mode: FeatureLayer.MODE_ONDEMAND,
-      outFields: ["*"],
+      outFields: fields,
       inSR:102100,
       outSR:102100,
       opacity: opacity,
