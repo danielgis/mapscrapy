@@ -107,7 +107,7 @@ require([
     elm.innerHTML = `<br>` + innerhtml;
   };
 
-  _addServicesUrls(services);
+  // _addServicesUrls(services);
 
   _createToolbar = function(){
       var toolbar = new Draw(mapviewer);
