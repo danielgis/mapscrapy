@@ -42,6 +42,17 @@ var loadLayer = [
         fields: ["Casos", "Muertes", "Recuperados", "Provincia"]
     },
     {
+        fuente: 'Imagem',
+        name: '<strong>Confirmados por estados - Brasil</strong><br> Fuente: Imagem',
+        url: 'https://services.arcgis.com/4CZwpdWHGNPLU7QQ/arcgis/rest/services/Estados_Corona_View/FeatureServer/0',
+        turn: true,
+        renderer: true,
+        rendererField: 'Caso_Confirmado',
+        opacity: 0.60,
+        disabledOption: false,
+        fields: ["NM_ESTADO", "Caso_Confirmado"]
+    },
+    {
         fuente: 'ESRI Chile',
         name: '<strong>Confirmados por región - Chile</strong><br> Fuente: ESRI Chile',
         url: 'https://services1.arcgis.com/KM0mcPc4ZbEiA1B1/arcgis/rest/services/Mapa_COVID_19/FeatureServer/0',
@@ -62,16 +73,5 @@ var loadLayer = [
         opacity: 0.60,
         disabledOption: false,
         fields: ["*"]
-    },
-    {
-        fuente: 'Imagem',
-        name: '<strong>Confirmados por estados - Brasil</strong><br> Fuente: Imagem',
-        url: 'https://services.arcgis.com/4CZwpdWHGNPLU7QQ/arcgis/rest/services/Estados_Corona_View/FeatureServer/0',
-        turn: true,
-        renderer: true,
-        rendererField: 'Casos_total',
-        opacity: 0.60,
-        disabledOption: false,
-        fields: ["NM_ESTADO", "Casos_total"]
     }
 ]
