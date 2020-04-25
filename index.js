@@ -132,6 +132,11 @@ require([
       title: 'Info',
     });
 
+  _cargarwmsOnClick = function(evt){
+    _cargarwms();
+  }
+
+
   _cargarwms = async function(fields=["*"], zoom=true, namelayer=null, removeLayer=true, turnLayer=true, opacity=1, applyRenderer=false, disabledOption=false) {
     _showLoader(true);
     uuid = Math.random().toString(36).substring(2) + Date.now().toString(36);
@@ -470,6 +475,6 @@ require([
     modal.style.display = "none";
   };
 
-  document.getElementById('cargarwms').onclick = _cargarwms;
+  document.getElementById('cargarwms').onclick = _cargarwmsOnClick;
   _loadLayerStartup();
 });
