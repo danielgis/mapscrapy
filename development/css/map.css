@@ -1,0 +1,50 @@
+html,
+body,
+#map {
+    height: 100%;
+    padding: 0;
+}
+
+html,
+body{
+	width: 100%;
+	margin: 0;
+	font-family: "Segoe UI", sans-serif;
+}
+
+#map {
+	margin-top: -53px;
+	position: relative;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	top: 0;
+	
+}
+
+/* BUTTON - Home */
+#HomeButton {
+  	position: absolute;
+  	top: 10px;
+  	right: 10px;
+  	z-index: 50;
+}
+
+#LocateButton {
+  	position: absolute;
+  	top: 50px;
+  	right: 10px;
+  	z-index: 50;
+}
+
+#BasemapGallery {
+	height: 100%;
+	overflow:auto;
+	width: 100%;
+}
+
+/* Zoom IN | OUT */
+.esriSimpleSliderTL {
+	top: 60px;
+    left: 10px;
+}

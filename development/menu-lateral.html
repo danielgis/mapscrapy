@@ -3,7 +3,7 @@
     <head>
         <!--<meta charset="UTF-8">-->
         <!-- TITLE -->
-        <title>Menú lateral escamoteable sin JavaScript</title>
+        <title>MapScrapy :)</title>
 
         <!-- META -->
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
@@ -16,7 +16,14 @@
         <!-- CSS - FontAwesome -->
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
+        <link rel="stylesheet" href="https://js.arcgis.com/3.31/dijit/themes/claro/claro.css">   
+        <link rel="stylesheet" href="https://js.arcgis.com/3.31/esri/css/esri.css">
+
+        <link rel="stylesheet" href="./css/map.css">
+        
+
         <!-- JS - Google Analytics -->
+        <!--
         <script async src="https://www.googletagmanager.com/gtag/js?id=UA-162172110-1"></script>
         <script>
           window.dataLayer = window.dataLayer || [];
@@ -25,6 +32,7 @@
 
           gtag('config', 'UA-162172110-1');
         </script>
+        -->
     </head>
     <body>
         <input type="checkbox" id="abrir-cerrar" name="abrir-cerrar" value="">
@@ -32,9 +40,11 @@
             <span class="abrir" id="abrir">Menú</span>
             <span class="cerrar">Menú</span>
         </label>
-        <div id="sidebar" class="sidebar">
-            
-            <section class="tabs">
+
+        <!-- BEGIN - Sidebar -->
+        <section id="sidebar" class="sidebar">
+            <article class="tabs">
+
                 <input id="tab-1" type="radio" name="radio-set" class="tab-selector-1" checked="checked" />
                 <label for="tab-1">Home</label>
 
@@ -78,7 +88,10 @@
                             <p>
                                 MapScrapy by 
                                 <a href="https://danielgis.github.io" target="blank">DanielGIS</a> | 
-                                <a href="https://danielgis.github.io" target="blank">HDRamosMendoza</a>
+                                <a href="https://hdramosmendoza.github.io/Perfil-Profesional/" target="blank">HDRamosMendoza</a>
+                            </p>
+                            <p>
+                                MADE in PERÚ - LIMA
                             </p>
                         
                     </div>
@@ -87,26 +100,35 @@
                         <h1>2</h1>
                     </div>
                     <div class="content-3">
-                        <!--Tu contenido 3-->            
+                        <!-- Tu contenido 3 -->          
                         <h1>3</h1>
                     </div>
                     <div class="content-4">
-                        <!--Tu contenido 4-->        
+                        <!-- Tu contenido 4 -->
                         <h1>4</h1>
                     </div>
-                    <div class="content-5">
-                        <!--Tu contenido 4-->
-                        <h1>5</h1>
+                    <div class="content-5" data-dojo-type="dijit/layout/ContentPane" title="Basemap" >
+                        <!-- Tu contenido 5 -->
+                        <section id="BasemapGallery"></section>
                     </div>
                 </div>
-            </section>
-        </div>
-        <div id="contenido">
+            </article>
+        </section>
+        <!-- END - Sidebar -->
 
-            
-        </div>
+        <!-- BEGIN - Map -->
+        <section id="map">
+            <div id="HomeButton"></div>
+            <div id="LocateButton"></div>
+        </section>
+        <!-- END - Map -->
+
         <script type="text/javascript">
             document.getElementById("abrir").click();
         </script>
+
+        <!-- JS - API ESRI -->
+        <script type='text/javascript' src="https://js.arcgis.com/3.31/"></script>
+        <script type='text/javascript' src='./js/map.js'></script>
     </body>
 </html> 

@@ -1,10 +1,3 @@
-body {
-    font-family: "Segoe UI", sans-serif;
-    font-size:100%;
-    margin:0;
-    padding:0;
-}
-
 header {
     background:#333;
     color:#eee;
@@ -21,11 +14,12 @@ input#abrir-cerrar {
 label[for="abrir-cerrar"] {
     cursor:pointer;
     padding: 1rem;
-    background-color:#333;
+    background-color:#111111;
     color:#fff;
     display:inline-block;
     width: 65px;
-
+    position: relative;
+    z-index: 500;
 }
 
 .cerrar {
@@ -39,7 +33,7 @@ label[for="abrir-cerrar"] {
     font-size: 12px;
 }
 
-#contenido {
+#map {
     margin-left:0;
 }
 
@@ -47,7 +41,7 @@ input#abrir-cerrar:checked ~ #sidebar {
     width:394px;
 }
 
-input#abrir-cerrar:checked + label[for="abrir-cerrar"], input#abrir-cerrar:checked ~ #contenido {
+input#abrir-cerrar:checked + label[for="abrir-cerrar"], input#abrir-cerrar:checked ~ #map {
     margin-left:394px;
     transition: margin-left .4s;
 }
@@ -89,8 +83,7 @@ input#abrir-cerrar:checked + label[for="abrir-cerrar"] .abrir {
     vertical-align: top;
 }
 
-#contenido {
-    background-color: red;
+#map {
     transition: margin-left .4s;
     padding: 0.5rem;
 }

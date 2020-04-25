@@ -107,11 +107,15 @@
     text-align: center;
 }
 
-.content div {
+.content div.content-1,
+.content div.content-2,
+.content div.content-3,
+.content div.content-4,
+.content div.content-5 {
     position: absolute;
     top: 0;
     left: 0;
-    padding: 10px 40px;
+    padding: 10px 10px;
     z-index: 1;
     opacity: 0;
 
