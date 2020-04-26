@@ -13,7 +13,7 @@ body{
 }
 
 #map {
-	margin-top: -74px;
+	margin-top: -53px !important;
 	position: relative;
 	left: 0;
 	right: 0;
@@ -41,10 +41,4 @@ body{
 	height: 100%;
 	overflow:auto;
 	width: 100%;
-}
-
-/* Zoom IN | OUT */
-.esriSimpleSliderTL {
-	top: 60px;
-    left: 10px;
 }
