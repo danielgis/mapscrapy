@@ -88,13 +88,13 @@ fieldset div.oval:hover {
 }
 
 fieldset div.polygon {
-  background: url("img/polygon.png") no-repeat 50% 50%;
+  background: url("../img/polygon.png") no-repeat 50% 50%;
 }
 
 fieldset div.dot {
-  background: url("img/dot.png") no-repeat 50% 50%;
+  background: url("../img/dot.png") no-repeat 50% 50%;
 }
 
 fieldset div.oval {
-  background: url("img/oval.png") no-repeat 50% 50%;
+  background: url("../img/oval.png") no-repeat 50% 50%;
 }

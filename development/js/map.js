@@ -49,8 +49,8 @@ require([
   /* Map */
   let map = new Map("map", {
     center: [-75.015152,-9.1899672],
-    zoom: 2,
-    basemap: "streets-night-vector"
+    zoom: 5,
+    basemap: "osm"
   });
 
   /* Botón Home */
