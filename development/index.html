@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="es">
+<html>
     <head>
         <meta charset="UTF-8">
         <!-- TITLE -->
@@ -9,15 +9,17 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
         <meta name="description" content="Descripción de la WEB">
 
+        
+
+
+        <link rel="stylesheet" href="https://js.arcgis.com/3.23/esri/css/esri.css">
+
         <!-- CSS -->
         <link rel="stylesheet" type="text/css" href="./css/menu-lateral.css">
         <link rel="stylesheet" type="text/css" href="./css/tab.css">
 
         <!-- CSS - FontAwesome -->
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-
-        <link rel="stylesheet" href="https://js.arcgis.com/3.31/dijit/themes/claro/claro.css">   
-        <link rel="stylesheet" href="https://js.arcgis.com/3.31/esri/css/esri.css">
 
         <link rel="stylesheet" href="./css/map.css">
         <link rel="stylesheet" href="./css/basemap.css">
@@ -109,8 +111,9 @@
                                     1. Seleccione tipo de servicio:
                                 </label>
                                 <select id="ID_Tipo" name="deporte">
-                                    <option>Mapserver</option>
-                                    <option>WMS</option>
+                                    <option value="">SELECCIONE</option>
+                                    <option value="MAPSERVER" selected="selected">MAPSERVER</option>
+                                    <option value="WMS">WMS</option>
                                 </select>
                             </div>
                             
@@ -118,15 +121,15 @@
                                 <label for="ID_Servicio">
                                     2. Ingrese servicio (URL):
                                 </label>
-                                <input id="ID_Servicio" type="text" placeholder="Ingrese servicio - URL">
+                                <input id="ID_Servicio" type="text" placeholder="Ingrese servicio - URL" value="https://www.idep.gob.pe/geoportal/rest/services/DATOS_GEOESPACIALES/L%C3%8DMITES/MapServer/5">
                             </div>
                             
                             <div class="group-button">
-                                <button class="btn is-outlined" type="button">
+                                <button id="ID_Limpiar" class="btn is-outlined" type="button">
                                     <i class="fa fa-eraser" aria-hidden="true"></i>
                                     Limpiar
                                 </button>
-                                <button class="btn is-link" type="button">
+                                <button id="ID_Cargar" class="btn is-link" type="button">
                                     <i class="fa fa-upload" aria-hidden="true"></i>
                                     Cargar
                                 </button>
@@ -147,11 +150,11 @@
                             </div>                            
                             
                             <div class="group-button">    
-                                <button class="btn is-outlined" type="button">
+                                <button id="ID_Borrar" class="btn is-outlined" type="button">
                                     <i class="fa fa-minus-circle" aria-hidden="true"></i>
                                     Borrar
                                 </button>
-                                <button class="btn is-link" type="button">
+                                <button id="ID_Descargar" class="btn is-link" type="button">
                                     <i class="fa fa-arrow-circle-o-down" aria-hidden="true"></i>
                                     Descargar
                                 </button>
@@ -183,12 +186,22 @@
         </section>
         <!-- END - Map -->
 
-        <script type="text/javascript">
-            document.getElementById("abrir").click();
-        </script>
-
-        <!-- JS - API ESRI -->
-        <script type='text/javascript' src="https://js.arcgis.com/3.31/"></script>
-        <script type='text/javascript' src='./js/map.js'></script>
     </body>
+    <!-- JS - Config DOJO -->
+    <!--<script src='./js/dojoConfig.js'></script>-->
+    <script>
+        var dojoConfig = {
+            paths: { 
+                js: location.pathname.replace(/\/[^/]+$/, "") + "/js" 
+            }
+        };
+    </script>
+    <!-- JS - API ESRI -->
+    <script src="https://js.arcgis.com/3.23/"></script>
+    <!-- JS -->
+    <script src='./js/map.js'></script>
+    <script type="text/javascript">
+        document.getElementById("abrir").click();
+    </script>
+    
 </html> 

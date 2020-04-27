@@ -143,12 +143,20 @@ require([
     var url = document.getElementById('urlwms').value;
 
     // Verifica que la url ingresada sea correcta
-    try {new URL(url)}
-    catch(err){alert(`${nls.urlfailed}`); _showLoader(false); return false;}
+    try {
+      new URL(url)
+    }
+    catch(err){
+      alert(`${nls.urlfailed}`);
+      _showLoader(false);
+      return false;
+    }
 
     // Verifica si el proceso de obtener datos del servidor se ejecutan correctamente
     try{var response = _getMetadata(url)}
-    catch (err){alert(err); _showLoader(false); return false;}
+    catch (err){
+      alert(err); 
+      _showLoader(false);return false;}
 
     // Se agrega la capa al mapa
     var featureLayer = new FeatureLayer(url, {
