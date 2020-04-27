@@ -1,7 +1,6 @@
 require([
   "js/descargarServicios",
-  "esri/map",
-  //"esri/config",
+  "js/configMap",
   "esri/dijit/BasemapGallery", 
   "esri/dijit/HomeButton",
   "esri/dijit/LocateButton",
@@ -16,8 +15,6 @@ require([
   //"esri/graphic",
   //"esri/symbols/SimpleFillSymbol",
   //"esri/geometry/Extent",
-  "dojo/on",/*HDRamosMendoza*/
-  "dojo/dom",/*HDRamosMendoza*/
   //"dojo/parser",
   //"dojo/dom-construct",
   // "esri/dijit/FeatureTable",
@@ -25,11 +22,9 @@ require([
   //"dijit/layout/AccordionContainer", 
   //"dijit/layout/ContentPane",
   //"dojo/domReady!"
-], 
-  function(
+], function(
     servicios,
-    Map,
-    //esriConfig,
+    map,
     BasemapGallery, 
     HomeButton,
     LocateButton,
@@ -44,19 +39,10 @@ require([
     //Graphic,
     //SimpleFillSymbol,
     //Extent,
-    on,/*HDRamosMendoza*/
-    dom,/*HDRamosMendoza*/
     //parser,
     //domConstruct,
     // FeatureTable
   ) {
-  
-  /* Map */
-  let map = new Map("map", {
-    center: [-75.015152,-9.1899672],
-    zoom: 5,
-    basemap: "osm"
-  });
   
   /* BUTTON - Botón Home */
   let home = new HomeButton({
@@ -80,8 +66,7 @@ require([
       console.log("basemap gallery error:  ", msg);
     }
     catch(error) {
-      console.error(`${error.name} : ${error.message}.`);
+      console.error(`${error.name} - ${error.message}.`);
     }
   });
-
 });
