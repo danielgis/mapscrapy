@@ -1,6 +1,6 @@
 define(
   [
-    "js/configMap",
+    "js/Map/Widget",
     "esri/request",
     "esri/layers/FeatureLayer",
     "dojo/on",

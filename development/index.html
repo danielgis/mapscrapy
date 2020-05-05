@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="es">
     <head>
         <!--<meta charset="UTF-8">-->
         
@@ -14,7 +14,8 @@
         <link rel="icon"       type="image/png" href="./img/monster-truck.png"/>
         
         <!-- CSS - API ESRI -->        
-        <link rel="stylesheet" type="text/css" href="https://js.arcgis.com/3.23/esri/css/esri.css"/>
+        <link rel="stylesheet" type="text/css" href="https://js.arcgis.com/3.24/esri/css/esri.css">
+        <link rel="stylesheet" type="text/css" href="https://js.arcgis.com/3.24/dijit/themes/claro/claro.css">
 
         <!-- CSS - FontAwesome -->
         <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"/>
@@ -38,7 +39,7 @@
         </script>
         -->
     </head>
-    <body>
+    <body class="claro">
         <input type="checkbox" id="abrir-cerrar" name="abrir-cerrar" value="">
         <label for="abrir-cerrar">&#9776;
             <span class="abrir" id="abrir">Menu</span>
@@ -171,9 +172,11 @@
                         <!-- Tu contenido 4 -->
                         <h1>4</h1>
                     </div>
-                    <div class="content-5" data-dojo-type="dijit/layout/ContentPane" title="Basemap" >
+                    <div class="content-5">
                         <!-- Tu contenido 5 -->
-                        <section id="BasemapGallery"></section>
+
+                        <!-- WIDGET - Basemap -->
+                        <section id="WidgetBasemap" data-dojo-type="WidgetBasemap" ></section>
                     </div>
                 </div>
             </article>
@@ -188,20 +191,33 @@
         <!-- END - Map -->
 
     </body>
+
     <!-- JS - Config DOJO -->
     <!--<script src='./js/dojoConfig.js'></script>-->
-    <script>
+    
+    <!-- Set Dojo configuration, load Dojo. -->
+    <script type="text/javascript">
         var dojoConfig = {
-            paths: { 
+            async: true,
+            parseOnLoad: false,
+            packages: [
+                {
+                    name:"js",
+                    location: location.pathname.replace(/\/[^/]+$/, "") + "/js"
+                }
+            ]
+            /*paths: {
                 js: location.pathname.replace(/\/[^/]+$/, "") + "/js" 
-            }
+            }*/
         };
     </script>
+    
     <!-- JS - API ESRI -->
-    <script src="https://js.arcgis.com/3.23/"></script>
+    <script type="text/javascript" src="https://js.arcgis.com/3.23/"></script>
+
     <!-- JS -->
-    <script src='./js/map.js'></script>
-    <script type="text/javascript">
+    <script type="text/javascript" src='./js/map.js'></script>
+    <script type="text/javascript" type="text/javascript">
         document.getElementById("abrir").click();
     </script>
     

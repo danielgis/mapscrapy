@@ -297,6 +297,30 @@ table,tr,td {
     width:100%;
 }
 
+/*Base map*/
+#BasemapGallery {
+	width: 100%;
+	height: 24.5em;
+	max-height: 35em;
+	overflow-x: hidden;
+	box-sizing: border-box;
+}
+
+#BasemapGallery::-webkit-scrollbar {
+   width: 10px; /*=> ancho del scroll*/
+   background-color: #FFFFFF; /*=> Color del fondo principal */
+   border-radius: 10px; 
+}
+
+#BasemapGallery::-webkit-scrollbar-track {
+   background-color: rgba(38, 50, 56, 0.19); /*=> color de fondo del trayecto del scroll */
+}
+
+#BasemapGallery::-webkit-scrollbar-thumb {
+   background-color: #056896; /*=> color del indicador del scroll */
+   border-radius: 10px; /*=> bordes redondeados */
+}
+
 
 
 @media only screen and (max-width: 1100px) {

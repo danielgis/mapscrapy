@@ -1,30 +1,34 @@
-require([
-  "js/descargarServicios",
-  "js/configMap",
-  "esri/dijit/BasemapGallery", 
-  "esri/dijit/HomeButton",
-  "esri/dijit/LocateButton",
-  //"esri/layers/FeatureLayer",
-  //"esri/dijit/Popup", 
-  //"esri/dijit/PopupTemplate",
-  //"esri/request",
-  //"esri/tasks/query",
-  //"esri/tasks/QueryTask",
-  //"esri/SpatialReference",
-  //"esri/toolbars/draw",
-  //"esri/graphic",
-  //"esri/symbols/SimpleFillSymbol",
-  //"esri/geometry/Extent",
-  //"dojo/parser",
-  //"dojo/dom-construct",
-  // "esri/dijit/FeatureTable",
-  //"dijit/form/Form", 
-  //"dijit/layout/AccordionContainer", 
-  //"dijit/layout/ContentPane",
-  //"dojo/domReady!"
+require(
+  [
+  "js/Map/Widget",
+    "js/Basemap/Widget",
+    /*"js/descargarServicios",*/
+    
+    "esri/dijit/BasemapGallery", 
+    "esri/dijit/HomeButton",
+    "esri/dijit/LocateButton",
+    //"esri/layers/FeatureLayer",
+    //"esri/dijit/Popup", 
+    //"esri/dijit/PopupTemplate",
+    //"esri/request",
+    //"esri/tasks/query",
+    //"esri/tasks/QueryTask",
+    //"esri/SpatialReference",
+    //"esri/toolbars/draw",
+    //"esri/graphic",
+    //"esri/symbols/SimpleFillSymbol",
+    //"esri/geometry/Extent",
+    //"dojo/parser",
+    //"dojo/dom-construct",
+    // "esri/dijit/FeatureTable",
+    //"dijit/form/Form", 
+    //"dijit/layout/AccordionContainer", 
+    //"dijit/layout/ContentPane",
+    //"dojo/domReady!"
 ], function(
-    servicios,
     map,
+    WidgetBasemap,
+    /*servicios,*/
     BasemapGallery, 
     HomeButton,
     LocateButton,
@@ -44,29 +48,33 @@ require([
     // FeatureTable
   ) {
   
-  /* BUTTON - Botón Home */
-  let home = new HomeButton({
-    map: map
-  }, "HomeButton");
-  home.startup();
+    /* Home */
+    let home = new HomeButton({
+      map: map
+    }, "HomeButton");
+    home.startup();
 
-  /* BUTTON - Geolocalización */
-  let geoLocate = new LocateButton({
-    map: map
-  }, "LocateButton");
-  geoLocate.startup();
-  
-  /* WIDGET - Basemap */
-  let basemapGallery = new BasemapGallery({
-    showArcGISBasemaps: true, map: map
-  }, "BasemapGallery");
-  basemapGallery.startup();
-  basemapGallery.on("error", function(msg) {
-    try {
-      console.log("basemap gallery error:  ", msg);
-    }
-    catch(error) {
-      console.error(`${error.name} - ${error.message}.`);
-    }
-  });
-});
+    /* Geolocalización */
+    let geoLocate = new LocateButton({
+      map: map
+    }, "LocateButton");
+    geoLocate.startup();
+
+    /* Basemap */
+    let basemapGallery = new BasemapGallery({
+      showArcGISBasemaps:true,
+      map:map
+    },"WidgetBasemap");
+    basemapGallery.startup();
+
+    basemapGallery.on("error",function(msg){
+      try {
+        console.log("basemap gallery error: ",msg);
+      } catch(error) {
+        console.error(`${error.name} - ${error.message}.`);
+      }
+    });
+
+
+  }
+);
