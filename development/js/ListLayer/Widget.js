@@ -1,12 +1,12 @@
 define(
   	[
   		"js/ListLayer/layer",
-  		"js/descargarServicios",
     	"dojo/domReady!"
   	], function(
-  		WidgetListLayer,
-  		WidgetServices
+  		FILE_ListLayer
   	) {
-    	let lista = "";
+    	let lista = FILE_ListLayer;
+      console.log(lista);
+      
     	return lista;
 });
