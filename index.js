@@ -270,10 +270,17 @@ require([
     var query = new Query();
     query.where = "1=1";
     query.outSpatialReference = new SpatialReference(mapviewer.extent.spatialReference.wkid);
+    console.log("ramos");
+    console.log(query);
+    console.log("ramos");
     featureLayer.queryExtent(query, _setMapExtent);
   };
 
   _setMapExtent = function(response){
+    console.log("Daniel");
+    console.log(response);
+    console.log(response.extent);
+    console.log("Daniel");
       var extent = response.extent;
       if (extent){
         mapviewer.setExtent(extent, true);

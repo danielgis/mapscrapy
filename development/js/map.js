@@ -2,8 +2,7 @@ require(
   [
   "js/Map/Widget",
     "js/Basemap/Widget",
-    /*"js/descargarServicios",*/
-    
+    "js/descargarServicios",
     "esri/dijit/BasemapGallery", 
     "esri/dijit/HomeButton",
     "esri/dijit/LocateButton",
@@ -28,7 +27,7 @@ require(
 ], function(
     map,
     WidgetBasemap,
-    /*servicios,*/
+    WidgetServices,
     BasemapGallery, 
     HomeButton,
     LocateButton,
