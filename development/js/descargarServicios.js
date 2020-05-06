@@ -53,6 +53,9 @@ define(
         console.error(`_setMapExtent: ${error.name} - ${error.message}.`);
       }
     };
+    let abc = function(){
+      console.log("SE ESTA CARGANDO");
+    }
 
     let _loadServices = async function(layerUrl){
       try{
@@ -86,11 +89,13 @@ define(
             });
             /* FALTA AGREGAR EL JS */
             map.addLayer(featureLayer);
+
             /* Acercamiento de la capa por EXTENT */
             _setMapExtent(response.extent);
+
             /* METADATA - Falta contruir el HTML */
             let metadata = map._layers[uuid];
-            setTimeout (function() {
+            metadata.on("load",function(){
               console.log(`version: ${metadata.version}`);
               console.log(`name: ${metadata.name}`);
               console.log(`type: ${metadata.type}`);
@@ -98,9 +103,13 @@ define(
               console.log(`geometryType: ${metadata.geometryType}`);
               console.log(`wkid: ${metadata.spatialReference.wkid}`);
               console.log(`latestWkid: ${metadata.spatialReference.latestWkid}`);
-              console.log(`count: ${metadata.graphics.length}`);
+              setTimeout (function() {
+                /* Preguntar a DANIEL si conoce otra forma del evento LOAD */
+                console.log(`count: ${metadata.graphics.length}`);
+              }, 3000);
               console.log(`maxRecordCount: ${metadata.maxRecordCount}`);
-            }, 2500);
+            });
+            
             /* GIT CARGA - REMOVE */
           },
           function(error) {
