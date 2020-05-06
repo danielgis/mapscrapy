@@ -1,53 +1,53 @@
-form div {
+.form-services  div {
   margin-bottom: 10px;
 }
 
-form select,
-form label,
-form input[type="text"] {
+.form-services select,
+.form-services label,
+.form-services input[type="text"] {
   width: 100%;
   border: 0;
   padding: 0; 
 }
 
-form label {
+.form-services label {
   line-height: 25px;
 }
 
-form select,
-form input[type="text"] {
+.form-services select,
+.form-services input[type="text"] {
   height: 27px;
   text-indent: 20px;
 }
 
-form .group-button .btn{
+.form-services .group-button .btn{
   text-align:center;
   width: 48.5%;
   margin-top: 10px;
 }
 
-form .is-outlined {
+.form-services .is-outlined {
   background-color: white;
   color: #0F4C75 !important;
 }
 
-form .is-outlined:hover {
+.form-services .is-outlined:hover {
   background-color: rgba(15,76,117,1);
   color: white !important;
 }
 
-form .is-link {
+.form-services .is-link {
   background-color: rgba(15,76,117,0.5);
 }
 
-form .is-link:hover {
+.form-services .is-link:hover {
   background-color: rgba(15,76,117,1);
 }
 /*
   rgba(15,76,117,1);
   #0F4C75
   */
-form .btn {
+.form-services .btn {
   border: 2px solid rgba(15,76,117,1);
   color: #FFFFFF;
   cursor: pointer;
@@ -62,15 +62,15 @@ form .btn {
   vertical-align: middle;
 }
 
-fieldset {
+.form-services fieldset {
   padding: 7px 7px 3px 7px;
   margin: 0;
   text-align: center;
 }
 
-fieldset div.polygon,
-fieldset div.dot,
-fieldset div.oval {
+.form-services fieldset div.polygon,
+.form-services fieldset div.dot,
+.form-services fieldset div.oval {
   background-color: rgba(15,76,117,0.5) !important;
   border: 1px solid rgba(15,76,117,1);
   display: inline-block;
@@ -80,21 +80,21 @@ fieldset div.oval {
   width: 40px;
 }
 
-fieldset div.polygon:hover,
-fieldset div.dot:hover,
-fieldset div.oval:hover {
+.form-services fieldset div.polygon:hover,
+.form-services fieldset div.dot:hover,
+.form-services fieldset div.oval:hover {
   background-color: rgba(15,76,117,1);
   border: 1px solid white;
 }
 
-fieldset div.polygon {
+.form-services fieldset div.polygon {
   background: url("../img/polygon.png") no-repeat 50% 50%;
 }
 
-fieldset div.dot {
+.form-services fieldset div.dot {
   background: url("../img/dot.png") no-repeat 50% 50%;
 }
 
-fieldset div.oval {
+.form-services fieldset div.oval {
   background: url("../img/oval.png") no-repeat 50% 50%;
 }
