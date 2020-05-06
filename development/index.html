@@ -26,6 +26,8 @@
         <link rel="stylesheet" type="text/css" href="./css/map.css"/>
         <link rel="stylesheet" type="text/css" href="./css/basemap.css"/>
         <link rel="stylesheet" type="text/css" href="./css/form.css"/>
+
+        <link rel="stylesheet" type="text/css" href="./css/list-layer.css"/>
         
         <!-- JS - Google Analytics -->
         <!--
@@ -102,7 +104,8 @@
                     </div>
                     <div class="content-2">
                         <!--Tu contenido 2-->
-                        <form>
+
+                        <form class="form-services">
 
                             <center>
                                 <h1><u>Descargar Servicio</u></h1>
@@ -165,8 +168,57 @@
                         </form>
                     </div>
                     <div class="content-3">
-                        <!-- Tu contenido 3 -->          
-                        <h1>3</h1>
+                        <!-- Tu contenido 3 -->
+
+                        <div class="list-layer">
+                            <h1>
+                                <center>Tabla de Contenido</center>
+                            </h1>
+                            <nav>
+                                <ul class="list-content">
+                                    <li>
+                                        <input type="checkbox" class="mostrar-menu" id="group1">
+                                        <label for="group1" class="ampliar"></label>
+                                        <input type="checkbox" id="groupName1">
+                                        <label for="groupName1">Grouasd1</label>
+                                        <ul class="nivel-02">
+                                            <li>
+                                                <input type="checkbox" class="mostrar-menu" id="layer1">
+                                                <label for="layer1" class="ampliar"></label>
+                                                <input type="checkbox" id="layerName1">
+                                                <label for="layerName1">Layer 1</label>
+                                                <ul class="nivel-03">
+                                                    <li><p>Leyenda</p></li>
+                                             
+                                                </ul>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                                <hr>
+                                <ul class="list-content">      
+                                    <li>
+                                        <input type="checkbox" class="mostrar-menu" id="layer01">
+                                        <label for="layer01" class="ampliar"></label>
+                                        <input type="checkbox" id="layerName01">
+                                        <label for="layerName01">Layer 1</label>
+                                        <ul class="nivel-03">
+                                            <li><p>Leyenda</p></li>
+                                        </ul>
+                                    </li>
+                                    <li>
+                                        <input type="checkbox" class="mostrar-menu" id="layer02">
+                                        <label for="layer02" class="ampliar"></label>
+                                        <input type="checkbox" id="layerName02">
+                                        <label for="layerName02">Layer 1</label>
+                                        <ul class="nivel-03">
+                                            <li><p>Leyenda</p></li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </nav>
+                        </div>
+
                     </div>
                     <div class="content-4">
                         <!-- Tu contenido 4 -->
