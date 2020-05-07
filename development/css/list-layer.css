@@ -59,18 +59,25 @@
 }
 
 .list-layer .list-content input[type="checkbox"] {
-  margin: 3px 8px 3px 8px;
+  margin:3px 8px 3px 8px;
+}
+
+.list-layer .list-content label:hover {
+  color:orange;
+}
+
+.list-layer .list-content label:nth-child(4) {
+  padding-top:4px;
 }
 
 .list-layer .list-content input,
 .list-layer .list-content label {
-  display: inline-block;
-  vertical-align: top;
+  display:inline-block;
+  vertical-align:top;
+  cursor:pointer;
 }
 
-.list-layer .list-content label:nth-child(4) {
-  padding-top: 4px;
-}
+
 
 
 .list-layer .list-content .nivel-02 {
