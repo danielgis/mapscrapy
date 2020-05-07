@@ -1,10 +1,12 @@
 define(
   [
+    "dojo/dom-attr",
     "dojo/domReady!"
-  ], function(Map) {
+  ], function(domAttr) {
     /* Lista de capas */
     const listLayer = [{
-      group: "Johns Hopkins University",
+      name: "Johns Hopkins University",
+      group: true,
       layers: [
         {
           name: "Coronavirus COVID-19 - Mundial",
@@ -28,10 +30,11 @@ define(
         }
       ]
     },{
-      group: "Telemática SAC",
+      name: "Telemática SAC",
+      group: false,
       layers: [
         {
-          name: "Confirmados Lima-Callao - Perú",
+          name: "Confirmados Perú - Lima - Callao",
           source: "Telemática SAC",
           layer: {
             type: "FeatureServer",
@@ -72,10 +75,11 @@ define(
         }
       ]
     },{
-      group: "Aeroterra",
+      name: "Aeroterra - Argentina",
+      group: true,
       layers: [
         {
-          name: "Confirmados por provincia - Argentina",
+          name: "Confirmados por provincia",
           source: "Aeroterra",
           layer: {
             type: "FeatureServer",
@@ -97,10 +101,11 @@ define(
         }
       ]
     },{
-      group: "Imagem",
+      name: "Imagem - Brasil",
+      group: true,
       layers: [
         {
-          name: "Confirmados por estados - Brasil",
+          name: "Confirmados por estados",
           source: "Imagem",
           layer: {
             type: "FeatureServer",
@@ -121,10 +126,11 @@ define(
         }
       ]
     },{
-      group: "ESRI Chile",
+      name: "ESRI Chile",
+      group: true,
       layers: [
         {
-          name: "Confirmados por región - Chile",
+          name: "Confirmados por región",
           source: "ESRI Chile",
           layer: {
             type: "FeatureServer",
@@ -146,10 +152,11 @@ define(
         }
       ]
     },{
-      group: "Gobierno de Bolivia",
+      name: "Gobierno de Bolivia",
+      group: false,
       layers: [
         {
-          name: "Confirmados por departamentos - Bolivia",
+          name: "Confirmados por departamentos",
           source: "Gobierno de Bolivia",
           layer: {
             type: "FeatureServer",
@@ -171,64 +178,56 @@ define(
       ]
     }];
     
+    let listLayerHTML = [];
     /* Se construye la lista de capas */
-    let _listContentHTML = function(group = true) {
-      if(group){
-        console.log("POR GRUPO");
-        /* Nivel de GROUP */
-        for (const group in listLayer) {
-          /* Nivel de LAYER */
-          let layers = listLayer[group].layers;
-          for (const layer in layers) {
-            console.log(layers[layer]);
-            console.log(layers[layer].name);
-            console.log(layers[layer].source);
-            console.log(layers[layer].layer.type);
-            let items = layers[layer].layer.args;
-            /* Caracteristicas del LAYER */
-            for (const item in items) {
-              console.log(" - - - - - - - ");
-              console.log(items[item].url);
-              console.log(items[item].config.disabledOption);
-              console.log(items[item].config.fields);
-              console.log(items[item].config.opacity);
-              console.log(items[item].config.renderer);
-              console.log(items[item].config.rendererField);
-              console.log(items[item].config.turn);
-              console.log(" - - - - - - - ");
-            }
-          }
+    let _listContentHTML = function() {
+      console.log("POR GRUPO");
+      /* Nivel de GROUP */
+      for (const group in listLayer) {
+        /*** GROUP - Abre si se AGRUPA */
+        if(listLayer[group].group) {
+          listLayerHTML.push('<li>');
+          listLayerHTML.push(`<input type="checkbox" class="mostrar-menu" id="group${group}">`);
+          listLayerHTML.push(`<label for="group${group}" class="ampliar"></label>`);
+          listLayerHTML.push(`<input type="checkbox" id="groupName${group}">`);
+          listLayerHTML.push(`<label for="groupName${group}">${listLayer[group].name}</label>`);
+          listLayerHTML.push(`<ul class="nivel-02">`);
         }
-      } else {
-        console.log("POR ITEM");
-        /* Nivel de GROUP */
-        for (const group in listLayer) {
-          console.log(listLayer[group].group);
-          /* Nivel de LAYER */
-          let layers = listLayer[group].layers;
-          for (const layer in layers) {
-            console.log(layers[layer]);
-            console.log(layers[layer].name);
-            console.log(layers[layer].source);
-            console.log(layers[layer].layer.type);
-            let items = layers[layer].layer.args;
-            /* Caracteristicas del LAYER */
-            for (const item in items) {
-              console.log(" - - - - - - - ");
-              console.log(items[item].url);
-              console.log(items[item].config.disabledOption);
-              console.log(items[item].config.fields);
-              console.log(items[item].config.opacity);
-              console.log(items[item].config.renderer);
-              console.log(items[item].config.rendererField);
-              console.log(items[item].config.turn);
-              console.log(" - - - - - - - ");
-            }
-          }
+        let layers = listLayer[group].layers;
+        /* Nivel de LAYER */
+        for (const layer in layers) {
+          listLayerHTML.push(`<li>`);
+          listLayerHTML.push(`<input type="checkbox" class="mostrar-menu" id="layer${group}${layer}">`);
+          listLayerHTML.push(`<label for="layer${group}${layer}" class="ampliar"></label>`);
+          listLayerHTML.push(`<input type="checkbox" id="layerName${group}${layer}">`);
+          listLayerHTML.push(`<label for="layerName${group}${layer}">${layers[layer].name}</label>`);
+          listLayerHTML.push(`<ul class="nivel-03">`);
+          listLayerHTML.push(`  <li><p>Leyenda</p></li>`);
+          listLayerHTML.push(`</ul>`);
+          /* Caracteristicas del LAYER */
+          /*let items = layers[layer].layer.args;
+          for (const item in items) {
+            listLayerHTML.push(`  <li><p>Leyenda</p></li>`);
+            console.log(items[item].url);
+            console.log(items[item].config.disabledOption);
+            console.log(items[item].config.fields);
+            console.log(items[item].config.opacity);
+            console.log(items[item].config.renderer);
+            console.log(items[item].config.rendererField);
+            console.log(items[item].config.turn);
+          }*/ 
+          listLayerHTML.push(`</li>`);
+        }
+        /*** GROUP - Cierra si se AGRUPA */
+        if(listLayer[group].group) {
+          listLayerHTML.push(`</ul>`);
+          listLayerHTML.push(`</li>`);
         }
       }
+      domAttr.set("listLayerContent", "innerHTML", listLayerHTML.join(""));
     };
-    //_listContentHTML(false);  
+    
+    _listContentHTML();
 
     return listLayer;
 });

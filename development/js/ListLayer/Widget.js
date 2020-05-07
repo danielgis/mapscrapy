@@ -1,12 +1,18 @@
 define(
   	[
   		"js/ListLayer/layer",
+  		"dojo/dom-attr",
     	"dojo/domReady!"
   	], function(
-  		FILE_ListLayer
+  		FILE_ListLayer,
+  		domAttr
   	) {
     	let lista = FILE_ListLayer;
-      console.log(lista);
+    	/*let arr = [];
+    	arr.push("<p>hi</p>");
+
+    	domAttr.set("ign", "innerHTML", arr);*/
+      	console.log(lista);
       
     	return lista;
 });

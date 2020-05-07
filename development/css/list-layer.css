@@ -58,6 +58,9 @@
   padding-left: 3px;
 }
 
+.list-layer .list-content input[type="checkbox"] {
+  margin: 3px 8px 3px 8px;
+}
 
 .list-layer .list-content input,
 .list-layer .list-content label {
