@@ -57,8 +57,8 @@ define(
       console.log("SE ESTA CARGANDO");
     }
 
-    let _loadServices = async function(layerUrl, zoom= true){
-      try{
+    let _loadServices = function(layerUrl, zoom= true){
+      /*try{*/
         /* GIT CARGA - LOAD */
         let uuid = Math.random()
                     .toString(36)
@@ -68,7 +68,7 @@ define(
         /* Layer REQUEST */
         let layersRequest = esriRequest({
           "url"               : layerUrl,
-          "sync"              : true,
+          "sync"              : false,
           "content"           : {"f":"json"},
           "callbackParamName" : "callback"
         });
@@ -109,9 +109,7 @@ define(
                 }, 3000);
                 console.log(`maxRecordCount: ${metadata.maxRecordCount}`);
               });
-
             }
-            
             /* GIT CARGA - REMOVE */
           },
           function(error) {
@@ -120,14 +118,14 @@ define(
           }
         );
         return uuid;
-      } catch(error) {
+      /*} catch(error) {
         if (error instanceof TypeError) {
           console.error(`${error.name} - ${error.message}.`);
         } else {
           throw error;
           console.error(`${error.name} - ${error.message}.`);
         }
-      }
+      }*/
     };
 
     /* Acciones de SERVICIOS */
@@ -193,7 +191,6 @@ define(
       }
     });
 
-
     return {
       _loadServices: function(paramURL, booleanZOOM){
         /*
@@ -203,7 +200,7 @@ define(
             * _listContentHTML('https:....'). Carga la capa y hace ZOOM(por defecto booleanZOOM = true) a la capa cargada.
             * _listContentHTML('https:....'), false). Carga la capa pero no realiza un ZOOM por el usar 'false'.
         */
-        _loadServices(paramURL, booleanZOOM)
+        return _loadServices(paramURL, booleanZOOM);
       }
     };
 
