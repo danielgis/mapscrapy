@@ -11,7 +11,7 @@
   opacity:0.5;
   height: 1px;
   overflow: hidden;
-  margin-top: 0.5rem;
+  margin-top: 4px;
 }
 
 .list-layer .list-content .mostrar-menu:checked ~ ul
@@ -40,7 +40,9 @@
 {
   list-style: none;
   padding:0.5rem;
+  padding-top: 4px;
   padding-left: 0;
+  padding-right: 0;
   padding-bottom: 0;
 }
 
@@ -59,7 +61,7 @@
 }
 
 .list-layer .list-content input[type="checkbox"] {
-  margin:3px 8px 3px 8px;
+  margin:3px 0px;
 }
 
 .list-layer .list-content label:hover {
@@ -78,10 +80,13 @@
 }
 
 
+.list-layer .list-content p {
+  margin: 2px 0 0 0;
+}
 
-
+.list-layer .list-content p,
 .list-layer .list-content .nivel-02 {
-  padding-left: 22px;
+  padding-left: 34px;
 }
 .list-layer .list-content .nivel-03 {
   padding-left: 30px;

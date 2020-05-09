@@ -57,7 +57,7 @@ define(
       console.log("SE ESTA CARGANDO");
     }
 
-    let _loadServices = async function(layerUrl){
+    let _loadServices = async function(layerUrl, zoom= true){
       try{
         /* GIT CARGA - LOAD */
         let uuid = Math.random()
@@ -90,25 +90,27 @@ define(
             /* FALTA AGREGAR EL JS */
             map.addLayer(featureLayer);
 
-            /* Acercamiento de la capa por EXTENT */
-            _setMapExtent(response.extent);
+            if(zoom) {
+              /* Acercamiento de la capa por EXTENT */
+              _setMapExtent(response.extent);
+              /* METADATA - Falta contruir el HTML */
+              let metadata = map._layers[uuid];
+              metadata.on("load",function(){
+                console.log(`version: ${metadata.version}`);
+                console.log(`name: ${metadata.name}`);
+                console.log(`type: ${metadata.type}`);
+                console.log(`description: ${metadata.description}`);
+                console.log(`geometryType: ${metadata.geometryType}`);
+                console.log(`wkid: ${metadata.spatialReference.wkid}`);
+                console.log(`latestWkid: ${metadata.spatialReference.latestWkid}`);
+                setTimeout (function() {
+                  /* Preguntar a DANIEL si conoce otra forma del evento LOAD */
+                  console.log(`count: ${metadata.graphics.length}`);
+                }, 3000);
+                console.log(`maxRecordCount: ${metadata.maxRecordCount}`);
+              });
 
-            /* METADATA - Falta contruir el HTML */
-            let metadata = map._layers[uuid];
-            metadata.on("load",function(){
-              console.log(`version: ${metadata.version}`);
-              console.log(`name: ${metadata.name}`);
-              console.log(`type: ${metadata.type}`);
-              console.log(`description: ${metadata.description}`);
-              console.log(`geometryType: ${metadata.geometryType}`);
-              console.log(`wkid: ${metadata.spatialReference.wkid}`);
-              console.log(`latestWkid: ${metadata.spatialReference.latestWkid}`);
-              setTimeout (function() {
-                /* Preguntar a DANIEL si conoce otra forma del evento LOAD */
-                console.log(`count: ${metadata.graphics.length}`);
-              }, 3000);
-              console.log(`maxRecordCount: ${metadata.maxRecordCount}`);
-            });
+            }
             
             /* GIT CARGA - REMOVE */
           },
@@ -117,6 +119,7 @@ define(
             console.log("Error: ", error.message);
           }
         );
+        return uuid;
       } catch(error) {
         if (error instanceof TypeError) {
           console.error(`${error.name} - ${error.message}.`);
@@ -189,5 +192,20 @@ define(
         console.error(`${error.name} - ${error.message}.`);
       }
     });
+
+
+    return {
+      _loadServices: function(paramURL, booleanZOOM){
+        /*
+          paramURL: Es la URL del servicios.
+          booleanZOOM: Por defecto es TRUE en caso de quieras hacer ZOOM.
+          Llamado de func. 
+            * _listContentHTML('https:....'). Carga la capa y hace ZOOM(por defecto booleanZOOM = true) a la capa cargada.
+            * _listContentHTML('https:....'), false). Carga la capa pero no realiza un ZOOM por el usar 'false'.
+        */
+        _loadServices(paramURL, booleanZOOM)
+      }
+    };
+
    
 });
