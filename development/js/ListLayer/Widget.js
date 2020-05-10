@@ -4,6 +4,7 @@ define(
   		"js/ListLayer/layer",
       "js/descargarServicios",
   		"dojo/dom-attr",
+      "dojo/dom",
       "dojo/query",
     	"dojo/domReady!"
   	], function(
@@ -11,6 +12,7 @@ define(
   		WidgetListLayer,
       WidgetServices,
   		domAttr,
+      dom,
       query
   	) {
     	let listLayerHTML=[],listLayer=WidgetListLayer;
@@ -107,14 +109,22 @@ define(
               }
             }
           } catch(error) {
-            console.error(`query: ${error.name} - ${error.message}.`);
+            console.error(`_activeLayer: ${error.name} - ${error.message}.`);
           }
         });
-      }
-
+      };
       _activeLayer('listLayerContent');
-      
-      window._activeLayer = _activeLayer;
 
-      
+      /* Función que renueva el LAYER de MAP */
+      let _removelayer = function(id){
+        try {
+          dom.byId(`content${id}`).remove();
+          map.removeLayer(map.getLayer(id));
+        } catch(error) {
+          console.error(`_removelayer: ${error.name} - ${error.message}.`);
+        }
+      }
+      /* Se asigna a nivel de WINDOW para que tengan acceso */
+      window.activeLayer = _activeLayer;
+      window.removeLayer = _removelayer;
 });

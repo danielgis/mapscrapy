@@ -81,6 +81,7 @@
 
 
 .list-layer .list-content p {
+  font-size: 11px;
   margin: 2px 0 0 0;
 }
 
@@ -123,3 +124,26 @@
   content:'-';
 }
 
+/* Estilos de boton de eliminación */
+.list-layer .is-link {
+  background-color: rgba(15,76,117,0.5);
+}
+
+.list-layer .is-link:hover {
+  background-color: rgba(15,76,117,1);
+}
+
+.list-layer .btn {
+  border: 2px solid rgba(15,76,117,1);
+  color: #FFFFFF;
+  cursor: pointer;
+  display: inline-block;
+  font-size: 12px;
+  font-weight: bold;
+  min-width: 70px;
+  
+  padding: 0 15px;
+  text-align: center;
+  overflow: hidden;
+  vertical-align: middle;
+}

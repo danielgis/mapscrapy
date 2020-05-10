@@ -114,24 +114,31 @@ define(
                 }, 3000);
                 console.log(`maxRecordCount: ${metadata.maxRecordCount}`);
               });
-
-
               /*Se agrega LAYER */
               listLayerHTML.push(`
-                  <li>  
+                  <li id="content${uuid}">  
                     <input type="checkbox" class="mostrar-menu" id="layer${uuid}">
                     <label for="layer${uuid}" class="ampliar"></label>
-                    <input type="checkbox" id="layerName${uuid}" data-item='layer' data-uuid="${uuid}" data-url="${url}" data-name="${name}" onclick="window._activeLayer('listLayerDynamic')" checked>
+                    <input type="checkbox" 
+                      id="layerName${uuid}" 
+                      data-item='layer' 
+                      data-uuid="${uuid}" 
+                      data-url="${url}" 
+                      data-name="${name}" 
+                      onclick="window.activeLayer('listLayerDynamic')" 
+                      checked>
                     <label for="layerName${uuid}">${name}</label>
-                    <p>Fuente: ${name}</p>
+                    <p>Fuente: ${name} 
+                      <button class='btn is-link' onclick="window.removeLayer('${uuid}')">
+                        <i class="fa fa-trash" aria-hidden="true"></i>&nbsp;
+                        Eliminar
+                      </button></p>
                     <ul class="nivel-03">
                       <li><p>** Legenda en proceso ...</p></li>
                     </ul>
                   </li>
               `);
-
               domAttr.set("listLayerDynamic", "innerHTML", listLayerHTML.join(""));
-
             }
             /* GIT CARGA - REMOVE */
           },
