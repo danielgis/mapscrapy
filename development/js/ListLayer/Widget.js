@@ -44,23 +44,16 @@ define(
               /* Valida si existe la propiedad ACTIVE */
               if(layers[layer].hasOwnProperty('active')){
                 /* Agrega la capa */
-                let [uuid,nameLayerWMS]= layers[layer].active ? WidgetServices._loadServices([url,name],false):'';
+                uuid= layers[layer].active ? WidgetServices._loadServices([url,name],false):'';
                 /* Se agrega el atributo 'checked' */
                 checkboxActive = layers[layer].active ? `checked`: ``; 
               }
-
-              /*
-              let start = url.toLowerCase().indexOf('/rest/services/');
+              /*let start = url.toLowerCase().indexOf('/rest/services/');
               let end = url.toLowerCase().indexOf('/mapserver', start);
-              layerWMS = url.substring(start + 15, end);
-              */
-
+              layerWMS = url.substring(start + 15, end);*/
               /* http://geoservicios.sernanp.gob.pe/arcgis/rest/services/representatividad/peru_sernanp_010201/MapServer */
               sUrl = 'http://geoservicios.sernanp.gob.pe/arcgis/services/representatividad/peru_sernanp_010201/MapServer/WMSServer?';
-              sTipoServ = 'WMS';
-              sLayer = '0';
-              imgLegend = '<img src="' + sUrl + 'SERVICE=' + sTipoServ + '&VERSION=1.3.0&REQUEST=GetLegendGraphic&LAYER=' + sLayer + '&Format=image/png&SLD_Version=1.1.0&WIDTH=20&HEIGHT=20">'
-
+              sTipoServ = 'WMS',sLayer = '0',imgLegend = '<img src="' + sUrl + 'SERVICE=' + sTipoServ + '&VERSION=1.3.0&REQUEST=GetLegendGraphic&LAYER=' + sLayer + '&Format=image/png&SLD_Version=1.1.0&WIDTH=20&HEIGHT=20">'
               /* Estructura por LAYER */
               listLayerHTML.push(`
                   <li>  
@@ -70,8 +63,9 @@ define(
                     <label for="layerName${group}${layer}">${layers[layer].name}</label>
                     ${fuente}
                     <ul class="nivel-03">
-                      <li>${imgLegend}</li>
+                      <li><p>** Legenda en proceso ...</p></li>
                     </ul>
+                  </li>
               `);
             }
             /*** GROUP - Cierra si se AGRUPA */
@@ -91,28 +85,36 @@ define(
       _listContentHTML();
 
       /* Activa u desactiva el LISTLAYER */
-      query(".list-layer input[data-item='layer']").on("click", function(){
-        try {
-          /* Verifica si CHECBOX está activo */
-          if(this.checked){
-            /* Verifica si UUID se tiene registrado */
-            if(this.dataset.uuid == ''){
-              /* En el caso de que no tenga UUID se carga el servicio */
-              let [uuid,nameLayerWMS] = WidgetServices._loadServices([this.dataset.url,this.dataset.name],false);
-              this.dataset.uuid = uuid;
+      let _activeLayer = function(id) {
+        query(`.list-layer #${id} input[data-item='layer']`).on("change",function(){
+          try {
+            /* Verifica si CHECBOX está activo */
+            if(this.checked){
+              /* Verifica si UUID se tiene registrado */
+              if(this.dataset.uuid == ''){
+                /* En el caso de que no tenga UUID se carga el servicio */
+                uuid= WidgetServices._loadServices([this.dataset.url,this.dataset.name],false);
+                this.dataset.uuid = uuid;
+              } else {
+                /* Si tiene una UUID se muestra la capa */
+                map.getLayer(this.dataset.uuid).show();
+              }
             } else {
-              /* Si tiene una UUID se muestra la capa */
-              map.getLayer(this.dataset.uuid).show();
+              /* Verifica si UUID se tiene registrado */
+              if(this.dataset.uuid != ''){
+                /* Si tiene una UUID se oculta la capa */
+                map.getLayer(this.dataset.uuid).hide();
+              }
             }
-          } else {
-            /* Verifica si UUID se tiene registrado */
-            if(this.dataset.uuid != ''){
-              /* Si tiene una UUID se oculta la capa */
-              map.getLayer(this.dataset.uuid).hide();
-            }
+          } catch(error) {
+            console.error(`query: ${error.name} - ${error.message}.`);
           }
-        } catch(error) {
-          console.error(`query: ${error.name} - ${error.message}.`);
-        }
-      });
+        });
+      }
+
+      _activeLayer('listLayerContent');
+      
+      window._activeLayer = _activeLayer;
+
+      
 });

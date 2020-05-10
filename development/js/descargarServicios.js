@@ -7,6 +7,7 @@ define(
     "esri/layers/FeatureLayer",
     "esri/dijit/PopupTemplate",
     "esri/geometry/Extent",
+    "dojo/dom-attr",
     "dojo/on",
     "dojo/dom",
     "dojo/domReady!"
@@ -18,8 +19,9 @@ define(
     FeatureLayer,
     PopupTemplate,
     Extent,
+    domAttr,
     on,
-    dom,
+    dom
   ){
     let _showLoader = function(toggle){
       try {
@@ -56,15 +58,15 @@ define(
     let abc = function(){
       console.log("SE ESTA CARGANDO");
     }
-
+    let listLayerHTML=[];
     let _loadServices = function(layerUrl,zoom=true){
       try{
+        
         let [url,name] = layerUrl;
         /* GIT CARGA - LOAD */
         let uuid = Math.random()
                     .toString(36)
                     .substring(2) + Date.now().toString(36);
-
         /* Valida URL */
         new URL(url);
         /* Layer REQUEST */
@@ -75,8 +77,7 @@ define(
           "callbackParamName" : "callback"
         });
         layersRequest.then(
-          function(response) {
-            console.log(response);
+          function(response){
             /* Valida el nombre si tiene contenido */
             name = name=='' ? response.name:name;
             /* Se agrega la capa al mapa */
@@ -94,7 +95,6 @@ define(
             });
             /* FALTA AGREGAR EL JS */
             map.addLayer(featureLayer);
-
             if(zoom) {
               /* Acercamiento de layers capa por EXTENT */
               _setMapExtent(response.extent);
@@ -114,6 +114,24 @@ define(
                 }, 3000);
                 console.log(`maxRecordCount: ${metadata.maxRecordCount}`);
               });
+
+
+              /*Se agrega LAYER */
+              listLayerHTML.push(`
+                  <li>  
+                    <input type="checkbox" class="mostrar-menu" id="layer${uuid}">
+                    <label for="layer${uuid}" class="ampliar"></label>
+                    <input type="checkbox" id="layerName${uuid}" data-item='layer' data-uuid="${uuid}" data-url="${url}" data-name="${name}" onclick="window._activeLayer('listLayerDynamic')" checked>
+                    <label for="layerName${uuid}">${name}</label>
+                    <p>Fuente: ${name}</p>
+                    <ul class="nivel-03">
+                      <li><p>** Legenda en proceso ...</p></li>
+                    </ul>
+                  </li>
+              `);
+
+              domAttr.set("listLayerDynamic", "innerHTML", listLayerHTML.join(""));
+
             }
             /* GIT CARGA - REMOVE */
           },
@@ -122,7 +140,7 @@ define(
             console.log("Error: ", error.message);
           }
         );
-        return [uuid,'HOLA'];
+        return uuid;
       } catch(error) {
         if (error instanceof TypeError) {
           console.error(`${error.name} - ${error.message}.`);
