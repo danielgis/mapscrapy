@@ -57,25 +57,30 @@ define(
       console.log("SE ESTA CARGANDO");
     }
 
-    let _loadServices = function(layerUrl, zoom= true){
-      /*try{*/
+    let _loadServices = function(layerUrl,zoom=true){
+      try{
+        let [url,name] = layerUrl;
         /* GIT CARGA - LOAD */
         let uuid = Math.random()
                     .toString(36)
                     .substring(2) + Date.now().toString(36);
+
         /* Valida URL */
-        new URL(layerUrl);
+        new URL(url);
         /* Layer REQUEST */
         let layersRequest = esriRequest({
-          "url"               : layerUrl,
+          "url"               : url,
           "sync"              : false,
           "content"           : {"f":"json"},
           "callbackParamName" : "callback"
         });
         layersRequest.then(
           function(response) {
-            // Se agrega la capa al mapa
-            let featureLayer = new FeatureLayer(layerUrl, {
+            console.log(response);
+            /* Valida el nombre si tiene contenido */
+            name = name=='' ? response.name:name;
+            /* Se agrega la capa al mapa */
+            let featureLayer = new FeatureLayer(url, {
               mode         : FeatureLayer.MODE_ONDEMAND,
               outFields    : ["*"],
               id           : uuid,
@@ -83,7 +88,7 @@ define(
               outSR        : 102100,              
               opacity      : 1,
               infoTemplate : new PopupTemplate({
-                title       : `<center>${response.name}</center>`,
+                title       : `<center>${name}</center>`,
                 description : "{*}"
               })
             });
@@ -91,7 +96,7 @@ define(
             map.addLayer(featureLayer);
 
             if(zoom) {
-              /* Acercamiento de la capa por EXTENT */
+              /* Acercamiento de layers capa por EXTENT */
               _setMapExtent(response.extent);
               /* METADATA - Falta contruir el HTML */
               let metadata = map._layers[uuid];
@@ -117,15 +122,15 @@ define(
             console.log("Error: ", error.message);
           }
         );
-        return uuid;
-      /*} catch(error) {
+        return [uuid,'HOLA'];
+      } catch(error) {
         if (error instanceof TypeError) {
           console.error(`${error.name} - ${error.message}.`);
         } else {
           throw error;
           console.error(`${error.name} - ${error.message}.`);
         }
-      }*/
+      }
     };
 
     /* Acciones de SERVICIOS */
@@ -156,7 +161,7 @@ define(
 
         if(txtServicio.value.length > 0 && txtServicio.value != "") {
           /* Cargar datos */
-          _loadServices(txtServicio.value);
+          _loadServices([txtServicio.value,'']);
         } else {
           /* Evento que PINTE DE COLOR EL INPUT y letras rojas */
           console.log("INGRESE SERVICIO"); 
