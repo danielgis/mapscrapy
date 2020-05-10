@@ -61,6 +61,10 @@
   overflow: hidden;
   vertical-align: middle;
 }
+.form-services .btn-full {
+  width: 100% !important;
+}
+
 
 .form-services fieldset {
   padding: 7px 7px 3px 7px;
@@ -68,16 +72,14 @@
   text-align: center;
 }
 
-.form-services fieldset div.polygon,
-.form-services fieldset div.dot,
-.form-services fieldset div.oval {
+.form-services fieldset div {
   background-color: rgba(15,76,117,0.5) !important;
   border: 1px solid rgba(15,76,117,1);
   display: inline-block;
   cursor: pointer;
   height: 40px;
   margin: 0;
-  width: 40px;
+  width: 31%;
 }
 
 .form-services fieldset div.polygon:hover,
