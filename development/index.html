@@ -148,18 +148,18 @@
                             
                             <div>
                                 <fieldset>
-                                    <div class="polygon" title="Polígono"></div>
-                                    <div class="dot" title="Círculo"></div>
-                                    <div class="oval" title="Ovalo"></div>
+                                    <div class="polygon" title="Polígono" data-graphics="polygon" onclick="window.activeTool(this)"></div>
+                                    <div class="dot" title="Círculo" data-graphics="circle" onclick="window.activeTool(this)"></div>
+                                    <div class="oval" title="Ovalo" data-graphics="ellipse"></div>
                                 </fieldset>
                             </div>                            
                             
                             <div class="group-button">    
-                                <button id="ID_Borrar" class="btn is-outlined" type="button">
+                                <button type="button" id="ID_Borrar" class="btn is-outlined" data-graphics="delete" onclick="window.activeTool(this)">
                                     <i class="fa fa-minus-circle" aria-hidden="true"></i>
                                     Borrar
                                 </button>
-                                <button id="ID_Descargar" class="btn is-link" type="button">
+                                <button type="button" id="ID_Descargar" class="btn is-link">
                                     <i class="fa fa-arrow-circle-o-down" aria-hidden="true"></i>
                                     Descargar
                                 </button>

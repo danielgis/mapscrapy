@@ -64,6 +64,8 @@ define(
                     <input type="checkbox" id="layerName${group}${layer}" data-item='layer' data-uuid="${uuid}" data-url="${url}" data-name="${layers[layer].name}" ${checkboxActive}>
                     <label for="layerName${group}${layer}">${layers[layer].name}</label>
                     ${fuente}
+
+                    <div style="display:none;float:right; margin:-30px 8px 0 0; font-size: 12px !important; border:1px solid white; padding: 3px 3px 1px 3px; box-sizing: border-box; cursor:pointer;"><i class="fa fa-bars" aria-hidden="true"></i></div>
                     <ul class="nivel-03">
                       <li><p>** Legenda en proceso ...</p></li>
                     </ul>

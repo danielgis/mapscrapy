@@ -7,6 +7,11 @@ define(
     "esri/layers/FeatureLayer",
     "esri/dijit/PopupTemplate",
     "esri/geometry/Extent",
+    "esri/toolbars/draw",
+    "esri/graphic",
+    "esri/Color",
+    "esri/symbols/SimpleFillSymbol",
+    "esri/symbols/SimpleLineSymbol",
     "dojo/dom-attr",
     "dojo/on",
     "dojo/dom",
@@ -19,10 +24,57 @@ define(
     FeatureLayer,
     PopupTemplate,
     Extent,
+    Draw,
+    Graphic,
+    Color,
+    SimpleFillSymbol,
+    SimpleLineSymbol,
     domAttr,
     on,
     dom
   ){
+    
+    let _toolbar = function(){
+      try {
+        let toolbar = new Draw(map);
+        toolbar.on("draw-end", function(evt){
+          toolbar.deactivate();
+          map.setInfoWindowOnClick(true);
+          let symbol =  new SimpleFillSymbol(
+                          "solid", 
+                          new SimpleLineSymbol(
+                            "dash",
+                            new Color([255,0,0]), 2),
+                            new Color([255,255,0,0.25]
+                          )
+                        ),
+              graphic = new Graphic(evt.geometry, symbol);
+          map.graphics.add(graphic);
+          map.setExtent(graphic._extent, true);
+          graphicAsJsonString = graphic;
+        })
+        return toolbar;
+      } catch(error) {
+        console.error(`_activeTool: ${error.name} - ${error.message}.`);
+      }
+    };
+
+    let _activeTool = function($this){
+      try {
+        let tool = $this.dataset.graphics.toUpperCase();
+        if (tool != "DELETE"){
+          _toolbar().activate(Draw[tool]);
+          map.setInfoWindowOnClick(false);
+        }else if(tool == "DELETE"){
+          map.graphics.clear();
+          _toolbar().deactivate();
+          map.setInfoWindowOnClick(true);
+        } 
+      } catch(error) {
+        console.error(`_activeTool: ${error.name} - ${error.message}.`);
+      }
+    }
+
     let _showLoader = function(toggle){
       try {
         if (toggle == true){
@@ -55,9 +107,7 @@ define(
         console.error(`_setMapExtent: ${error.name} - ${error.message}.`);
       }
     };
-    let abc = function(){
-      console.log("SE ESTA CARGANDO");
-    }
+   
     let listLayerHTML=[];
     let _loadServices = function(layerUrl,zoom=true){
       try{
@@ -201,13 +251,12 @@ define(
       }
     });
 
-    //
     const btnBorrar     = dom.byId("ID_Borrar"),
           btnDescargar  = dom.byId("ID_Descargar");
-
+    /* Limpia dotos los GRAPHICS */
     on(btnBorrar,"click",function(evt) {
       try {
-        console.log("Le dio click en BORRAR");
+        _activeTool(this);
       } catch(error) {
         console.error(`${error.name} - ${error.message}.`);
       }
@@ -220,7 +269,7 @@ define(
         console.error(`${error.name} - ${error.message}.`);
       }
     });
-
+    window.activeTool = _activeTool;
     return {
       _loadServices: function(paramURL, booleanZOOM){
         /*
