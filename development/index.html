@@ -112,7 +112,7 @@
                             </h1>
 
                             <div>
-                                <label for="ID_Tipo">
+                                <label class="subTitle" for="ID_Tipo">
                                     1. Seleccione tipo de servicio:
                                 </label>
                                 <select id="ID_Tipo" name="deporte">
@@ -123,7 +123,7 @@
                             </div>
                             
                             <div>
-                                <label for="ID_Servicio">
+                                <label class="subTitle" for="ID_Servicio">
                                     2. Ingrese servicio (URL):
                                 </label>
                                 <input id="ID_Servicio" type="text" placeholder="Ingrese servicio - URL" value="https://www.idep.gob.pe/geoportal/rest/services/DATOS_GEOESPACIALES/L%C3%8DMITES/MapServer/5">
@@ -141,7 +141,7 @@
                             </div>
 
                             <div>
-                                <label>
+                                <label class="subTitle">
                                     3. Dibujar el grafico del área de interés el cual debe contener los elementos a extraer:
                                 </label>
                             </div>
@@ -159,17 +159,41 @@
                                 </button>
                             </div>                            
                             
-                            
                             <div>
-                                <label>
-                                    4. Seleccione la(s) capa(s) que esten activas de la '<strong>Tabla de contenido</strong>' a descargar:
+                                <label class="subTitle">
+                                    4. Se listara la(s) capa(s) activa(s) de la '<strong>Tabla de contenido</strong>' a descargar. Seleccione las capas a descargar:
                                 </label>
                             </div>
-                            <div>
-                                <fieldset>
-                                    
-                                </fieldset>
+
+                            <hr>
+
+                            <div class="list-layer">
+                                <nav>
+                                    <ul class="list-content">
+                                        <li>  
+                                            <input  type="checkbox" 
+                                                    class="mostrar-menu" 
+                                                    id="layerRamos">
+                                            <label  for="layerRamos" 
+                                                    class="ampliar">
+                                            </label>
+                                            <input  type="checkbox" 
+                                                    id="layerNameMendoza" 
+                                                    data-item='layer'>
+                                            <label for="layerNameMendoza">
+                                              Nombre
+                                            </label>
+                                            <p>Fuente: ....</p>
+                                            <ul class="nivel-03">
+                                                <li><p>** Legenda en proceso ...</p></li>
+                                            </ul>
+                                        </li>
+                                    </ul>
+                                </nav>
                             </div>
+                            
+                            <hr>
+
                             <div class="group-button">    
                                 <button type="button" id="ID_Borrar" class="btn is-outlined" data-graphics="delete" onclick="window.activeTool(this)">
                                     <i class="fa fa-minus-circle" aria-hidden="true"></i>
@@ -182,6 +206,7 @@
                             </div>
                             
                         </form>
+                        
                     </div>
                     <div class="content-3">
                         <!-- Tu contenido 3 -->

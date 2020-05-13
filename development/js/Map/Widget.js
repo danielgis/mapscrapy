@@ -1,8 +1,9 @@
 define(
   [
     "esri/map",
+    "dojo/on",
     "dojo/domReady!"
-  ], function(Map) {
+  ], function(Map,on) {
     /* Objeto de mapa principal */
     let map = new Map("map", {
       center: [-75.015152,-9.1899672],

@@ -3,14 +3,14 @@
 }
 
 .form-services select,
-.form-services label,
+.form-services .subTitle,
 .form-services input[type="text"] {
   width: 100%;
   border: 0;
   padding: 0; 
 }
 
-.form-services label {
+.form-services .subTitle {
   line-height: 25px;
 }
 
@@ -100,3 +100,5 @@
 .form-services fieldset div.oval {
   background: url("../img/oval.png") no-repeat 50% 50%;
 }
+
+

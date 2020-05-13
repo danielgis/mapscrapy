@@ -33,7 +33,6 @@ define(
     on,
     dom
   ){
-    
     let _toolbar = function(){
       try {
         let toolbar = new Draw(map);
@@ -89,6 +88,7 @@ define(
       }
     };
 
+    /* Cambio de extensión del mapa */
     let _setMapExtent = function(response){
       try {
         let queryExtent = new Extent(response);
@@ -109,6 +109,8 @@ define(
     };
    
     let listLayerHTML=[];
+
+    /* Cargar servicio */
     let _loadServices = function(layerUrl,zoom=true){
       try{
         
@@ -143,6 +145,11 @@ define(
                 description : "{*}"
               })
             });
+            /*  */
+            on(featureLayer, 'toggle', function(evt){
+              console.log('toggle');
+            });
+
             /* FALTA AGREGAR EL JS */
             map.addLayer(featureLayer);
             if(zoom) {
@@ -150,6 +157,7 @@ define(
               _setMapExtent(response.extent);
               /* METADATA - Falta contruir el HTML */
               let metadata = map._layers[uuid];
+              
               metadata.on("load",function(){
                 console.log(`version: ${metadata.version}`);
                 console.log(`name: ${metadata.name}`);
@@ -190,7 +198,6 @@ define(
               `);
               domAttr.set("listLayerDynamic", "innerHTML", listLayerHTML.join(""));
             }
-            /* GIT CARGA - REMOVE */
           },
           function(error) {
             /* GIT CARGA - REMOVE */
