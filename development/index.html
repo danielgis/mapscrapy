@@ -50,202 +50,252 @@
 
         <!-- BEGIN - Sidebar -->
         <section id="sidebar" class="sidebar">
-            <article class="tabs">
+            <div class="scroll-menu">
+                <input id="Tab-1" type="radio" name="tabs">
+                <label for="Tab-1">
+                    Home
+                </label>
+                
+                <input id="Tab-2" type="radio" name="tabs">
+                <label for="Tab-2">
+                    Descargar Servicios
+                </label>
 
-                <input id="tab-1" type="radio" name="radio-set" class="tab-selector-1" checked="checked" />
-                <label class="label" for="tab-1">Home</label>
+                <input id="Tab-3" type="radio" name="tabs">
+                <label for="Tab-3" name="Presas">
+                    Tabla de contenido
+                </label>
 
-                <input id="tab-2" type="radio" name="radio-set" class="tab-selector-2" />
-                <label class="label" for="tab-2">Descargar Servicios</label>
+                <input id="Tab-4" type="radio" name="tabs">
+                <label for="Tab-4">
+                    Host disponibles
+                </label>
 
-                <input id="tab-3" type="radio" name="radio-set" class="tab-selector-3" />
-                <label class="label" for="tab-3">Tabla de contenido</label>
+                <input id="Tab-5" type="radio" name="tabs">
+                <label for="Tab-5">
+                    Mapas bases
+                </label>
+            </div>
+           
+            <div id="Tab-1_TAB" class="tab-content tab-1">
+                <!--Tu contenido 1-->
+                <img src="./img/monster-truck.png" alt="Logo de MapScrapy" />
+                
+                <br>
 
-                <input id="tab-4" type="radio" name="radio-set" class="tab-selector-4" />
-                <label class="label" for="tab-4">Host Disponibles</label>
+                <h3>Bienvenido a MapScrapy</h3>
+                
+                <br>
+                
+                <p>
+                    Este proyecto personal nace en base a la necesidad de obtener información geoespacial en formato vectorial
+                    de las distintas entidades productoras de cartografía que disponen de tecnología suficiente para proporcionar
+                    servicios de mapas web (WMS).
+                    Por favor si tiene alguna sugerencia, sientase libre de dejarlo en 
+                    <u>
+                        <a href="https://github.com/danielgis/mapscrapy/issues/1" target="blank">
+                            esta dirección <i class="fa fa-link" aria-hidden="true"></i>
+                        <a>
+                    </u> 
+                    .
+                </p>
+                
+                <br>
 
-                <input id="tab-5" type="radio" name="radio-set" class="tab-selector-5" />
-                <label class="label" for="tab-5">Mapas bases</label>
+                <p style="text-align: left">
+                    * MapScrapy by:
+                </p>
+                <p style="text-align: left; margin-left: 20px;">
+                    <a href="https://danielgis.github.io" target="blank">
+                        - DanielGIS :
+                    </a>
+                    <a href="https://github.com/danielgis" target="blank">
+                        <i class="fa fa-github-alt fa-2x"></i>
+                    </a>
+                    
+                    <a href="https://twitter.com/daniela92295460" target="blank">
+                        <i class="fa fa-twitter fa-2x"></i>
+                    </a>
 
-                <div class="clear-shadow"></div>
-
-                <div class="content">
-                    <div class="content-1">
-                        <!--Tu contenido 1-->
-                        <img src="./img/monster-truck.png" alt="Logo de MapScrapy" />
-                        <h3>Bienvenido a MapScrapy</h3>
-                        <p>
-                            Este proyecto personal nace en base a la necesidad de obtener información geoespacial en formato vectorial
-                            de las distintas entidades productoras de cartografía que disponen de tecnología suficiente para proporcionar
-                            servicios de mapas web (WMS).
-                            Por favor si tiene alguna sugerencia, sientase libre de dejarlo en <a href="https://github.com/danielgis/mapscrapy/issues/1" target="blank">esta dirección<a>
-                        </p>
+                    <a href="https://www.linkedin.com/in/danielgis" target="blank">
+                        <i class="fa fa-linkedin fa-2x"></i>
+                    </a>
                         
-                            <a href="https://github.com/danielgis" target="blank">
-                                <i class="fa fa-github-alt fa-2x"></i>
-                            </a>
-                            <a href="https://twitter.com/daniela92295460" target="blank">
-                                <i class="fa fa-twitter fa-2x"></i>
-                            </a>
-                            <a href="https://www.linkedin.com/in/danielgis" target="blank">
-                                <i class="fa fa-linkedin fa-2x"></i>
-                            </a>
-                        
-                        
-                            <p>
-                                MapScrapy by 
-                                <a href="https://danielgis.github.io" target="blank">DanielGIS</a> | 
-                                <a href="https://hdramosmendoza.github.io/Perfil-Profesional/" target="blank">HDRamosMendoza</a>
-                            </p>
-                            <p>
-                                MADE in PERÚ - LIMA
-                            </p>
-                        
+                </p>
+
+                <p style="text-align: left; margin-left: 20px;">
+                    <a href="https://hdramosmendoza.github.io/Perfil-Profesional/" target="blank">
+                        - HDRamosMendoza :
+                    </a>
+                    <a href="https://github.com/HDRamosMendoza" target="blank">
+                        <i class="fa fa-github-alt fa-2x"></i>
+                    </a>
+                    
+                    <a href="https://twitter.com/HDRamosMendoza" target="blank">
+                        <i class="fa fa-twitter fa-2x"></i>
+                    </a>
+
+                    <a href="https://www.linkedin.com/in/HDRamosMendoza" target="blank">
+                        <i class="fa fa-linkedin fa-2x"></i>
+                    </a>
+                </p>
+                
+                <br>
+
+                <p>
+                    <strong>MADE in PERÚ - LIMA</strong>
+                </p>
+                
+            </div>
+            <div id="Tab-2_TAB" class="tab-content tab-2">
+                <!--Tu contenido 2-->
+
+                <form class="form-services">
+
+                    <h3>
+                        <center><u>Descargar servicios</u></center>
+                    </h3>
+
+                    <div>
+                        <label class="subTitle" for="ID_Tipo">
+                            1. Seleccione tipo de servicio:
+                        </label>
+                        <select id="ID_Tipo" name="deporte">
+                            <option value="">SELECCIONE SERVICIO</option>
+                            <option value="MAPSERVER" selected="selected">MAPSERVER</option>
+                            <option value="WMS" disabled>WMS</option>
+                        </select>
                     </div>
-                    <div class="content-2">
-                        <!--Tu contenido 2-->
+                    
+                    <div>
+                        <label class="subTitle" for="ID_Servicio">
+                            2. Ingrese servicio (URL):
+                        </label>
+                        <input id="ID_Servicio" type="text" placeholder="Ingrese servicio - URL" value="https://www.idep.gob.pe/geoportal/rest/services/DATOS_GEOESPACIALES/L%C3%8DMITES/MapServer/5">
+                    </div>
+                    
+                    <div class="group-button">
+                        <button id="ID_Limpiar" class="btn is-outlined" type="button">
+                            <i class="fa fa-eraser" aria-hidden="true"></i>
+                            Limpiar 1 y 2
+                        </button>
+                        <button id="ID_Cargar" class="btn is-link" type="button">
+                            <i class="fa fa-upload" aria-hidden="true"></i>
+                            Cargar
+                        </button>
+                    </div>
 
-                        <form class="form-services">
+                    <div>
+                        <label class="subTitle">
+                            3. Dibujar el grafico del área de interés el cual debe contener los elementos a extraer:
+                        </label>
+                    </div>
+                    
+                    <div>
+                        <fieldset>
+                            <div class="polygon" title="Polígono" data-graphics="polygon" onclick="window.activeTool(this)"></div>
+                            <div class="dot" title="Círculo" data-graphics="circle" onclick="window.activeTool(this)"></div>
+                            <div class="oval" title="Ovalo" data-graphics="ellipse"></div>
+                        </fieldset>
+                        <br>
+                        <button type="button" id="ID_Borrar" class="btn btn-full is-outlined" data-graphics="delete" onclick="window.activeTool(this)">
+                            <i class="fa fa-trash" aria-hidden="true"></i>
+                            Borrar gráfico
+                        </button>
+                    </div>                            
+                    
+                    <div>
+                        <label class="subTitle">
+                            4. Se listara la(s) capa(s) activa(s) de la '<strong>Tabla de contenido</strong>' a descargar. Seleccione las capas a descargar:
+                        </label>
+                    </div>
 
-                            <h1>
-                                <center><u>Descargar servicios</u></center>
-                            </h1>
+                    <hr>
 
-                            <div>
-                                <label class="subTitle" for="ID_Tipo">
-                                    1. Seleccione tipo de servicio:
-                                </label>
-                                <select id="ID_Tipo" name="deporte">
-                                    <option value="">SELECCIONE SERVICIO</option>
-                                    <option value="MAPSERVER" selected="selected">MAPSERVER</option>
-                                    <option value="WMS" disabled>WMS</option>
-                                </select>
-                            </div>
-                            
-                            <div>
-                                <label class="subTitle" for="ID_Servicio">
-                                    2. Ingrese servicio (URL):
-                                </label>
-                                <input id="ID_Servicio" type="text" placeholder="Ingrese servicio - URL" value="https://www.idep.gob.pe/geoportal/rest/services/DATOS_GEOESPACIALES/L%C3%8DMITES/MapServer/5">
-                            </div>
-                            
-                            <div class="group-button">
-                                <button id="ID_Limpiar" class="btn is-outlined" type="button">
-                                    <i class="fa fa-eraser" aria-hidden="true"></i>
-                                    Limpiar 1 y 2
-                                </button>
-                                <button id="ID_Cargar" class="btn is-link" type="button">
-                                    <i class="fa fa-upload" aria-hidden="true"></i>
-                                    Cargar
-                                </button>
-                            </div>
-
-                            <div>
-                                <label class="subTitle">
-                                    3. Dibujar el grafico del área de interés el cual debe contener los elementos a extraer:
-                                </label>
-                            </div>
-                            
-                            <div>
-                                <fieldset>
-                                    <div class="polygon" title="Polígono" data-graphics="polygon" onclick="window.activeTool(this)"></div>
-                                    <div class="dot" title="Círculo" data-graphics="circle" onclick="window.activeTool(this)"></div>
-                                    <div class="oval" title="Ovalo" data-graphics="ellipse"></div>
-                                </fieldset>
-                                <br>
-                                <button type="button" id="ID_Borrar" class="btn btn-full is-outlined" data-graphics="delete" onclick="window.activeTool(this)">
-                                    <i class="fa fa-trash" aria-hidden="true"></i>
-                                    Borrar gráfico
-                                </button>
-                            </div>                            
-                            
-                            <div>
-                                <label class="subTitle">
-                                    4. Se listara la(s) capa(s) activa(s) de la '<strong>Tabla de contenido</strong>' a descargar. Seleccione las capas a descargar:
-                                </label>
-                            </div>
-
-                            <hr>
-
-                            <div class="list-layer">
-                                <nav>
-                                    <ul class="list-content">
-                                        <li>  
-                                            <input  type="checkbox" 
-                                                    class="mostrar-menu" 
-                                                    id="layerRamos">
-                                            <label  for="layerRamos" 
-                                                    class="ampliar">
-                                            </label>
-                                            <input  type="checkbox" 
-                                                    id="layerNameMendoza" 
-                                                    data-item='layer'>
-                                            <label for="layerNameMendoza">
-                                              Nombre
-                                            </label>
-                                            <p>Fuente: ....</p>
-                                            <ul class="nivel-03">
-                                                <li><p>** Legenda en proceso ...</p></li>
-                                            </ul>
-                                        </li>
+                    <div class="list-layer">
+                        <nav>
+                            <ul class="list-content">
+                                <li>  
+                                    <input  type="checkbox" 
+                                            class="mostrar-menu" 
+                                            id="layerRamos">
+                                    <label  for="layerRamos" 
+                                            class="ampliar">
+                                    </label>
+                                    <input  type="checkbox" 
+                                            id="layerNameMendoza" 
+                                            data-item='layer'>
+                                    <label for="layerNameMendoza">
+                                      Nombre
+                                    </label>
+                                    <p>Fuente: ....</p>
+                                    <ul class="nivel-03">
+                                        <li><p>** Legenda en proceso ...</p></li>
                                     </ul>
-                                </nav>
-                            </div>
-                            
-                            <hr>
+                                </li>
+                            </ul>
+                        </nav>
+                    </div>
+                    
+                    <hr>
 
-                            <div class="group-button">    
-                                <button type="button" id="ID_Borrar" class="btn is-outlined" data-graphics="delete" onclick="window.activeTool(this)">
-                                    <i class="fa fa-minus-circle" aria-hidden="true"></i>
-                                    Limpiar
-                                </button>
-                                <button type="button" id="ID_Descargar" class="btn is-link">
-                                    <i class="fa fa-arrow-circle-o-down" aria-hidden="true"></i>
-                                    Descargar
-                                </button>
-                            </div>
-                            
-                        </form>
-                        
+                    <div class="group-button">    
+                        <button type="button" id="ID_Borrar" class="btn is-outlined" data-graphics="delete" onclick="window.activeTool(this)">
+                            <i class="fa fa-minus-circle" aria-hidden="true"></i>
+                            Limpiar
+                        </button>
+                        <button type="button" id="ID_Descargar" class="btn is-link">
+                            <i class="fa fa-arrow-circle-o-down" aria-hidden="true"></i>
+                            Descargar
+                        </button>
                     </div>
-                    <div class="content-3">
-                        <!-- Tu contenido 3 -->
-                        <h1>
-                            <center><u>Tabla de Contenido</u></center>
-                        </h1>
-                        <hr>
-                        <div class="list-layer">
-                            <nav>
-                                <ul class="list-content" id="listLayerDynamic">
-                                </ul>
-                            </nav>
-                        </div>
-                        <hr>
-                        <div class="list-layer">
-                            <nav>
-                                <ul class="list-content" id="listLayerContent">
-                                </ul>
-                            </nav>
-                        </div>
-                        <hr>
-                    </div>
-                    <div class="content-4">
-                        <!-- Tu contenido 4 -->
-                        <h1>
-                            <center><u>Host disponibles</u></center>
-                        </h1>
-                    </div>
-                    <div class="content-5">
-                        <!-- Tu contenido 5 -->
-                        <h1>
-                            <center><u>Mapas bases</u></center>
-                        </h1>
-                        <!-- WIDGET - Basemap -->
-                        <section id="WidgetBasemap" data-dojo-type="WidgetBasemap">
-                        </section>
-                    </div>
+                    
+                </form>
+                
+            </div>
+            <div id="Tab-3_TAB" class="tab-content">
+                <!-- Tu contenido 3 -->
+                <h3>
+                    <center>
+                        <u>Tabla de Contenido</u>
+                    </center>
+                </h3>
+                <hr>
+                <div class="list-layer">
+                    <nav>
+                        <ul class="list-content" id="listLayerDynamic">
+                        </ul>
+                    </nav>
                 </div>
-            </article>
+                <hr>
+                <div class="list-layer">
+                    <nav>
+                        <ul class="list-content" id="listLayerContent">
+                        </ul>
+                    </nav>
+                </div>
+                <hr>
+            </div>
+            <div id="Tab-4_TAB" class="tab-content">
+                <!-- Tu contenido 4 -->
+                <h3>
+                    <center>
+                        <u>Host disponibles</u>
+                    </center>
+                </h3>
+            </div>
+            <div id="Tab-5_TAB" class="tab-content">
+                <!-- Tu contenido 5 -->
+                <h3>
+                    <center>
+                        <u>Mapas bases</u>
+                    </center>
+                </h3>
+                <!-- WIDGET - Basemap -->
+                <section id="WidgetBasemap" data-dojo-type="WidgetBasemap">
+                </section>
+            </div>
+            
         </section>
         <!-- END - Sidebar -->
 
@@ -257,10 +307,8 @@
         <!-- END - Map -->
 
     </body>
-
     <!-- JS - Config DOJO -->
     <!--<script src='./js/dojoConfig.js'></script>-->
-    
     <!-- Set Dojo configuration, load Dojo. -->
     <script type="text/javascript">
         var dojoConfig = {
@@ -277,14 +325,11 @@
             }*/
         };
     </script>
-    
     <!-- JS - API ESRI -->
     <script type="text/javascript" src="https://js.arcgis.com/3.23/"></script>
-
     <!-- JS -->
     <script type="text/javascript" src='./js/map.js'></script>
     <script type="text/javascript" type="text/javascript">
         document.getElementById("abrir").click();
     </script>
-    
-</html> 
+</html>

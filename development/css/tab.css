@@ -1,145 +1,91 @@
-.tabs {
-    position: relative;
-    margin: 0px auto;
-    width: 100%;
-}
-
-.tabs input[name="radio-set"] {
-    position: absolute;
-    z-index: 1000;
-    width: 120px;
-    height: 40px;
-    left: 0px;
-    top: 0px;
-    -ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=100)";
-    opacity: 0;
-    filter: alpha(opacity=0);
-    cursor: pointer;
-    display: none;
-}
-
-.tabs input#tab-2{
-    left: 120px;
-}
-
-.tabs input#tab-3{
-    left: 240px;
-}
-
-.tabs input#tab-4{
-    left: 360px;
-}
-
-.tabs label.label {
-    font-size: 9px;
-    line-height: 40px;
-    height: 40px;
-    position: relative;
-    padding: 0 10px;
-    float: left;
-    font-weight: bold;
-    display: block;
-    color: #f1f1f6;
-    letter-spacing: 1px;
-    text-align: center;
-    margin-bottom: 3px;
-}
-
-.tabs label.label:after {
-    content: '';
-    background: #fff;
-    position: absolute;
-    bottom: -2px;
-    left: 0;
-    width: 100%;
-    height: 2px;
-    display: block;
-}
-
-.tabs input:hover + label.label {
-    background: #0F4C75;
+a:link, a:visited, a:active {
+    text-decoration:none;
     color: white;
 }
-
-.tabs label.label:first-of-type {
-    z-index: 4;
-    box-shadow: 2px 0 2px rgba(0,0,0,0.1);
+.tab-content {
+  display: none;
+  padding: 5px 10px;
+  overflow-y: hidden; 
+  height: 100%;
+  margin-bottom: -150px;
 }
 
-.tab-label-2 {
-    z-index: 4;
+/* Activa el scroll del menú */
+.scroll-menu {
+  overflow-x: auto;
+  overflow-y: hidden;
+  white-space: nowrap;
 }
 
-.tab-label-3 {
-    z-index: 2;
+.scroll-menu input {
+  display: none;
 }
 
-.tab-label-4 {
-    z-index: 2;
+.scroll-menu label {
+  color: #F1F1F6;
+  display: inline-block;
+  /*margin: 0 0 -1px;*/
+  padding: 15px 15px;
+  font-weight: 600;
+  text-align: center;
+  margin-left: -5px;
 }
 
-.tab-label-5 {
-    z-index: 1;
+.scroll-menu input[name="tabs"] {
+  position: absolute;
+  z-index: 1000;
+  width: 120px;
+  height: 40px;
+  left: 0px;
+  top: 0px;
+  -ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=100)";
+  opacity: 0;
+  filter: alpha(opacity=0);
+  display: none;
 }
 
-.tabs input:checked + label {
-    background: #1b262c;
-    color: #1eb2a6;
-    z-index: 6;
+.scroll-menu input[name="tabs"]:hover + label {
+  background: #0F4C75;
+  color: white;
+  cursor: pointer;
 }
-/*0F4C75*/
-
-.clear-shadow {
-    clear: both;
-}
-
-.content {
-    background-color: #303030;
-    position: relative;
-    z-index: 5;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    
+.scroll-menu input:checked + label {
+  background: #1b262c;
+  color: #1eb2a6;
+  z-index: 6;
 }
 
-.content-1 {
-    text-align: center;
+.tab-1 {
+  text-align: center;
+  padding: 30px 10px !important;
 }
 
-.content div.content-1,
-.content div.content-2,
-.content div.content-3,
-.content div.content-4,
-.content div.content-5 {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    padding: 5px 10px;
-    z-index: 1;
-    opacity: 0;
-    -webkit-transition: opacity linear 0.1s;
-    -moz-transition: opacity linear 0.1s;
-    -o-transition: opacity linear 0.1s;
-    -ms-transition: opacity linear 0.1s;
-    transition: opacity linear 0.1s;
+/* BEGIN - Scroll personalizado */
+.scroll-menu::-webkit-scrollbar {
+  -webkit-appearance: none;
 }
 
-.tabs input.tab-selector-1:checked ~ .content .content-1,
-.tabs input.tab-selector-2:checked ~ .content .content-2,
-.tabs input.tab-selector-3:checked ~ .content .content-3,
-.tabs input.tab-selector-4:checked ~ .content .content-4,
-.tabs input.tab-selector-5:checked ~ .content .content-5 {
-    z-index: 100;
-    -ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=100)";
-    filter: alpha(opacity=100);
-    opacity: 1;
+.scroll-menu::-webkit-scrollbar:vertical {
+  width:10px;
+}
 
-    -webkit-transition: opacity ease-out 0.2s 0.1s;
-    -moz-transition: opacity ease-out 0.2s 0.1s;
-    -o-transition: opacity ease-out 0.2s 0.1s;
-    -ms-transition: opacity ease-out 0.2s 0.1s;
-    transition: opacity ease-out 0.2s 0.1s;
-}   
+.scroll-menu::-webkit-scrollbar-button:increment,
+.scroll-menu::-webkit-scrollbar-button {
+  display: none;
+} 
+
+.scroll-menu::-webkit-scrollbar:horizontal {
+  background-color: #292828;
+  height: 10px;  
+}
+
+.scroll-menu::-webkit-scrollbar-thumb {
+  background-color: #024f49;
+  border-radius: 20px;
+  border: 1px solid #024f49;
+}
+
+.scroll-menu::-webkit-scrollbar-track {
+  border-radius: 10px;  
+}
+/* END - Scroll personalizado */

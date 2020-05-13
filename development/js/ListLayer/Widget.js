@@ -165,4 +165,5 @@ define(
       /* Se asigna a nivel de WINDOW para que tengan acceso */
       window.activeLayer = _activeLayer;
       window.removeLayer = _removelayer;
+
 });

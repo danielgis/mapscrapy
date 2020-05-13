@@ -64,7 +64,7 @@ input#abrir-cerrar:checked + label[for="abrir-cerrar"] .abrir {
     background-color: #303030;
     overflow-x: hidden;
     transition: 0.4s;
-    padding: 1rem 0;
+    padding: 0;
     box-sizing:border-box;
 }
 
@@ -92,3 +92,33 @@ input#abrir-cerrar:checked + label[for="abrir-cerrar"] .abrir {
     color: #2E88C7;
     font-size:1rem;   
 }
+
+/* BEGIN - Scroll personalizado */
+.sidebar::-webkit-scrollbar {
+    -webkit-appearance: none;
+}
+
+.sidebar::-webkit-scrollbar:vertical {
+    width:10px;
+}
+
+.sidebar::-webkit-scrollbar-button:increment,
+.sidebar::-webkit-scrollbar-button {
+    display: none;
+} 
+
+.sidebar::-webkit-scrollbar:horizontal {
+    background-color: #292828;
+    height: 10px;
+}
+
+.sidebar::-webkit-scrollbar-thumb {
+    background-color: #024f49;
+    border-radius: 20px;
+    border: 1px solid #024f49;
+}
+
+.sidebar::-webkit-scrollbar-track {
+    border-radius: 10px;  
+}
+/* END - Scroll personalizado */
