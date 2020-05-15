@@ -196,7 +196,7 @@ require([
     var response;
     esriRequest({
       "url": url,
-      "sync": true,
+      "sync": false,
       "content": {
         "f": "json",
       },
