@@ -1,6 +1,6 @@
 var hash = {
 	url: 'https://twitter.com/search?src=hash&q=%23',
-	name: ['YoMeQuedoEnCasa', 'Todossomostelmo', 'Telmo']
+	name: ['MerinoNoEsMiPresidente']
 }
 
 
