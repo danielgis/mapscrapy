@@ -1,159 +1,43 @@
-<!DOCTYPE html>
-<html>
+<html lang="en">
+
 <head>
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<link rel="icon" type="image/png" href="css/img/monster-truck.png" />
-	<link rel="stylesheet" href="https://js.arcgis.com/3.31/dijit/themes/claro/claro.css">   
-	<link rel="stylesheet" href="https://js.arcgis.com/3.31/esri/css/esri.css">
-	<script src="https://js.arcgis.com/3.31/"></script>
-	<!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.8.0/css/bulma.min.css"> -->
-    <!-- <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script> -->
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-	<link rel="stylesheet" type="text/css" href="css/style.css">
-	<script type="text/javascript" src="src/nls.js"></script>
-	<script type="text/javascript" src="src/servicesurl.js"></script>
-	<script type="text/javascript" src="src/symbmanager.js"></script>
-	<script type="text/javascript" src="src/loadstartup.js"></script>
-	<script type="text/javascript" src="index.js"></script>
-	<title>MapScrapy</title>
-
-	<!-- Global site tag (gtag.js) - Google Analytics -->
-	<script async src="https://www.googletagmanager.com/gtag/js?id=UA-162172110-1"></script>
-	<script>
-	  window.dataLayer = window.dataLayer || [];
-	  function gtag(){dataLayer.push(arguments);}
-	  gtag('js', new Date());
-
-	  gtag('config', 'UA-162172110-1');
-	</script>
-
-
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="img/monster-truck.png" />
+    <title>Document</title>
+    <!-- Import style.css -->
+    <link rel="stylesheet" href="style.css">
+    <!-- Import arcgis api for javascript 4 -->
+    <link rel="stylesheet" href="https://js.arcgis.com/4.27/esri/themes/light/main.css">
+    <script src="https://js.arcgis.com/4.27/"></script>
 </head>
+
 <body>
-	<div class="container">
-	    <div data-dojo-type="dijit/layout/AccordionContainer" id="optcontainer">
-			<div data-dojo-type="dijit/layout/ContentPane" title="Home">
-	       		<div class="aboutcontainer">
-	       			<div id="imgcontainer">
-	       				<img id="imghome" src="css/img/monster-truck.png">
-	       			</div>
-	       			<div id="textcontainer">
-	       				<div id="descontainer">
-			       			<h3>Bienvenido a MapScrapy</h3>
-			       			<p>
-			       				Este proyecto personal nace en base a la necesidad de obtener información geoespacial en formato vectorial
-			       				de las distintas entidades productoras de cartografía que disponen de tecnología suficiente para proporcionar
-			       				servicios de mapas web (WMS).
-			       				Por favor si tiene alguna sugerencia, sientase libre de dejarlo en <a href="https://github.com/danielgis/mapscrapy/issues/1" target="blank">esta dirección<a>
-			       			</p>
-	       				</div>
-	       				<div id="icocontainer">
-							<a href="https://github.com/danielgis" target="blank"><i class="fa fa-github-alt fa-2x"></i></a>
-							<a href="https://twitter.com/daniela92295460" target="blank"><i class="fa fa-twitter fa-2x"></i></a>
-							<a href="https://www.linkedin.com/in/danielgis" target="blank"><i class="fa fa-linkedin fa-2x"></i></a>
-	       				</div>
-	       				<div id="footcontainer">
-	       					<p>MapScrapy by <a href="https://danielgis.github.io" target="blank">DanielGIS</a></p>
-	       				</div>
-	       			</div>
-	       		</div>
-	        </div>
-	        <div data-dojo-type="dijit/layout/ContentPane" title="Desargar servicios" id="downloadcontainer">
-    			<div id="idloadercontainer" class="loadercontainer">
-    				<i class="fa fa-cog fa-spin fa-3x"></i>	
-    			</div>
-        		<div>
-        			<label>Insertar URL del WebMapService</label><br>
-        			<div id="cargarwmscontainer">	
-	        			<div id="urlcontainer">
-	        				<input type="text" name="url wms" id="urlwms">
-	        			</div>
-	        			<div id="cargarcontainer">
-	        				<button id="cargarwms">cargar</button>
-	        			</div>
-        			</div>
-        		</div>
-        		<br>
-        		<div id="formcontainer">
-        			<form method="post">
-        				<label>Seleccionar servicio</label><br>
-        				<select id="optioncontainer">
-        				</select><br><br>
-        				<label>Grafica el área de interes el cual debe contener los elementos a extraer</label><br>
-    					<div id="drawcontainer" class="toolbarconteiner">
-    						<button class="drawtool" type="button" id="polygon" title="Polígono" onclick="_activateTool()"></button>
-    						<button class="drawtool" type="button" id="circle" title="Circulo" onclick="_activateTool()"></button>
-    						<button class="drawtool" type="button" id="ellipse" title="Elipse" onclick="_activateTool()"></button>
-    						<button class="drawtool" type="button" id="delete" title="Remover gráficos" onclick="_activateTool()"></button>
-    					</div>
+    <div class="maincontainer">
+        <div class="titleContainer">
+            <h1>MAPSCRAPY</h1>
+        </div>
+        <div class="formContainer">
+            <div class="containerUrl">
+                <input type="text" name="search" id="search" placeholder="Ingresa la url del servicio de ArcGIS Server">
+                <button id="searchButton">Search</button>
+            </div>
+            <div class="containerLayers">
+                <label for="selectLayer">Selecciona la capa</label>
+                <select name="" id="selectLayer"></select>
+            </div>
+        </div>
+        <div id="mapContainer">
 
-        				<input type="button" id="btnsubmit" name="submit" value="descargar" onclick="_dataDownload()"><br><br>
-        			</form>
-        		</div>
-        		<div id="metacontainer"></div>
-        	</div>
-	        <div data-dojo-type="dijit/layout/ContentPane" title="Tabla de contenidos" id="layerscontainer">
-	        </div>
-	        <div data-dojo-type="dijit/layout/ContentPane" title="Host de Servicios disponibles" id="agscontainer">
-	        </div>
-	        <div data-dojo-type="dijit/layout/ContentPane" title="Basemap">
-	        	<div id="bascontainer"></div>
-	        </div>
-	    </div>
-		<div id="mapcontainer">
-			<div id="HomeButton"></div>
-			<div id="LocateButton"></div>
-			<div id="TitleApp"></div>
-			<div id="fb-root"></div>
-			<script async defer crossorigin="anonymous" src="https://connect.facebook.net/es_LA/sdk.js#xfbml=1&version=v6.0"></script>
-			<div id="iconfb">	
-				<div class="fb-like" data-href="https://danielgis.github.io/mapscrapy/" data-width="50" data-layout="box_count" data-action="like" data-size="small" data-share="true"></div>
-			</div>
-		</div>
-	<div id="myModal" class="modal">
-
-  <!-- Modal content -->
-  <div class="modal-content">
-    <!-- <span class="close">&times;</span> -->
-    <h3>Mapscrapy</h3>
-    <p>
-		Este proyecto personal nace en base a la necesidad de obtener información geoespacial en formato vectorial
-		de las distintas entidades productoras de cartografía que disponen de tecnología suficiente para proporcionar
-		servicios de mapas web (WMS).
-    </p>
-    <h4>Novedades COVID19 en Tiempo Real <i class="fa fa-star" style="color: #fddb3a;"></i></h4>
-    <p>
-    	<ul>
-       	<li>Descarga del servicio de Johns Hopkins University de casos de COVID19 a nivel mundial <i class="fa fa-star" style="color: #fddb3a;"></i></li>
-    	<li>Descarga del servicio de casos confirmados en Lima Metropolitana y Callao de Telemática SAC <i class="fa fa-star" style="color: #fddb3a;"></i></li>
-    	<li>Descarga del servicio de casos confirmados por región Perú de Telemática SAC <i class="fa fa-star" style="color: #fddb3a;"></i></li>
-    	<li>Descarga del servicio de casos confirmados por departamento Bolivia <i class="fa fa-star" style="color: #fddb3a;"></i></li>
-    	<li>Descarga del servicio de casos confirmados por estado Brasil <i class="fa fa-star" style="color: #fddb3a;"></i></li>
-    	<li>Descarga del servicio de casos confirmados por provincia Argentina <i class="fa fa-star" style="color: #fddb3a;"></i></li>
-    	<li>Descarga del servicio de casos confirmados por región Chile <i class="fa fa-star" style="color: #fddb3a;"></i></li>
-    	</ul>
-    </p>
-    <h4>Consideraciones</h4>
-    <p>
-    	<ul>
-       	<li>Usted puede disponer de 1000 registros como máximo por cada descarga.</li>
-    	<li>Mapscrapy tiene un mejor rendimiento con WMS de tipo Punto.</li>
-    	<li>Aun nos encontramos en fase de pruebas.</li>
-    	</ul>
-    </p>
-    <h4>Terminos y condiciones</h4>
-    <p>
-    	<ul>
-    		<li>Mapscrapy es propietario de los derechos de propiedad intelectual del software. Usted adquiere únicamente el derecho a utilizar el software para sus fines particulares, mas no adquiere derecho de propiedad intelectual.</li>
-    		<li>Mapscrapy no es propietario intelectual de los datos adquiridos desde la plataforma; estos datos pertenecen a las entidades encargadas de la generación de los mismos. Se recomienda verificar los terminos y condiciones sobre la disposición de los datos a cargo de la entidad consultada.</li>
-    		<li>Reconoce que utiliza el software y los datos en su propio riesgo y acepta que Mapscrapy no es responsable por cualquier perdida o daño ocasionado por el uso del software y datos.</li>
-    		<li>Mapscrapy rescindirá este permiso si usted incumple cualquiera de los terminos.</li>
-    	</ul>    	
-    </p>
-    <button class="classAcept" onclick="_closeModal()">Acepto</button>
-  </div>
-</div>
-
-<script type="text/javascript" src="src/hashtags.js"></script>
+        </div>
+        <div class="metadataContainer">
+        </div>
+        <div class="submitContainer">
+            <button id="downloadButton">Descargar</button>
+        </div>
+    </div>
+    <!-- Import index.js -->
+    <script src="index.js"></script>
 </body>
+
 </html>
