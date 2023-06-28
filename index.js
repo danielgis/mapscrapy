@@ -1,23 +1,28 @@
 // add map to the page api arcgis for javascript 4
 // Load the Map and MapView modules
+// import global variables
+
+var _SERVICEURL = ''
+var __ = 'https://danielgis-uw7bpwj5za-uc.a.run.app'
+var _NAME_SERVICE = ''
+
 require([
     "esri/config",
     "esri/Map",
     "esri/views/MapView",
-    // import extent
     "esri/geometry/Extent",
     "esri/geometry/SpatialReference",
-    // import basemap toggle
     "esri/widgets/BasemapGallery",
-    // import home button
     "esri/widgets/Home",
     "esri/widgets/Expand",
-    // import list layers
     "esri/widgets/LayerList",
-    // import map image layer
     "esri/layers/FeatureLayer",
-    // import esri request
-    "esri/request"
+    "esri/request",
+    "esri/widgets/Sketch",
+    "esri/layers/GraphicsLayer",
+    "esri/rest/support/Query",
+    "esri/rest/query",
+    "esri/geometry/Polygon"
 ], function (
     esriConfig,
     Map,
@@ -29,13 +34,33 @@ require([
     Expand,
     LayerList,
     FeatureLayer,
-    esriRequest
+    esriRequest,
+    Sketch,
+    GraphicsLayer,
+    Query,
+    query,
+    Polygon
 ) {
 
-    esriConfig.apiKey = "AAPK02cc79a406844fe490777fffb44d49a68rKns-SWWDmuWPm5YsGBAOtEgsUjWxGAU5uocOao6psinhpPaoFmelzH7lScYgrQ";
+    function _() {
+        const r = new XMLHttpRequest();
+        r.open('GET', `${__}/getApiKey`, false);
+        r.send();
+
+        if (r.status === 200) {
+            return r.responseText;
+        }
+        throw new Error(r.status);
+    }
+
+
+    esriConfig.apiKey = _();
+
+    const graphicsLayer = new GraphicsLayer();
 
     const map = new Map({
-        basemap: "arcgis-topographic" // Basemap layer service
+        basemap: "arcgis-topographic", // Basemap layer service
+        layers: [graphicsLayer]
     });
 
     const view = new MapView({
@@ -91,11 +116,47 @@ require([
         view.ui.add(homeBtn, "top-left");
     });
 
+    // Crear el widget de dibujo
+    const sketch = new Sketch({
+        view: view,
+        container: document.createElement("div"),
+        layer: graphicsLayer,
+        creationMode: "single"
+    });
+
+    // Agregar el widget de dibujo al view
+    // view.ui.add(sketch, "top-right");
+
+    const rectangleBtn = document.getElementById("drawRectangle");
+    const freehandBtn = document.getElementById("drawFreehand");
+    const circleBtn = document.getElementById("drawCircle");
+    const clearBtn = document.getElementById("drawClear");
+
+    // Manejar los eventos de click en los botones
+    rectangleBtn.addEventListener("click", function () {
+        removeAllGraphics();
+        sketch.create("rectangle");
+    });
+
+    freehandBtn.addEventListener("click", function () {
+        removeAllGraphics();
+        sketch.create("polygon");
+    });
+
+    circleBtn.addEventListener("click", function () {
+        removeAllGraphics();
+        sketch.create("circle");
+    });
+
+    clearBtn.addEventListener("click", removeAllGraphics);
+
+    function removeAllGraphics() {
+        graphicsLayer.removeAll();
+    }
+
     // create function
     function addLayer(evt) {
-        // get the value of the button
-        // var value = evt.target.value;
-        // get value of the input text
+        _SERVICEURL = ''
         var inputText = document.getElementById("search").value;
         // check if the value is empty
         if (inputText === "") {
@@ -133,6 +194,7 @@ require([
                     select.add(option);
                 })
             } else {
+                _SERVICEURL = inputText;
                 addFeature(inputText);
             }
         }, function (error) {
@@ -154,6 +216,7 @@ require([
                 f: "json"
             }
         }).then(function (response) {
+            _NAME_SERVICE = response.data.name
             // add data to metadata container
             template = `<div id="metadataLayer">
                         <div><strong>Versión:</strong> ${response.data.currentVersion}</div>
@@ -176,13 +239,76 @@ require([
         // get value of the input text
         var inputText = document.getElementById("search").value;
         // build url
-        var url = inputText + "/" + option;
+        _SERVICEURL = inputText + "/" + option;
+
         // add feature
-        addFeature(url);
+        addFeature(_SERVICEURL);
+    }
+
+    function showLoader() {
+        var overlay = document.getElementById('overlay');
+        overlay.style.display = 'block';
+    }
+
+    function hideLoader() {
+        var overlay = document.getElementById('overlay');
+        overlay.style.display = 'none';
+    }
+
+    // add event listener to button
+    function downloadShapefile(evt) {
+        // show loader
+        showLoader();
+
+        let urlDownload = _SERVICEURL
+
+        let queryObject = new Query();
+        queryObject.where = '1=1';
+        queryObject.outFields = '*';
+        queryObject.returnGeometry = true;
+        queryObject.geometryType = "esriGeometryPolygon";
+        if (graphicsLayer.graphics.items.length > 0) {
+            let geojson = graphicsLayer.graphics.items[0].geometry.toJSON()
+            queryObject.geometry = new Polygon(geojson)
+            queryObject.spatialRelationship = "esriSpatialRelIntersects";
+        }
+
+        query.executeQueryJSON(urlDownload, queryObject)
+            .then(response => {
+                return ArcgisToGeojsonUtils.arcgisToGeoJSON(response);
+            })
+            .then(function (geojson) {
+
+                _NAME_SERVICE = _NAME_SERVICE.replace(/\s+/g, '_').trim().replace(/[^a-zA-Z]/g, '')
+                const requestOptions = {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        geojson: geojson,
+                        filename: _NAME_SERVICE
+                    })
+                };
+                console.log(requestOptions.body)
+                return fetch(`${__}/convert`, requestOptions)
+            })
+            .then(function (response) {
+                return response.blob();
+            }).then(function (blob) {
+                hideLoader();
+                // Crear un enlace de descarga
+                const downloadLink = document.createElement('a');
+                downloadLink.href = URL.createObjectURL(blob);
+                downloadLink.download = `${_NAME_SERVICE}.zip`;
+                downloadLink.click();
+            }).catch(error => {
+                hideLoader();
+                alert('Error:', error)
+            })
     }
 
     document.getElementById("searchButton").addEventListener("click", addLayer);
     document.getElementById("selectLayer").addEventListener("change", addLayerBySelectLayer);
-
-
+    document.getElementById("downloadButton").addEventListener("click", downloadShapefile);
 });
