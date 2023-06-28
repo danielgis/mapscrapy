@@ -42,6 +42,7 @@ require([
     Polygon
 ) {
 
+    let basemaptitle = 'Topographic';
     function _() {
         const r = new XMLHttpRequest();
         r.open('GET', `${__}/getApiKey`, false);
@@ -245,6 +246,32 @@ require([
         addFeature(_SERVICEURL);
     }
 
+    function ToggleBaseMap(evt) {
+        if(basemaptitle == "Topographic"){
+            map.basemap = "arcgis-streets-night";
+            basemaptitle = "StreetsNight";
+        }
+        else if(basemaptitle == "StreetsNight"){
+            map.basemap = "arcgis-topographic";
+            basemaptitle = "Topographic";
+        }
+    }
+
+    function toggleEsriBaseMapbyTime() {
+        var date = new Date();
+        var hour = date.getHours();
+        var body = document.body;
+    
+        if (hour >= 19 || hour < 6) {
+            if(basemaptitle == "Topographic") {
+                ToggleBaseMap();
+            
+        } else {
+            if(basemaptitle == "StreetsNight") {
+                ToggleBaseMap();
+        }
+    }}}
+  
     function showLoader() {
         var overlay = document.getElementById('overlay');
         overlay.style.display = 'block';
@@ -311,4 +338,6 @@ require([
     document.getElementById("searchButton").addEventListener("click", addLayer);
     document.getElementById("selectLayer").addEventListener("change", addLayerBySelectLayer);
     document.getElementById("downloadButton").addEventListener("click", downloadShapefile);
+    document.getElementById("checkbox").addEventListener("change", ToggleBaseMap)
+    window.addEventListener("load", toggleEsriBaseMapbyTime);
 });

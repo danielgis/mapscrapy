@@ -1,10 +1,11 @@
 /* apply font style boostrap to all html */
-html {
+html,body {
     font-family: 'Roboto', sans-serif;
     font-size: 14px;
     font-weight: 400;
     line-height: 1.5;
     color: #2c2c2c;
+    transition: background 0.2s linear;
 }
 
 * {
@@ -30,6 +31,9 @@ html {
     /* justify-content: space-between; */
 }
 
+body.dark {background-color: #292c35;} /* #9b59b6 */
+
+body.dark h1, body.dark .support a {color: #fff;}
 
 .titleContainer {
     height: 50px;
@@ -237,4 +241,47 @@ html {
         width: 100%;
         height: 100%;
     }
+}
+
+.togglercbx {
+	position: absolute;
+	right: 20px;
+	top: 20px;
+}
+
+.checkbox {
+    opacity: 0;
+    position: absolute;
+}
+  
+.checkbox-label {
+background-color: #111;
+width: 50px;
+height: 24px;
+border-radius: 50px;
+position: relative;
+padding: 5px;
+cursor: pointer;
+display: flex;
+justify-content: space-between;
+align-items: center;
+}
+
+.fa-moon {color: #ced4da;}
+
+.fa-sun {color: #f5701e;}
+
+.checkbox-label .ball {
+background-color: #fff;
+width: 20px;
+height: 20px;
+position: absolute;
+left: 2px;
+top: 2px;
+border-radius: 50%;
+transition: transform 0.2s linear;
+}
+
+.checkbox:checked + .checkbox-label .ball {
+transform: translateX(24px);
 }
