@@ -3,8 +3,9 @@
 // import global variables
 
 var _SERVICEURL = ''
-var __ = 'https://danielgis-uw7bpwj5za-uc.a.run.app'
+var __ = 'http://127.0.0.1:8080'
 var _NAME_SERVICE = ''
+var _WKID_CRS = 4326
 
 require([
     "esri/config",
@@ -211,6 +212,8 @@ require([
         });
         map.add(flayer);
 
+        map.reorder(flayer, graphicsLayer);
+
         // get description of the layer by esrirequest
         esriRequest(url, {
             query: {
@@ -218,6 +221,7 @@ require([
             }
         }).then(function (response) {
             _NAME_SERVICE = response.data.name
+            _WKID_CRS = response.data.extent.spatialReference.wkid
             // add data to metadata container
             template = `<div id="metadataLayer">
                         <div><strong>Versión:</strong> ${response.data.currentVersion}</div>
@@ -247,11 +251,11 @@ require([
     }
 
     function ToggleBaseMap(evt) {
-        if(basemaptitle == "Topographic"){
+        if (basemaptitle == "Topographic") {
             map.basemap = "arcgis-streets-night";
             basemaptitle = "StreetsNight";
         }
-        else if(basemaptitle == "StreetsNight"){
+        else if (basemaptitle == "StreetsNight") {
             map.basemap = "arcgis-topographic";
             basemaptitle = "Topographic";
         }
@@ -261,17 +265,19 @@ require([
         var date = new Date();
         var hour = date.getHours();
         var body = document.body;
-    
+
         if (hour >= 19 || hour < 6) {
-            if(basemaptitle == "Topographic") {
+            if (basemaptitle == "Topographic") {
                 ToggleBaseMap();
-            
-        } else {
-            if(basemaptitle == "StreetsNight") {
-                ToggleBaseMap();
+
+            } else {
+                if (basemaptitle == "StreetsNight") {
+                    ToggleBaseMap();
+                }
+            }
         }
-    }}}
-  
+    }
+
     function showLoader() {
         var overlay = document.getElementById('overlay');
         overlay.style.display = 'block';
@@ -314,7 +320,8 @@ require([
                     },
                     body: JSON.stringify({
                         geojson: geojson,
-                        filename: _NAME_SERVICE
+                        filename: _NAME_SERVICE,
+                        crs: _WKID_CRS
                     })
                 };
                 console.log(requestOptions.body)
