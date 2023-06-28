@@ -8,11 +8,23 @@
     <!-- Import style.css -->
     <link rel="stylesheet" href="style.css">
     <!-- Import arcgis api for javascript 4 -->
-    <link rel="stylesheet" href="https://js.arcgis.com/4.27/esri/themes/light/main.css">
+    <link rel="stylesheet" id="esriStyle" href="https://js.arcgis.com/4.27/esri/themes/light/main.css">
     <script src="https://js.arcgis.com/4.27/"></script>
+
+    <style>
+        @import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css');
+    </style>
 </head>
 
 <body>
+    <div class="togglercbx">
+        <input type="checkbox" class="checkbox" id="checkbox">
+        <label for="checkbox" class="checkbox-label">
+          <i class="fas fa-moon"></i>
+          <i class="fas fa-sun"></i>
+          <span class="ball"></span>
+        </label>
+      </div>
     <div class="maincontainer">
         <div class="titleContainer">
             <h1>MAPSCRAPY</h1>
@@ -37,6 +49,7 @@
         </div>
     </div>
     <!-- Import index.js -->
+    <script src="script.js"></script>
     <script src="index.js"></script>
 </body>
 

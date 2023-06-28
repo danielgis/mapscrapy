@@ -33,7 +33,7 @@ require([
 ) {
 
     esriConfig.apiKey = "AAPK02cc79a406844fe490777fffb44d49a68rKns-SWWDmuWPm5YsGBAOtEgsUjWxGAU5uocOao6psinhpPaoFmelzH7lScYgrQ";
-
+    let basemaptitle = 'Topographic';
     const map = new Map({
         basemap: "arcgis-topographic" // Basemap layer service
     });
@@ -181,8 +181,35 @@ require([
         addFeature(url);
     }
 
+    function ToggleBaseMap(evt) {
+        if(basemaptitle == "Topographic"){
+            map.basemap = "arcgis-streets-night";
+            basemaptitle = "StreetsNight";
+        }
+        else if(basemaptitle == "StreetsNight"){
+            map.basemap = "arcgis-topographic";
+            basemaptitle = "Topographic";
+        }
+    }
+
+    function toggleEsriBaseMapbyTime() {
+        var date = new Date();
+        var hour = date.getHours();
+        var body = document.body;
+    
+        if (hour >= 19 || hour < 6) {
+            if(basemaptitle == "Topographic") {
+                ToggleBaseMap();
+            
+        } else {
+            if(basemaptitle == "StreetsNight") {
+                ToggleBaseMap();
+        }
+    }}}
+
     document.getElementById("searchButton").addEventListener("click", addLayer);
     document.getElementById("selectLayer").addEventListener("change", addLayerBySelectLayer);
-
+    document.getElementById("checkbox").addEventListener("change", ToggleBaseMap)
+    window.addEventListener("load", toggleEsriBaseMapbyTime);
 
 });
