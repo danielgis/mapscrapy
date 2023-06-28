@@ -3,7 +3,7 @@
 // import global variables
 
 var _SERVICEURL = ''
-var __ = 'http://127.0.0.1:8080'
+var __ = 'https://danielgis-uw7bpwj5za-uc.a.run.app'
 var _NAME_SERVICE = ''
 var _WKID_CRS = 4326
 
