@@ -5,10 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" type="image/png" href="img/monster-truck.png" />
     <title>Document</title>
-    <!-- Import style.css -->
     <link rel="stylesheet" href="style.css">
-    <!-- Import arcgis api for javascript 4 -->
+    <script src="https://unpkg.com/@esri/arcgis-to-geojson-utils"></script>
+    <script src="https://unpkg.com/shapefile/dist/shapefile.min.js"></script>
     <link rel="stylesheet" id="esriStyle" href="https://js.arcgis.com/4.27/esri/themes/light/main.css">
+
     <script src="https://js.arcgis.com/4.27/"></script>
 
     <style>
@@ -32,11 +33,20 @@
         <div class="formContainer">
             <div class="containerUrl">
                 <input type="text" name="search" id="search" placeholder="Ingresa la url del servicio de ArcGIS Server">
-                <button id="searchButton">Search</button>
+                <button id="searchButton">Buscar</button>
             </div>
             <div class="containerLayers">
                 <label for="selectLayer">Selecciona la capa</label>
                 <select name="" id="selectLayer"></select>
+            </div>
+        </div>
+        <div class="drawContainer">
+            <div class="drawButtons">
+                <!-- add tooltip to button -->
+                <button class="drawButton" id="drawRectangle" title="Rectangulo"></button>
+                <button class="drawButton" id="drawFreehand" title="Poligono"></button>
+                <button class="drawButton" id="drawCircle" title="Circulo"></button>
+                <button class="drawButton" id="drawClear" title="Eliminar"></button>
             </div>
         </div>
         <div id="mapContainer">
@@ -47,6 +57,9 @@
         <div class="submitContainer">
             <button id="downloadButton">Descargar</button>
         </div>
+    </div>
+    <div id="overlay">
+        <div id="loader"></div>
     </div>
     <!-- Import index.js -->
     <script src="script.js"></script>
