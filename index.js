@@ -3,9 +3,8 @@
 // import global variables
 
 var _SERVICEURL = ''
-var __ = 'https://danielgis-uw7bpwj5za-uc.a.run.app'
 var _NAME_SERVICE = ''
-var _WKID_CRS = 4326
+var _FEATURE_LAYER = ''
 
 require([
     "esri/config",
@@ -23,7 +22,8 @@ require([
     "esri/layers/GraphicsLayer",
     "esri/rest/support/Query",
     "esri/rest/query",
-    "esri/geometry/Polygon"
+    "esri/geometry/Polygon",
+    "./config.js"
 ], function (
     esriConfig,
     Map,
@@ -40,13 +40,14 @@ require([
     GraphicsLayer,
     Query,
     query,
-    Polygon
+    Polygon,
+    config
 ) {
 
     let basemaptitle = 'Topographic';
     function _() {
         const r = new XMLHttpRequest();
-        r.open('GET', `${__}/getApiKey`, false);
+        r.open('GET', `${config.__}/getApiKey`, false);
         r.send();
 
         if (r.status === 200) {
@@ -67,7 +68,10 @@ require([
 
     const view = new MapView({
         map: map,
-        container: "mapContainer" // Div element
+        container: "mapContainer", // Div element
+        // spatialReference: {
+        //     wkid: config._WKID_CRS
+        // },
     });
 
     // Add a basemap toggle widget to toggle between basemaps
@@ -134,6 +138,13 @@ require([
     const circleBtn = document.getElementById("drawCircle");
     const clearBtn = document.getElementById("drawClear");
 
+    sketch.on("create", function (event) {
+        // Si el usuario está creando o actualizando el gráfico, realiza la consulta
+        if (event.state === "active") {
+            queryFeatureWithingPolygon(event.graphic.geometry);
+        }
+    });
+
     // Manejar los eventos de click en los botones
     rectangleBtn.addEventListener("click", function () {
         removeAllGraphics();
@@ -154,6 +165,25 @@ require([
 
     function removeAllGraphics() {
         graphicsLayer.removeAll();
+        document.getElementById("countFeatures").innerHTML = `<p id="countFeaturesId">0</p><p>reg</p>`;
+    }
+
+    function queryFeatureWithingPolygon(polygon) {
+        // Configurar la consulta
+        var query = _FEATURE_LAYER.createQuery();
+        query.geometry = polygon;  // Buscar solo entidades dentro del polígono
+        query.spatialRelationship = "intersects";  // Buscar entidades que se intersecten con el polígono
+
+        // Ejecutar la consulta
+        _FEATURE_LAYER.queryFeatures(query)
+            .then(function (results) {
+                // Mostrar la cantidad de entidades en algún lugar en la aplicación
+                // console.log(results.features.length);
+                document.getElementById("countFeatures").innerHTML = `<p id="countFeaturesId">${results.features.length}</p><p>reg</p>`;
+            })
+            .catch(function (error) {
+                console.error("Error al realizar la consulta: ", error);
+            });
     }
 
     // create function
@@ -207,12 +237,18 @@ require([
     function addFeature(url) {
         // clear all layers
         // map.removeAll();
-        const flayer = new FeatureLayer({
-            url: url
+        _FEATURE_LAYER = new FeatureLayer({
+            url: url,
         });
-        map.add(flayer);
+        map.add(_FEATURE_LAYER);
 
-        map.reorder(flayer, graphicsLayer);
+        // hacer zoom al layer
+        _FEATURE_LAYER.when(function () {
+            view.goTo(_FEATURE_LAYER.fullExtent);
+        });
+
+
+        map.reorder(_FEATURE_LAYER, graphicsLayer);
 
         // get description of the layer by esrirequest
         esriRequest(url, {
@@ -221,7 +257,7 @@ require([
             }
         }).then(function (response) {
             _NAME_SERVICE = response.data.name
-            _WKID_CRS = response.data.extent.spatialReference.wkid
+            config._WKID_CRS = response.data.extent.spatialReference.wkid
             // add data to metadata container
             template = `<div id="metadataLayer">
                         <div><strong>Versión:</strong> ${response.data.currentVersion}</div>
@@ -232,7 +268,7 @@ require([
                         <div><strong>Sistema de Referencia:</strong> ${response.data.extent.spatialReference.wkid}</div>
                         <div><strong>Cantidad de registros habilitados para descarga:</strong> ${response.data.maxRecordCount}</div>
                         </div>`
-            document.getElementsByClassName("metadataContainer")[0].innerHTML = template;
+            document.getElementById("metadata").innerHTML = template;
         }, function (error) {
             console.log(error)
         })
@@ -300,6 +336,7 @@ require([
         queryObject.outFields = '*';
         queryObject.returnGeometry = true;
         queryObject.geometryType = "esriGeometryPolygon";
+        queryObject.outSpatialReference = new SpatialReference({ wkid: config._WKID_CRS });
         if (graphicsLayer.graphics.items.length > 0) {
             let geojson = graphicsLayer.graphics.items[0].geometry.toJSON()
             queryObject.geometry = new Polygon(geojson)
@@ -311,7 +348,7 @@ require([
                 return ArcgisToGeojsonUtils.arcgisToGeoJSON(response);
             })
             .then(function (geojson) {
-
+                console.log(geojson)
                 _NAME_SERVICE = _NAME_SERVICE.replace(/\s+/g, '_').trim().replace(/[^a-zA-Z]/g, '')
                 const requestOptions = {
                     method: 'POST',
@@ -321,11 +358,11 @@ require([
                     body: JSON.stringify({
                         geojson: geojson,
                         filename: _NAME_SERVICE,
-                        crs: _WKID_CRS
+                        crs: config._WKID_CRS
                     })
                 };
-                console.log(requestOptions.body)
-                return fetch(`${__}/convert`, requestOptions)
+                // console.log(requestOptions.body)
+                return fetch(`${config.__}/convert`, requestOptions)
             })
             .then(function (response) {
                 return response.blob();

@@ -115,12 +115,16 @@ body.dark .metadataContainer {
 
 .metadataContainer {
     margin-top: 15px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
     /* margin-bottom: 15px; */
 }
 
-#metadataLayer {
+#metadata {
     text-align: left;
     font-size: 0.9rem;
+    width: 80%;
 }
 
 /* .submitContainer {
@@ -251,6 +255,10 @@ body.dark .metadataContainer {
         width: 100%;
         height: 100%;
     }
+
+    #iconfb {
+        display: none;
+    }
 }
 
 .togglercbx {
@@ -258,6 +266,24 @@ body.dark .metadataContainer {
     right: 20px;
     top: 20px;
     z-index: 50;
+}
+
+#countFeatures {
+    display: flex;
+    /* flex-direction: column; */
+    justify-content: end;
+    align-items: end;
+    height: 100%;
+    width: 20%;
+    /* font-size: 50px; */
+}
+
+#countFeatures p {
+    margin: 0 !important;
+}
+
+#countFeaturesId {
+    font-size: 40px;
 }
 
 .checkbox {
@@ -299,4 +325,11 @@ body.dark .metadataContainer {
 
 .checkbox:checked+.checkbox-label .ball {
     transform: translateX(24px);
+}
+
+#iconfb {
+    position: absolute;
+    left: 20px;
+    top: 20px;
+    z-index: 100;
 }

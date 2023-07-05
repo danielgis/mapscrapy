@@ -12,6 +12,16 @@
 
     <script src="https://js.arcgis.com/4.27/"></script>
 
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-162172110-1"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+
+        gtag('config', 'UA-162172110-1');
+    </script>
+
     <style>
         @import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css');
     </style>
@@ -21,11 +31,21 @@
     <div class="togglercbx">
         <input type="checkbox" class="checkbox" id="checkbox">
         <label for="checkbox" class="checkbox-label">
-          <i class="fas fa-moon"></i>
-          <i class="fas fa-sun"></i>
-          <span class="ball"></span>
+            <i class="fas fa-moon"></i>
+            <i class="fas fa-sun"></i>
+            <span class="ball"></span>
         </label>
-      </div>
+    </div>
+    <div id="fb-root"></div>
+    <script async defer crossorigin="anonymous"
+        src="https://connect.facebook.net/es_LA/sdk.js#xfbml=1&version=v6.0"></script>
+    <div id="iconfb">
+        <div class="fb-like" data-href="https://danielgis.github.io/mapscrapy/" data-width="50" data-layout="box_count"
+            data-action="like" data-size="small" data-share="true"></div>
+    </div>
+    <!-- <div class="countFeatures">
+        <p id="countFeaturesId">0</p>
+    </div> -->
     <div class="maincontainer">
         <div class="titleContainer">
             <h1>MAPSCRAPY</h1>
@@ -53,6 +73,11 @@
 
         </div>
         <div class="metadataContainer">
+            <div id="metadata"></div>
+            <div id="countFeatures">
+                <!-- <p id="countFeaturesId"></p> -->
+                <!-- <p>registros</p> -->
+            </div>
         </div>
         <div class="submitContainer">
             <button id="downloadButton">Descargar</button>
